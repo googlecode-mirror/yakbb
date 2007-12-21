@@ -2,6 +2,8 @@
 
 if(!defined("SNAPONE")) exit;
 
+$languages = array();
+
 class language {
 	public $curlang = "en"; // Current language. Only public incase current ID is needed
 	private $lang = array(); // Array to hold all the items.
@@ -40,7 +42,11 @@ class language {
 				$this->loadDefault();
 			}
 		}
+
+		global $languages;
+
 		$this->dir = $this->langDir.$lang."/";
+		require $this->dir."config.inc.php";
 		$this->curlang = $lang;
 		$this->lang = array(); // Clear lang.
 		$this->learn("global");
