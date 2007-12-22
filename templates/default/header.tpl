@@ -44,7 +44,6 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 		<a href="?">Home</a> - 
 		<a href="?action=help">Help</a> - 
 		<a href="?action=search">Search</a> - 
-		<a href="bugs/">Bugs</a> - 
 		<!-- if {guest} -->
 			<a href="?action=login">Login</a>
 			<!-- if {registration_enabled} -->
