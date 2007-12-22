@@ -49,13 +49,14 @@ class flat_file {
 		}
 
 		$ft[] = "htaccess"; // Make sure not to delete a .htaccess file
+		$ft[] = "svn"; // Don't delete svn folders/files.
 		$i = array(); // Files that are ignored because of extensions.
 		$f = $this->listDir($path);
 
 		foreach($f as $x){
 			if(!in_array(end(explode(".", $x)), $ft)){ // Get file extension and make sure it isn't in the list.
 				if(preg_match("/\./", $x)){
-					// Make sure it's a file.
+					// Make sure it's a file. This catches the SVN folders too though. =/
 					$this->deleteFile($path."/".$x);
 				} else if($folder === true){
 					// Check to see if we should delete folders.
@@ -64,7 +65,7 @@ class flat_file {
 					$i[] = $x;
 				}
 			} else {
-				$i[] = x;
+				$i[] = $x;
 			}
 		}
 

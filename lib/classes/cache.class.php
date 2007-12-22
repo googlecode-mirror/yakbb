@@ -40,6 +40,12 @@ class cache extends flat_file {
 		$this->tpl = $dir."tpl/";
 	}
 
+	public function clearCache(){
+		// Clears the cahce of EVERYTHING
+
+		$this->clearDir($this->dir, array(), true);
+	}
+
 
 
 

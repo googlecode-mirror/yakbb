@@ -141,6 +141,9 @@ $va = array( // Valid Actions
 	// Standard viewing pages
 	"board" => "viewboard",
 	"thread" => "viewthread",
+
+	// Development tools only.
+	"cc" => "clear_cache",
 );
 
 // Use request because it can be POST or GET.... COOKIE too though.
