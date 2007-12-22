@@ -1,12 +1,9 @@
 <?php
 
 /*	TODO
-	- Convert string in invalid includes error message to language reference.
-		- Make it generate a TP style error
-	- Finish login checking
-	- Update last login time and last IP
 	- Check to see if magic_quotes_runtime is actually disabled
 	- Needs to check to see if the user is banned or not
+	- Look into the stripslashes error that was created
 */
 
 if(!defined("SNAPONE")) exit;
@@ -73,11 +70,14 @@ $guest = true; // We'll use this to help us figure out if the user has logged in
 
 // Check cookies
 if(isset($_COOKIE[DBPRE."user"]) && isset($_COOKIE[DBPRE."pass"])){
+	$plugins->callhook("global_user_validation_start");
+
 	$username = $db->secure(secure($_COOKIE[DBPRE."user"]));
 	$db->query("SELECT * FROM ".DBPRE."users WHERE name='".$username."' LIMIT 1");
 	if($db->numRows() == 1){
 		$user = $db->fetch();
 		if($_COOKIE[DBPRE."pass"] == $user["password"]){ // Compare login here.
+			$plugins->callhook("global_user_validation_success");
 			$guest = false;
 		}
 	}
@@ -86,13 +86,15 @@ if(isset($_COOKIE[DBPRE."user"]) && isset($_COOKIE[DBPRE."pass"])){
 	if($guest === true){
 		setcookie(DBPRE."user", "", 0);
 		setcookie(DBPRE."pass", "", 0);
-		session_destroy();
+		session_regenerate_id();
 	}
 }
 
 if($guest === true){
 	// After all this time, the user isn't a valid/logged in user.
 	// Time to set them as a guest. We'll start be resetting the user array.
+
+	$plugins->callhook("global_guest_true");
 
 	$user = array(
 		"name" => "guest",
@@ -103,11 +105,14 @@ if($guest === true){
 		"dst" => $yak->settings["dst"]
 	);
 
+	$user = $plugins->callhook("global_guest_settings", $user);
+
 	// Load the default items for language and template
 	$lang = new language();
 	$tp->loadDefault();
 } else {
 	// Do some user specific things. =P
+	$user = $plugins->callhook("global_user_settings", $user);
 
 	// Load the user's defaults for language and template
 	$lang = new language($user["language"]);
@@ -122,7 +127,7 @@ if($guest === true){
 
 
 // Load specified actions
-$def = "home"; // Action to default to. This may become a setting changeable by a plugin for portals and such
+$def = "home"; // Action to default to. This is changeable by a plugin
 $va = array( // Valid Actions
 	// SYNTAX: "urlaccess" => "modulefile", // <-- No comma on last line
 	"home" => "home",
@@ -145,6 +150,11 @@ $va = array( // Valid Actions
 	// Development tools only.
 	"cc" => "clear_cache",
 );
+
+
+// We call these plugin hooks here because it should be able to change the default action and append additional actions
+$def = $plugins->callhook("global_default_action", $def);
+$va = $plugins->callhook("global_valid_actions", $va);
 
 // Use request because it can be POST or GET.... COOKIE too though.
 // Let's look at that again later.

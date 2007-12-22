@@ -16,17 +16,17 @@ if($guest == false && $yak->settings["switch_users"] == false){
 $tp->setTitle("login");
 $tp->loadFile("login", "login.tpl");
 $lang->learn("login");
+$plugins->callhook("login_start");
 
 
-if(isset($_REQUEST["submitit"])){
+if(isset($_REQUEST["submitit"]) && isset($_REQUEST["username"]) && isset($_REQUEST["password"])){
+	$plugins->callhook("login_form_sent");
 	$username = secure($_REQUEST["username"]);
 	$password = sha256($_REQUEST["password"]);
 
-	if(isset($_REQUEST["username"])){
-		$tp->addVar("login", array(
-			"USER" => substr($username, 0, $yak->settings["username_max_length"])
-		));
-	}
+	$tp->addVar("login", array(
+		"USER" => substr($username, 0, $yak->settings["username_max_length"])
+	));
 
 	$error = array();
 	if(strlen($username) <= $yak->settings["username_max_length"]){
@@ -34,8 +34,14 @@ if(isset($_REQUEST["submitit"])){
 		if($db->numRows($x) == 1){
 			$x = $db->fetch($x);
 			if($x["password"] == $password){
+				// Login successful
+				$plugins->callhook("login_success_start");
+	
 				setcookie(DBPRE."user", $username, time()+9999999);
 				setcookie(DBPRE."pass", $password, time()+9999999);
+
+				$plugins->callhook("login_success_end");
+
 				redirect("?");
 			} else {
 				$error[] = "wrong_password";
@@ -46,9 +52,14 @@ if(isset($_REQUEST["submitit"])){
 	} else {
 		$error[] = "username_too_long";
 	}
+
+	// Errored
+	$error = $plugins->callhook("login_error", $error);
 }
 
 
 $tp->addVar("login", "REG", isset($_REQUEST["reg"]));
+
+$plugins->callhook("login_end");
 
 ?>

@@ -20,9 +20,11 @@ class yakbb {
 	public function loadIC(){
 		// This function is here because of its possible use on all pages.
 
-		global $lang, $tp;
+		global $lang, $tp, $plugins;
+		$plugins->callhook("ic_start");
 		$lang->learn("infocenter");
-		
+
+		$plugins->callhook("ic_end");
 	}
 }
 	
