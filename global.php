@@ -84,6 +84,7 @@ if(isset($_COOKIE[DBPRE."user"]) && isset($_COOKIE[DBPRE."pass"])){
 	$db->free();
 
 	if($guest === true){
+		unset($user); // Security reasons. Just in case.
 		setcookie(DBPRE."user", "", 0);
 		setcookie(DBPRE."pass", "", 0);
 		session_regenerate_id();
