@@ -2,12 +2,12 @@
 	<!-- repeat:CATS:CAT -->
 		<table class="border" cellpadding="4" cellspacing="1">
 		<!-- if {repeat:CAT->id} is not 0 -->
-			<tr><td class="title" colspan="5">
-				{repeat:CAT->name}
-			</td></tr>
+		<tr><td class="title" colspan="5">
+			{repeat:CAT->name}
+		</td></tr>
 		<!-- endif -->
-		<tr><td class="title" width="1">
-		</td><td class="title" width="597">
+		<tr><td class="title" width="15">
+		</td><td class="title" width="583">
 			{LANG}forum_data{/LANG}
 		</td><td class="title" width="1">
 			{LANG}posts{/LANG}
@@ -17,24 +17,24 @@
 			{LANG}last_post{/LANG}
 		</td></tr>
 		<!-- repeat:BOARDS:BOARD -->
-			<!-- if {repeat:BOARD->parentid} == {repeat:CAT->id} -->
-				<tr><td class="cell1">
-					<!-- if {repeat:BOARD->new_posts} -->
-						<img src="{TPATH}/images/on.gif" alt="*" />
-					<!-- else -->
-						<img src="{TPATH}/images/off.gif" alt="" />
-					<!-- endif -->
-				</td><td class="cell1">
-					{repeat:BOARD->link}<br />
-					{repeat:BOARD->description}
-				</td><td class="cell1">
-					{repeat:BOARD->posts}
-				</td><td class="cell1">
-					{repeat:BOARD->threads}
-				</td><td class="cell1">
-					LAST POST INFO
-				</td></tr>
+		<!-- if {repeat:BOARD->parentid} == {repeat:CAT->id} -->
+		<tr><td class="cell1">
+			<!-- if {repeat:BOARD->new_posts} -->
+			<img src="{TPATH}images/on.gif" alt="*" title="{LANG}new_posts{/LANG}" />
+			<!-- else -->
+			<img src="{TPATH}images/off.gif" alt="-" title="{LANG}no_new_posts{/LANG}" />
 			<!-- endif -->
+		</td><td class="cell1">
+			{repeat:BOARD->link}<br />
+			{repeat:BOARD->description}
+		</td><td class="cell1">
+			{repeat:BOARD->posts}
+		</td><td class="cell1">
+			{repeat:BOARD->threads}
+		</td><td class="cell1">
+			LAST POST INFO
+		</td></tr>
+		<!-- endif -->
 		<!-- endrepeat -->
 		</table><br /><br />
 	<!-- endrepeat -->

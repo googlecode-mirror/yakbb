@@ -13,6 +13,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	td.cell1, tr.cell1 td, td.title, tr.title td {
 		background-color: #FFFFFF;
 		color: #000000;
+		text-align: left;
 	}
 	span.smalltext {
 		font-size: 8pt;
@@ -37,9 +38,9 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 <div align="center">
 <div style="width: 750px">
 <table cellpadding="4" cellspacing="1" class="border">
-<tr><td class="cell1" align="center">
+<tr><td class="cell1" style="text-align: center">
 	{board_title}
-</td></tr><tr><td class="cell1" align="center">
+</td></tr><tr><td class="cell1">
 	<font size="2">
 		<a href="?">Home</a> - 
 		<a href="?action=help">Help</a> - 
