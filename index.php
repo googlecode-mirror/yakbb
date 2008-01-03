@@ -5,5 +5,6 @@
 
 define("SNAPONE", 1); // Let's be unique with our security variable.
 define("IN_INSTALL", 0); // Used when installing.
+
 require_once "./global.php";
 ?>

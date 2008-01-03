@@ -5,7 +5,8 @@ if(!defined("SNAPONE")) exit;
 /*	NOTES
 	- The templating system for YakBB was inspired by viewing the template system 
 	of many forum systems. One large influence was phpBB2/3 and its templating 
-	system. It has had it's own tweaks added in however and is coded from scratch.
+	system. It has had it's own tweaks added in however and is coded completely from
+	scratch.
 */
 
 class template {
@@ -63,6 +64,7 @@ class template {
 		$this->dirKey = "install___";
 		$this->dir = "./install/tpl/";
 		$this->imgdir = $this->dir."images/";
+		$this->loadFile("header", "install_header.tpl");
 		return true;
 	}
 
@@ -113,6 +115,11 @@ class template {
 
 	public function displayInstall(){
 		// Displays the install pages.
+
+		$this->loadFile("footer", "install_footer.tpl");
+		$this->preParseFiles();
+		$this->displayFiles();
+		exit;
 	}
 
 	public function error($err){
