@@ -11,7 +11,7 @@ function redirect($url){
 	// Redirects to the specified page. It then exits the script.
 	// @param	Type		Description
 	// $url		String		The part of the URL after the slash.
-	
+
 	$host = $_SERVER['HTTP_HOST'];
 	$uri = rtrim(dirname($_SERVER['PHP_SELF']), "/\\");
 	header("Location: http://".$host.$uri.$url);

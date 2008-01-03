@@ -3,7 +3,6 @@
 /*	TODO
 	- Check to see if magic_quotes_runtime is actually disabled
 	- Needs to check to see if the user is banned or not
-	- Look into the stripslashes error that was created
 */
 
 if(!defined("SNAPONE")) exit;
@@ -11,6 +10,14 @@ if(!defined("SNAPONE")) exit;
 // Check PHP version. It could have changed since installation
 if(version_compare(phpversion(), "5.0.0") < 0){
 	die("You must be running at least PHP 5.0.0 to use YakBB. 5.1.2 is recommended for increased performance and the current release of PHP would be the optimal selection.");
+}
+
+// Check install. Redirect if not installed.
+if(!file_exists("./config.inc.php")){
+	$host = $_SERVER['HTTP_HOST'];
+	$uri = rtrim(dirname($_SERVER['PHP_SELF']), "/\\");
+	header("Location: http://".$host.$uri."/install/install.php");
+	exit;
 }
 
 // Register GLOBALS protection. YakBB should be secure already, but it doesn't hurt.
@@ -49,9 +56,17 @@ set_magic_quotes_runtime(false); // Disable magic quotes from DB.
 
 // Strip slashes management
 if(get_magic_quotes_gpc()){
-	//$_REQUEST = array_map("stripslashes", $_REQUEST);
-	//$_POST = array_map("stripslashes", $_POST);
-	//$_GET = array_map("stripslashes", $_GET);
+	function ss($n){
+		foreach($n as $k=>$v)
+			if(is_array($v)){
+				$n[$k] = ss($v);
+			} else {
+				$n[$k] = stripslashes($v);
+			}
+	}
+	ss(&$_REQUEST);
+	ss(&$_POST);
+	ss(&$_GET);
 }
 
 session_start();
