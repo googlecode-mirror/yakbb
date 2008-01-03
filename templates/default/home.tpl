@@ -1,21 +1,21 @@
 <!-- if count({BOARDS}) > 0 || count({CATS}) > 0 -->
-	<table class="border" cellpadding="4" cellspacing="1">
-	<tr><td class="title" width="1">
-	</td><td class="title" width="597">
-		{LANG}forum_data{/LANG}
-	</td><td class="title" width="1">
-		{LANG}posts{/LANG}
-	</td><td class="title" width="1">
-		{LANG}threads{/LANG}
-	</td><td class="title" width="150">
-		{LANG}last_post{/LANG}
-	</td></tr>
 	<!-- repeat:CATS:CAT -->
+		<table class="border" cellpadding="4" cellspacing="1">
 		<!-- if {repeat:CAT->id} is not 0 -->
 			<tr><td class="title" colspan="5">
 				{repeat:CAT->name}
 			</td></tr>
 		<!-- endif -->
+		<tr><td class="title" width="1">
+		</td><td class="title" width="597">
+			{LANG}forum_data{/LANG}
+		</td><td class="title" width="1">
+			{LANG}posts{/LANG}
+		</td><td class="title" width="1">
+			{LANG}threads{/LANG}
+		</td><td class="title" width="150">
+			{LANG}last_post{/LANG}
+		</td></tr>
 		<!-- repeat:BOARDS:BOARD -->
 			<!-- if {repeat:BOARD->parentid} == {repeat:CAT->id} -->
 				<tr><td class="cell1">
@@ -36,8 +36,8 @@
 				</td></tr>
 			<!-- endif -->
 		<!-- endrepeat -->
+		</table><br /><br />
 	<!-- endrepeat -->
-	</table>
 <!-- else -->
 	<table class="border" cellpadding="4" cellspacing="1">
 	<tr><td class="title">
