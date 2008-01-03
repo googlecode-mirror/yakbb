@@ -1,3 +1,3 @@
 <script type="text/Javascript">
-location.href = "install.php";
+	location.href = location.href.replace(/install.*$/i, "install.php");
 </script>

@@ -13,10 +13,10 @@ if(version_compare(phpversion(), "5.0.0") < 0){
 }
 
 // Check install. Redirect if not installed.
-if(!file_exists("./config.inc.php")){
+if(!file_exists("./config.inc.php") && IN_INSTALL === 0){
 	$host = $_SERVER['HTTP_HOST'];
 	$uri = rtrim(dirname($_SERVER['PHP_SELF']), "/\\");
-	header("Location: http://".$host.$uri."/install/install.php");
+	header("Location: http://".$host.$uri."/install.php");
 	exit;
 }
 
@@ -73,7 +73,9 @@ session_start();
 
 // Load some constants and a bit of config.
 require_once "./constants.inc.php";
-require_once "./config.inc.php";
+if(file_exists("./config.inc.php")){
+	require_once "./config.inc.php";
+}
 
 // Let's load the library stuff. Start with common.php since it loads most of what we need. We'll load any additional classes we need once we're inside the INCLUDESDIR files.
 require_once LIBDIR."common.php";
@@ -84,7 +86,7 @@ $user = array();
 $guest = true; // We'll use this to help us figure out if the user has logged in.
 
 // Check cookies
-if(isset($_COOKIE[DBPRE."user"]) && isset($_COOKIE[DBPRE."pass"])){
+if(IN_INSTALL == 0 && isset($_COOKIE[DBPRE."user"]) && isset($_COOKIE[DBPRE."pass"])){
 	$plugins->callhook("global_user_validation_start");
 
 	$username = $db->secure(secure($_COOKIE[DBPRE."user"]));
@@ -163,6 +165,9 @@ $va = array( // Valid Actions
 	"board" => "viewboard",
 	"thread" => "viewthread",
 
+	// Install and upgrade
+	"install" => "install",
+
 	// Development tools only.
 	"cc" => "clear_cache",
 );
@@ -186,6 +191,10 @@ if(!isset($act)){
 	$act = $def;
 }
 
+if(IN_INSTALL == 1){
+	$act = "install";
+}
+
 if(in_array($act, array_keys($va)) && file_exists(INCLUDESDIR.$va[$act].".php")){
 	// May have passed the action check, but the file may not exist because of a mistake or something.
 	require_once INCLUDESDIR.$va[$act].".php";
@@ -193,5 +202,8 @@ if(in_array($act, array_keys($va)) && file_exists(INCLUDESDIR.$va[$act].".php"))
 	$tp->error("invalid_include");
 }
 
-$tp->display();
+if(IN_INSTALL == 0)
+	$tp->display();
+else
+	$tp->displayInstall();
 ?>

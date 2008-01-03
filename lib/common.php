@@ -19,8 +19,10 @@ require_once LIBDIR."classes/post_parser.class.php";
 
 // Load the database abstraction and actual database classes. Then, make the $db class from that and run a few cores.
 require_once LIBDIR."classes/db/db.abstract.class.php";
-require_once LIBDIR."classes/db/".DBTYPE.".class.php";
-$db = new $connection["type"]();
-$db->connect($connection);
-unset($connection); // Security reasons
+if(defined("DBTYPE")){ // Check for install this way since it WILL use it
+	require_once LIBDIR."classes/db/".DBTYPE.".class.php";
+	$db = new $connection["type"]();
+	$db->connect($connection);
+	unset($connection); // Security reasons
+}
 ?>
