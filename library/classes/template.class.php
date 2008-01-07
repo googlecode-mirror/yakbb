@@ -33,10 +33,6 @@ class template {
 		// $kill	Boolean	Whether or not to kill it if the directory isn't found.
 		// Return	Return	Returns whether it was successfully changed. False can also mean it used default.
 
-		if(IN_INSTALL == 1){
-			return $this->loadTemplateInstall();
-		}
-
 		if(!empty($dir) && is_dir(TEMPLATESDIR.$dir."/")){
 			global $templates;
 			require TEMPLATESDIR.$dir."/config.inc.php"; // Load configuration for template.
@@ -57,15 +53,6 @@ class template {
 			$this->loadDefault(true);
 			return false;
 		}
-	}
-
-	private function loadTemplateInstall(){
-		// Only called on the install page.
-		$this->dirKey = "install___";
-		$this->dir = "./install/tpl/";
-		$this->imgdir = $this->dir."images/";
-		$this->loadFile("header", "install_header.tpl");
-		return true;
 	}
 
 	public function loadDefault($x=true){
@@ -111,15 +98,6 @@ class template {
 		));*/
 		$this->displayFiles();
 		exit; // Incase extra scripting is trying to execute for some reason
-	}
-
-	public function displayInstall(){
-		// Displays the install pages.
-
-		$this->loadFile("footer", "install_footer.tpl");
-		$this->preParseFiles();
-		$this->displayFiles();
-		exit;
 	}
 
 	public function error($err){
