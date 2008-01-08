@@ -6,7 +6,7 @@ if(!defined("SNAPONE")) exit;
 define("CACHEDIR", "./cache/");
 define("INCLUDESDIR", "./includes/");
 define("LANGUAGEDIR", "./languages/");
-define("LIBDIR", "./lib/");
+define("LIBDIR", "./library/");
 define("PLUGINSDIR", "./plugins/");
 define("SMILIESDIR", "./smilies/");
 define("TEMPLATESDIR", "./templates/");
