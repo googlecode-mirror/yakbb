@@ -77,7 +77,7 @@ if(isset($_POST["submitit"])){
 		$errors[] = "email_empty";
 	else if($email1 !== $email2)
 		$errors[] = "email_no_match";
-	else if(!validEmail($emal1))
+	else if(!validEmail($email1))
 		$errors[] = "email_invalid";
 	else if($yak->settings["unique_email"] == 1){
 		// Gotta check for a unique e-mail if they have that enabled. 
@@ -91,19 +91,27 @@ if(isset($_POST["submitit"])){
 		// Register the user and redirect to the login page with the login message
 
 		// Generate an activation string randomly. 10 characters, may change later.
-		$possibles = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
+		$possibles = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-";
 		$i = 0;
 		$acode = "";
 		while(++$i <= 10){
 			$acode .= $possibles[rand(0, strlen($possibles))];
 		}
-		
+
+
+		// Check $adminLoadIt stuff
+		$adminLoadIt = false;
+		$m = $db->fetch($db->query("SELECT count(id) AS totmem FROM ".DBPRE."users"));
+		if($m["totmem"] == 0){
+			$adminLoadIt = true;
+		}
+
 
 		$db->insert("users", array(
 			"id" => 0,
 			"name" => $username,
 			"display" => $display,
-			"group" => 0, // Might set up original admin registration via this? Maybe, but doubtful.
+			"group" => ($adminLoadIt?1:0), // $adminLoadIt is only if the total amount of users is zero.
 			"password" => sha256($pass1), // Encrypt the password
 			"activated" => 0, // Will be changed later
 			"activationcode" => $acode,
