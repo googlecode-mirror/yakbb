@@ -5,8 +5,8 @@ if(!defined("SNAPONE")) exit;
 $d = array(); // Drops
 $c = array(); // Creates
 $i = array(); // Inserts
-$d[] = "DROP TABLE IF EXISTS `yakbb_attachments`";
-$c[] = "CREATE TABLE `yakbb_attachments` (
+$d[] = "DROP TABLE IF EXISTS `".DBPRE."attachments`";
+$c[] = "CREATE TABLE `".DBPRE."attachments` (
 `id` int(10) unsigned NOT NULL auto_increment,
 `postid` int(11) NOT NULL,
 `originalname` text collate latin1_general_ci NOT NULL,
@@ -21,8 +21,8 @@ PRIMARY KEY (`id`)
 
 
 
-$d[] = "DROP TABLE IF EXISTS `yakbb_boards`";
-$c[] = "CREATE TABLE `yakbb_boards` (
+$d[] = "DROP TABLE IF EXISTS `".DBPRE."boards`";
+$c[] = "CREATE TABLE `".DBPRE."boards` (
 `id` int(10) unsigned NOT NULL auto_increment,
 `parentid` int(11) NOT NULL,
 `parenttype` enum('b','c') collate latin1_general_ci NOT NULL,
@@ -35,14 +35,14 @@ PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci";
 
 
-$i[] = "INSERT INTO `yakbb_boards` VALUES (1, 1, 'c', 'Board 1', 'o.o', 0, 0, 1)";
-$i[] = "INSERT INTO `yakbb_boards` VALUES (2, 2, 'c', 'Board 2', 'Should be under category 2', 0, 0, 1)";
-$i[] = "INSERT INTO `yakbb_boards` VALUES (3, 0, 'c', 'Board 3', 'This should appear under no category.', 0, 0, 0)";
+$i[] = "INSERT INTO `".DBPRE."boards` VALUES (1, 1, 'c', 'Board 1', 'o.o', 0, 0, 1)";
+$i[] = "INSERT INTO `".DBPRE."boards` VALUES (2, 2, 'c', 'Board 2', 'Should be under category 2', 0, 0, 1)";
+$i[] = "INSERT INTO `".DBPRE."boards` VALUES (3, 0, 'c', 'Board 3', 'This should appear under no category.', 0, 0, 0)";
 
 
 
-$d[] = "DROP TABLE IF EXISTS `yakbb_categories`";
-$c[] = "CREATE TABLE `yakbb_categories` (
+$d[] = "DROP TABLE IF EXISTS `".DBPRE."categories`";
+$c[] = "CREATE TABLE `".DBPRE."categories` (
 `id` int(11) unsigned NOT NULL auto_increment,
 `name` text collate latin1_general_ci NOT NULL,
 `hideshow` int(1) NOT NULL,
@@ -52,14 +52,14 @@ PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci";
 
 
-$i[] = "INSERT INTO `yakbb_categories` VALUES (1, 'Category 1', 1, 1, 1)";
-$i[] = "INSERT INTO `yakbb_categories` VALUES (2, 'Category 2', 1, 1, 2)";
-$i[] = "INSERT INTO `yakbb_categories` VALUES (3, 'Category 3', 1, 1, 3)";
+$i[] = "INSERT INTO `".DBPRE."categories` VALUES (1, 'Category 1', 1, 1, 1)";
+$i[] = "INSERT INTO `".DBPRE."categories` VALUES (2, 'Category 2', 1, 1, 2)";
+$i[] = "INSERT INTO `".DBPRE."categories` VALUES (3, 'Category 3', 1, 1, 3)";
 
 
 
-$d[] = "DROP TABLE IF EXISTS `yakbb_config`";
-$c[] = "CREATE TABLE `yakbb_config` (
+$d[] = "DROP TABLE IF EXISTS `".DBPRE."config`";
+$c[] = "CREATE TABLE `".DBPRE."config` (
 `id` int(10) unsigned NOT NULL auto_increment,
 `name` text collate latin1_general_ci NOT NULL,
 `value` text collate latin1_general_ci NOT NULL,
@@ -67,26 +67,26 @@ PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci";
 
 
-$i[] = "INSERT INTO `yakbb_config` VALUES (1, 'default_template', 'default')";
-$i[] = "INSERT INTO `yakbb_config` VALUES (2, 'default_language', 'en')";
-$i[] = "INSERT INTO `yakbb_config` VALUES (3, 'strip_tab_spacing', 'false')";
-$i[] = "INSERT INTO `yakbb_config` VALUES (4, 'defaulttimezone', '-6')";
-$i[] = "INSERT INTO `yakbb_config` VALUES (5, 'dst', 'true')";
-$i[] = "INSERT INTO `yakbb_config` VALUES (6, 'board_title', 'Message Board')";
-$i[] = "INSERT INTO `yakbb_config` VALUES (7, 'registration_enabled', 'true')";
-$i[] = "INSERT INTO `yakbb_config` VALUES (8, 'session_login', 'true')";
-$i[] = "INSERT INTO `yakbb_config` VALUES (10, 'username_max_length', '30')";
-$i[] = "INSERT INTO `yakbb_config` VALUES (11, 'displayname_max_length', '30')";
-$i[] = "INSERT INTO `yakbb_config` VALUES (12, 'activation_required', 'false')";
-$i[] = "INSERT INTO `yakbb_config` VALUES (13, 'username_min_length', '2')";
-$i[] = "INSERT INTO `yakbb_config` VALUES (14, 'displayname_min_length', '1')";
-$i[] = "INSERT INTO `yakbb_config` VALUES (15, 'unique_email', 'true')";
-$i[] = "INSERT INTO `yakbb_config` VALUES (16, 'switch_users', 'true')";
+$i[] = "INSERT INTO `".DBPRE."config` VALUES (1, 'default_template', 'default')";
+$i[] = "INSERT INTO `".DBPRE."config` VALUES (2, 'default_language', 'en')";
+$i[] = "INSERT INTO `".DBPRE."config` VALUES (3, 'strip_tab_spacing', 'false')";
+$i[] = "INSERT INTO `".DBPRE."config` VALUES (4, 'defaulttimezone', '-6')";
+$i[] = "INSERT INTO `".DBPRE."config` VALUES (5, 'dst', 'true')";
+$i[] = "INSERT INTO `".DBPRE."config` VALUES (6, 'board_title', 'Message Board')";
+$i[] = "INSERT INTO `".DBPRE."config` VALUES (7, 'registration_enabled', 'true')";
+$i[] = "INSERT INTO `".DBPRE."config` VALUES (8, 'session_login', 'true')";
+$i[] = "INSERT INTO `".DBPRE."config` VALUES (10, 'username_max_length', '30')";
+$i[] = "INSERT INTO `".DBPRE."config` VALUES (11, 'displayname_max_length', '30')";
+$i[] = "INSERT INTO `".DBPRE."config` VALUES (12, 'activation_required', 'false')";
+$i[] = "INSERT INTO `".DBPRE."config` VALUES (13, 'username_min_length', '2')";
+$i[] = "INSERT INTO `".DBPRE."config` VALUES (14, 'displayname_min_length', '1')";
+$i[] = "INSERT INTO `".DBPRE."config` VALUES (15, 'unique_email', 'true')";
+$i[] = "INSERT INTO `".DBPRE."config` VALUES (16, 'switch_users', 'true')";
 
 
 
-$d[] = "DROP TABLE IF EXISTS `yakbb_polls`";
-$c[] = "CREATE TABLE `yakbb_polls` (
+$d[] = "DROP TABLE IF EXISTS `".DBPRE."polls`";
+$c[] = "CREATE TABLE `".DBPRE."polls` (
 `id` int(10) unsigned NOT NULL auto_increment,
 `threadid` int(11) NOT NULL,
 `boardid` int(11) NOT NULL,
@@ -114,8 +114,8 @@ PRIMARY KEY (`id`)
 
 
 
-$d[] = "DROP TABLE IF EXISTS `yakbb_poll_votes`";
-$c[] = "CREATE TABLE `yakbb_poll_votes` (
+$d[] = "DROP TABLE IF EXISTS `".DBPRE."poll_votes`";
+$c[] = "CREATE TABLE `".DBPRE."poll_votes` (
 `id` int(10) unsigned NOT NULL auto_increment,
 `pollid` int(11) NOT NULL,
 `userid` int(11) NOT NULL,
@@ -128,8 +128,8 @@ PRIMARY KEY (`id`)
 
 
 
-$d[] = "DROP TABLE IF EXISTS `yakbb_posts`";
-$c[] = "CREATE TABLE `yakbb_posts` (
+$d[] = "DROP TABLE IF EXISTS `".DBPRE."posts`";
+$c[] = "CREATE TABLE `".DBPRE."posts` (
 `id` int(10) unsigned NOT NULL auto_increment,
 `threadid` int(11) NOT NULL,
 `userid` int(11) NOT NULL,
@@ -147,8 +147,8 @@ PRIMARY KEY (`id`)
 
 
 
-$d[] = "DROP TABLE IF EXISTS `yakbb_threads`";
-$c[] = "CREATE TABLE `yakbb_threads` (
+$d[] = "DROP TABLE IF EXISTS `".DBPRE."threads`";
+$c[] = "CREATE TABLE `".DBPRE."threads` (
 `id` int(10) unsigned NOT NULL auto_increment,
 `timestamp` int(11) NOT NULL,
 `title` text collate latin1_general_ci NOT NULL,
@@ -169,8 +169,8 @@ PRIMARY KEY (`id`)
 
 
 
-$d[] = "DROP TABLE IF EXISTS `yakbb_users`";
-$c[] = "CREATE TABLE `yakbb_users` (
+$d[] = "DROP TABLE IF EXISTS `".DBPRE."users`";
+$c[] = "CREATE TABLE `".DBPRE."users` (
 `id` int(10) unsigned NOT NULL auto_increment,
 `name` text collate latin1_general_ci NOT NULL,
 `display` text collate latin1_general_ci NOT NULL,
