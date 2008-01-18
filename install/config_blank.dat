@@ -3,18 +3,18 @@
 if(!defined("SNAPONE")) exit;
 
 define("YAKVERSION", "{YAKVER}"); // Actual YakBB version
-define("DBVERSION", "{DBVER}"); // Database version. Used when updating.
-define("DBSALT", "{DBSALT}"); // Generated randomly on install. DO NOT EDIT
-define("DBTYPE", "{DBTYPE}"); // Type of DB
-define("DBPRE", "{DBPRE}"); // Database table prefixes. These are also used for all cookies.
+define("DBVERSION",	 "{DBVER}"); // Database version. Used when updating.
+define("DBSALT", 	 '{DBSALT}'); // Generated randomly on install. DO NOT EDIT
+define("DBTYPE",	 "{DBTYPE}"); // Type of DB
+define("DBPRE", 	 "{DBPRE}"); // Database table prefixes. These are also used for all cookies.
 
 // This is the database connection information. It gets unset after the database class is initiated for security reasons.
 $connection = array(
-	"username" => "{DBUSER}",
-	"password" => "{DBPASS}",
-	"host" => "{DBHOST}",
-	"port" => {DBPORT},
-	"db" => "{DBDB}",
-	"type" => DBTYPE // We do this because we can't use constants for what we need later.
+	"username" =>	"{DBUSER}",
+	"password" =>	"{DBPASS}",
+	"host" =>		"{DBHOST}",
+	"port" =>		{DBPORT},
+	"db" =>			"{DBNAME}",
+	"type" =>		DBTYPE // We do this because we can't use constants for what we need later.
 );
 ?>

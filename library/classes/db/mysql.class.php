@@ -77,7 +77,7 @@ class mysql extends db {
 	}
 	public function close(){
 		if($this->dbc !== false){
-			mysql_close($this->dbc);
+			@mysql_close($this->dbc);
 			$this->dbc = false;
 		}
 	}
