@@ -9,7 +9,7 @@ if(!defined("SNAPONE")) exit;
 
 // Check PHP version. It could have changed since installation
 if(version_compare(phpversion(), "5.0.0") < 0){
-	die("You must be running at least PHP 5.0.0 to use YakBB. 5.1.2 is recommended for increased performance and the current release of PHP would be the optimal selection.");
+	die("You must be running at least PHP 5.0.0 to use YakBB. 5.1.2 is recommended and the current release of PHP would be the optimal selection.");
 }
 
 // Check install. Redirect if not installed.
@@ -148,6 +148,7 @@ if($guest === true){
 $def = "home"; // Action to default to. This is changeable by a plugin
 $va = array( // Valid Actions
 	// SYNTAX: "urlaccess" => "modulefile", // <-- No comma on last line
+	// BLANK ONES HAVE NOT HAD FILES ADDED YET
 	"home" => "home",
 	"index" => "home",
 
@@ -157,8 +158,10 @@ $va = array( // Valid Actions
 	"signup" => "join",
 	"login" => "login",
 	"signin" => "login",
-	"search" => "search",
 	"help" => "help",
+	"search" => "search",
+	"usercp" => "",
+	"members" => "",
 	"logout" => "logout",
 
 	// Standard viewing pages
@@ -188,7 +191,7 @@ if(!isset($act)){
 	$act = $def;
 }
 
-if(in_array($act, array_keys($va)) && file_exists(INCLUDESDIR.$va[$act].".php")){
+if(in_array($act, array_keys($va)) && !empty($va[$act]) && file_exists(INCLUDESDIR.$va[$act].".php")){
 	// May have passed the action check, but the file may not exist because of a mistake or something.
 	require_once INCLUDESDIR.$va[$act].".php";
 } else {

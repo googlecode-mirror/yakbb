@@ -14,6 +14,10 @@ $items = array(
 
 	// Login errors
 	"login_logged_in" => "You are already logged in.",
+
+	// View board errors
+	"viewboard_invalid_id" => "The specified board ID is invalid.",
+	"viewboard_doesnt_exist" => "The board you are trying to access does not exist.",
 );
 
 ?>
