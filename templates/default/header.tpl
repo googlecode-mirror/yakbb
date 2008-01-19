@@ -60,3 +60,4 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 </td></tr>
 </table>
 <br /><br />
+<div id="nav" style="text-align: left">{navtree}</div>

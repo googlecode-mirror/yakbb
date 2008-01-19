@@ -11,14 +11,24 @@ class upgrade_sql {
 		// $n = current version. Will fully update to final version
 		while($n <= CURRENTDBVERSION && is_callable(array($this, "upgradeIt".$n))){
 			call_user_func(array($this, "upgradeIt".$n));
-			echo $n;
 			$n++;
 		}
-		return $this->curver;
+
+		// Update config file
+		$ff = new flat_file();
+		$dat = $ff->loadFile("../config.inc.php");
+		if(!$dat) die("Can't locate config file for update query.");
+		// echo $dat; exit;
+		$dat = preg_replace("/define\(\"DBVERSION\",.*?\"\d+\"\);/i", "define(\"DBVERSION\",\t \"".CURRENTDBVERSION."\");", $dat);
+		$ff->updateFile("../config.inc.php", $dat);
 	}
 
 	private function upgradeIt0(){} // Prevent possible errors
 	private function upgradeIt1(){} // Prevent possible errors
+	private function upgradeIt2(){
+		global $db;
+		$db->query("INSERT INTO ".DBPRE."config VALUES ('0', 'nav_divider', ' :: ');");
+	}
 }
 
 ?>

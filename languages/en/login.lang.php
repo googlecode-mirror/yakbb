@@ -6,6 +6,7 @@ $items = array(
 	"login_title" => "Login",
 	"accountdetails_title" => "Account Details",
 	"settings_title" => "Settings",
+	"nav_login" => "Login",
 
 	// "Briefs"
 	"username_brief" => "Username: ",

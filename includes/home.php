@@ -5,6 +5,7 @@ if(!defined("SNAPONE")) exit;
 $tp->setTitle("home");
 $tp->loadFile("home", "home.tpl");
 $lang->learn("home");
+$tp->addNav($lang->item("home_nav"));
 $plugins->callhook("homestart");
 
 // Categories

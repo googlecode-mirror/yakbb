@@ -115,9 +115,10 @@ if($step == 0){
 	$dbname = $_REQUEST["dbname"];
 	$dbuser = $_REQUEST["dbuser"];
 	$dbpass = $_REQUEST["dbpass"];
-	require "../library/classes/flat_file.class.php";
-	require "../library/classes/db/db.abstract.class.php";
-	require "../library/classes/db/".$dbtype.".class.php";
+	require "../constants.inc.php";
+	require ".".LIBDIR."classes/flat_file.class.php";
+	require ".".LIBDIR."classes/db/db.abstract.class.php";
+	require ".".LIBDIR."classes/db/".$dbtype.".class.php";
 	$db = new $dbtype();
 	$db->connect(array(
 		"host" => $dbhost,
@@ -172,7 +173,7 @@ if($step == 0){
 	?>
 	Forum data successfully installed. Redirecting to admin registration page...
 	<script type='text/Javascript'>
-	setTimeout(function(){ location.href = '../?action=register'; }, 500);
+	setTimeout(function(){ location.href = '../?action=register'; }, 2000);
 	</script>
 	<?php
 }

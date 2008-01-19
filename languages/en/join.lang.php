@@ -25,6 +25,7 @@ $items = array(
 	// Short strings/titles on registration page
 	"error_title" => "An Error Has Occured",
 	"register_title" => "Register",
+	"join_nav" => "Register",
 	"userdisplay_title" => "Username &amp; Display Name",
 	"password_title" => "Password",
 	"email_title" => "E-mail",

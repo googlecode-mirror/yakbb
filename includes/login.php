@@ -16,6 +16,7 @@ if($guest == false && $yak->settings["switch_users"] == false){
 $tp->setTitle("login");
 $tp->loadFile("login", "login.tpl");
 $lang->learn("login");
+$tp->addNav($lang->item("nav_login"));
 $plugins->callhook("login_start");
 
 

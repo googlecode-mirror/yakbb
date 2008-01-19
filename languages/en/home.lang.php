@@ -1,6 +1,9 @@
 <?php
 
 $items = array(
+	// General
+	"home_nav" => "Home",
+
 	// Category listing titles
 	"forum_data" => "Forum Data",
 	"posts" => "Posts",

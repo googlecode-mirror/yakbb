@@ -19,6 +19,7 @@ class template {
 	private $gvars = array(); // Global variables. Same key-value relationship as $vars
 
 	private $title = "No title"; // Title of the page
+	private $navs = array(); // Nav tree holder
 
 	// Stat Variables
 	private $cachedAlready = 0; // Number of TPL files loaded from cache.
@@ -78,24 +79,26 @@ class template {
 
 		global $user, $yak, $db, $starttime, $lang;
 
+		array_unshift($this->navs, $yak->settings["board_title"]);
 		$this->addGlobal($yak->settings); // Register settings in global variables.
 		$this->addGlobal(array(
 			"TPATH" => $this->dir, // MUST NOT BE OVERRIDDEN
 			"title" => $this->title,
-			"guest" => !!($user["name"] == "guest")
+			"guest" => !!($user["name"] == "guest"),
+			"navtree" => implode($yak->settings["nav_divider"], $this->navs)
 		));
 		$lang->templateLearn($this->dir."lang_override");
 
 		$this->loadFile("footer", "footer.tpl");
 		$this->preParseFiles();
 		$gentime = substr(((array_sum(explode(" ", microtime()))) - $starttime), 0, 6);
-		/*$this->addVar("footer", array(
+		$this->addVar("footer", array(
 			"GENTIME" => $gentime, // We add gen time here because prePareseFiles can take a bit of time. =P
-			"QUERYTIME" => substr($db->time, 0, 6),
+			// "QUERYTIME" => substr($db->time, 0, 6),
 			"QUERIES" => $db->queries,
 			"TPLFILES" => count($this->files),
 			"TPLCACHED" => $this->cachedAlready
-		));*/
+		));
 		$this->displayFiles();
 		exit; // Incase extra scripting is trying to execute for some reason
 	}
@@ -239,6 +242,14 @@ class template {
 		} else {
 			$this->title = $tit;
 		}
+	}
+
+	public function addNav($nav){
+		// Adds a nav tree item.
+		// @param	Type	Description
+		// $nav		String	The nav (including link if used) to be added to the nav tree.
+
+		$this->navs[] = $nav;
 	}
 
 

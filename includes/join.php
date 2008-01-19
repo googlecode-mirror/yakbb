@@ -19,6 +19,7 @@ if($guest === false){
 $tp->setTitle("join");
 $tp->loadFile("join", "join.tpl");
 $lang->learn("join");
+$tp->addNav($lang->item("join_nav"));
 
 if(isset($_POST["submitit"])){
 	// Form submitted. Let's check the information.
