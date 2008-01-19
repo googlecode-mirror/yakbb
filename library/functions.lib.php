@@ -24,6 +24,10 @@ function secure($data){
 	return htmlentities($data, ENT_QUOTES);
 }
 
+function makeDate($time){
+	return date("D M d, Y g:i a", $time);
+}
+
 function validEmail($email){
 	// Confirms if it is a valid e-mail or not
 

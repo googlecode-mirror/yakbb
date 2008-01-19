@@ -1,5 +1,7 @@
 <?php
 
+if(!defined("SNAPONE")) exit;
+
 $items = array(
 	// Specific text pieces
 	"error_occurred" => "The following error has occurred:", // One
@@ -18,6 +20,7 @@ $items = array(
 	// View board errors
 	"viewboard_invalid_id" => "The specified board ID is invalid.",
 	"viewboard_doesnt_exist" => "The board you are trying to access does not exist.",
+	"viewboard_no_permission" => "You do not have permission to view this board.",
 );
 
 ?>

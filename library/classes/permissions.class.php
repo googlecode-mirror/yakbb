@@ -47,8 +47,8 @@ class permissions {
 		// Return	Return		Returns true if a user can view the board.
 
 		$board = $var["bid"];
-		$cat = $var["cid"];
-		return $this->checkPerm("viewcat", $var);
+		// $cat = $var["cid"];
+		return true; //$this->checkPerm("viewcat", $var);
 	}
 	private function checkThread($var){
 		// Checks to see if a thread is viewable by the current user.
@@ -57,9 +57,9 @@ class permissions {
 		// Return	Return		Returns true if a user can view the thread.
 
 		$thread = $var["tid"];
-		$board = $var["bid"];
-		$cat = $var["cid"];
-		return $this->checkPerm("viewboard", $var);
+		// $board = $var["bid"];
+		// $cat = $var["cid"];
+		return true; //$this->checkPerm("viewboard", $var);
 	}
 }
 

@@ -7,6 +7,8 @@ if(!defined("SNAPONE")) exit;
 	- Finish conversion to YakBB
 	- Make README use language variable? (Language loads after README, right? o.o;; )
 	- Finish query-cache functions. (They're at the bottom. =P)
+		-> Add expiration time settings
+		-> Convert the makeDate() to actually use a custom date format
 	- Add the SNAPONE security check to all cached files tops. Including templates. =P
 */
 
@@ -200,14 +202,21 @@ class cache extends flat_file {
 		return false;
 	}
 
-	public function queryCacheStore($file, $dat){
+	public function queryCacheStore($file, $dat, $query){
 		// Stores the data from a query in the cache.
 		// @param	Type		Description
 		// $file	String		The file name (md5 of the query)
 		// $dat		Array		The result of the query to be stored.
+		// $query	String		The actual query. Stored to keep track of data.
 		
-		$s = "<"."?php\n\nif(!defined(\"SNAPONE\")) exit;";
-		$s .= "\$return_value = ".var_export($dat, true);
+		$s = "<"."?php
+/*
+Query: ".$query."
+Created: ".makeDate(time())."
+*/
+
+if(!defined(\"SNAPONE\")) exit;";
+		$s .= "\n\n\$return_value = ".var_export($dat, true);
 		$s .= "?".">";
 
 		$this->updateFile($this->sql.$file.".php", $s);

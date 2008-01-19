@@ -1,5 +1,7 @@
 <?php
 
+if(!defined("SNAPONE")) exit;
+
 $items = array(
 	// General
 	"home_nav" => "Home",

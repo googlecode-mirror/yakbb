@@ -1,5 +1,7 @@
 <?php
 
+if(!defined("SNAPONE")) exit;
+
 $items = array(
 	// Page Titles
 	"home_title" => "Home",

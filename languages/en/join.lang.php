@@ -1,5 +1,7 @@
 <?php
 
+if(!defined("SNAPONE")) exit;
+
 $items = array(
 	// Errors
 	"username_empty" => "You must enter a username.",

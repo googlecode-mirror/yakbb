@@ -1,5 +1,7 @@
 <?php
 
+if(!defined("SNAPONE")) exit;
+
 $items = array(
 	// Section titles
 	"regsuccess_title" => "Registration Successful",

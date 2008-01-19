@@ -35,7 +35,7 @@ class mysql extends db {
 			$dat[] = $x; 
 		}
 		$this->free();
-		$cache->queryCacheStore($q2, $dat);
+		$cache->queryCacheStore($q2, $dat, $query);
 		return $dat;
 	}
 	public function query($query){
