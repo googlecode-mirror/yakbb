@@ -2,6 +2,10 @@
 
 /*	TODO
 	- Make the nav tree parts into links
+	- Thread listing
+		- Redirect threads
+		- Error message if no threads
+	- CHECK PASSWORs
 */
 
 if(!defined("SNAPONE")) exit;
