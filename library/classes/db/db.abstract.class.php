@@ -13,7 +13,7 @@ NOTES
 - connect() also selects the database in question.
 - cacheQuery() loads data from the cache and only queries the DB if the data isn't present.
 - secure() is only designed to protect against SQL injection.
-- Don't define fetch(), freeResult(), and __destruct() in the actual files.
+- Don't define queryCache(), fetch(), freeResult(), and __destruct() in the actual files.
 */
 
 abstract class db {
@@ -22,7 +22,11 @@ abstract class db {
 	public $last;
 
 	abstract public function connect($data);
-	abstract public function cacheQuery($query);
+	public function queryCache($query, $name=false){
+		return $this->cacheQuery($query, $name);
+	}
+	abstract public function cacheQuery($query, $name=false);
+	abstract public function clearCacheQuery($name,$query=false);
 	abstract public function query($query);
 	abstract public function insert($table, array $ins);
 	abstract public function numRows($res=false);

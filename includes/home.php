@@ -1,5 +1,11 @@
 <?php
 
+/*	TODO
+	- Last post data
+	- Moderators list (if enabled)
+	- Sub-boards list (if enabled)
+*/
+
 if(!defined("SNAPONE")) exit;
 
 $tp->setTitle("home");
@@ -9,7 +15,7 @@ $tp->addNav($lang->item("home_nav"));
 $plugins->callhook("homestart");
 
 // Categories
-$cats = $db->cacheQuery("SELECT * FROM ".DBPRE."categories WHERE showmain='1' ORDER BY `order` ASC");
+$cats = $db->cacheQuery("SELECT * FROM ".DBPRE."categories WHERE showmain='1' ORDER BY `order` ASC", "categories_main");
 $cats = $plugins->callhook("home_categories_loaded", $cats);
 
 $ids = array(0);

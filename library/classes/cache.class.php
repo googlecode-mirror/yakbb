@@ -42,10 +42,16 @@ class cache extends flat_file {
 		$this->tpl = $dir."tpl/";
 	}
 
-	public function clearCache(){
-		// Clears the cahce of EVERYTHING
+	public function clearCache($file=false){
+		// Clears the cache of EVERYTHING unless specified
+		// @param	Type	Description
+		// $file	Mixed	Either the name of the file or false to clear all.
 
-		$this->clearDir($this->dir, array(), true);
+		if($file === false){
+			$this->clearDir($this->dir, array(), true);
+		} else {
+			$this->deleteFile($this->dir.$file.".php");
+		}
 	}
 
 
@@ -191,9 +197,9 @@ class cache extends flat_file {
 	// DB query functions
 	public function queryCache($file){
 		// Loads data from the cache of a query. Returns false on failure.
-		// @param	Type		Description
-		// $file	String		The file name (md5 of the query)
-		// Return	Return		Returns false on failure and the data on success.
+		// @param	Type	Description
+		// $file	String	The file name (md5 of the query)
+		// Return	Return	Returns false on failure and the data on success.
 
 		if(file_exists($this->sql.$file.".php")){
 			require $this->sql.$file.".php";
@@ -204,10 +210,10 @@ class cache extends flat_file {
 
 	public function queryCacheStore($file, $dat, $query){
 		// Stores the data from a query in the cache.
-		// @param	Type		Description
-		// $file	String		The file name (md5 of the query)
-		// $dat		Array		The result of the query to be stored.
-		// $query	String		The actual query. Stored to keep track of data.
+		// @param	Type	Description
+		// $file	String	The file name (md5 of the query or custom)
+		// $dat		Array	The result of the query to be stored.
+		// $query	String	The actual query. Stored to keep track of data.
 		
 		$s = "<"."?php
 /*
@@ -221,6 +227,14 @@ if(!defined(\"SNAPONE\")) exit;";
 
 		$this->updateFile($this->sql.$file.".php", $s);
 		
+	}
+
+	public function queryCacheDelete($file){
+		// Clears a cached query file
+		// @param	Type	Description
+		// $file	String	The file/query file to be cleared
+
+		$this->clearCache($this->sql.$file.".php");
 	}
 }
 

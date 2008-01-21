@@ -21,10 +21,12 @@ class mysql extends db {
 		$this->dbc = mysql_connect($c["host"], $c["username"], $c["password"]) or die("Unable to connect to MySQL.");
 		mysql_select_db($c["db"]) or die("Unable to select MySQL database.");
 	}
-	public function cacheQuery($query){
+	public function cacheQuery($query, $name=false){
 		global $cache;
-		$q2 = md5($query);
-		if($dat = $cache->queryCache($q2)){
+		if($name === false){
+			$name = md5($query);
+		}
+		if($dat = $cache->queryCache($name)){
 			return $dat;
 		}
 
@@ -35,8 +37,17 @@ class mysql extends db {
 			$dat[] = $x; 
 		}
 		$this->free();
-		$cache->queryCacheStore($q2, $dat, $query);
+		$cache->queryCacheStore($name, $dat, $query);
 		return $dat;
+	}
+	public function clearCacheQuery($name, $query=false){
+		// Clears a cached query
+		global $cache;
+		if($query){
+			// Used it the file wasn't given a specific name
+			$name = md5($name);
+		}
+		$cache->queryCacheDelete($name);
 	}
 	public function query($query){
 		$this->queries++;
