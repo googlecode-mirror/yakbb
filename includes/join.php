@@ -35,56 +35,65 @@ if(isset($_POST["submitit"])){
 	$emailoptin = intval($_POST["emailoptin"]);
 
 
-	if(empty($username))
+	if(empty($username)){
 		$errors[] = "username_empty";
-	else if(strlen($username) > $yak->settings["username_max_length"])
+	} else if(strlen($username) > $yak->settings["username_max_length"]){
 		$errors[] = "username_max_length";
-	else if(strlen($username) < $yak->settings["username_min_length"])
+	} else if(strlen($username) < $yak->settings["username_min_length"]){
 		$errors[] = "username_min_length";
+	}
 
 	if(count($errors) == 0){
 		// Check first to save a query, because they have to change their username if the above are false anyway
 		$db->query("SELECT id FROM ".DBPRE."users WHERE name='".$db->secure($username)."' LIMIT 1");
-		if($db->numRows() == 1)
+		if($db->numRows() == 1){
 			$errors[] = "username_taken";
+		}
+		$db->free();
 	}
 
-	if(!preg_match("/^[a-z0-9_]+$/i", $username))
+	if(!preg_match("/^[a-z0-9_]+$/i", $username)){
 		$errors[] = "username_invalid_char";
+	}
 
 
-	if(empty($display))
+	if(empty($display)){
 		$errors[] = "displayname_empty";
-	else if(strlen($display) > $yak->settings["displayname_max_length"])
+	} else if(strlen($display) > $yak->settings["displayname_max_length"]){
 		$errors[] = "displayname_max_length";
-	else if(strlen($display) < $yak->settings["displayname_min_length"])
+	} else if(strlen($display) < $yak->settings["displayname_min_length"]){
 		$errors[] = "displayname_min_length";
+	}
 
 
-	if($pass1 !== $pass2)
+	if($pass1 !== $pass2){
 		$errors[] = "password_no_match";
+	}
 
-	if(empty($pass1))
+	if(empty($pass1)){
 		$errors[] = "password_empty";
-	else if(strlen($pass1) < 6)
+	} else if(strlen($pass1) < 6){
 		$errors[] = "password_too_short";
-	else if($pass1 == $username)
+	} else if($pass1 == $username){
 		$errors[] = "password_username";
-	else if($pass1 == strrev($username))
+	} else if($pass1 == strrev($username)){
 		$errors[] = "password_username_reversed";
+	}
 
 
-	if(empty($email1))
+	if(empty($email1)){
 		$errors[] = "email_empty";
-	else if($email1 !== $email2)
+	} else if($email1 !== $email2){
 		$errors[] = "email_no_match";
-	else if(!validEmail($email1))
+	} else if(!validEmail($email1)){
 		$errors[] = "email_invalid";
-	else if($yak->settings["unique_email"] == 1){
+	} else if($yak->settings["unique_email"] == 1){
 		// Gotta check for a unique e-mail if they have that enabled. 
 		$db->query("SELECT id FROM ".DBPRE."users WHERE email='".$db->secure($email1)."'");
-		if($db->numRows() == 1)
+		if($db->numRows() == 1){
 			$errors[] = "email_taken";
+		}
+		$db->free();
 	}
 
 	if(count($errors) == 0){
@@ -106,6 +115,7 @@ if(isset($_POST["submitit"])){
 		if($m["totmem"] == 0){
 			$adminLoadIt = true;
 		}
+		$db->free();
 
 
 		$db->insert("users", array(

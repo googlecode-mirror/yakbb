@@ -97,7 +97,9 @@ class template {
 			// "QUERYTIME" => substr($db->time, 0, 6),
 			"QUERIES" => $db->queries,
 			"TPLFILES" => count($this->files),
-			"TPLCACHED" => $this->cachedAlready
+			"TPLCACHED" => $this->cachedAlready,
+			"MEMUSE" => number_format(memory_get_usage()),
+			"MEMPEAK" => (function_exists("memory_get_peak_usage")?number_format(memory_get_peak_usage()):"")
 		));
 		$this->displayFiles();
 		exit; // Incase extra scripting is trying to execute for some reason

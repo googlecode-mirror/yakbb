@@ -10,7 +10,8 @@
 		- Sticky and announcements list
 		- New/no new replies info
 	- CHECK PASSWORDS
-	- Send new thread, new poll, etc. permissions
+	- Sub-boards list
+	- Send new thread, new poll, etc. permissions for buttons
 */
 
 if(!defined("SNAPONE")) exit;
@@ -71,8 +72,8 @@ $db->query("SELECT * FROM ".DBPRE."threads WHERE boardid='".$bid."' ORDER BY tim
 while($t = $db->fetch()){
 	$threads[] = array(
 		"id" => $t["id"],
-		"time" => $t["timestamp"],
-		"date" => makeDate($t["timestamp"]),
+		"creationtime" => $t["timestamp"],
+		"creationdate" => makeDate($t["timestamp"]),
 		"title" => $t["title"],
 		"description" => $t["description"],
 		"creator" => $t["creatorid"],
@@ -86,6 +87,8 @@ while($t = $db->fetch()){
 		"link" => (strlen($t["redirecturl"])>0?$t["redirecturl"]:$tp->threadLink($t["id"], $t["title"]))
 	);
 }
+
+$db->free();
 
 $tp->addVar("board", array(
 	"threads" => $threads

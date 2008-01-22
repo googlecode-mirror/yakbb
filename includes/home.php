@@ -46,6 +46,7 @@ while($b = $db->fetch()){
 	}
 }
 $boards = $plugins->callhook("home_boards_checked", $boards);
+$db->free();
 
 
 // Add to the template
