@@ -428,7 +428,10 @@ if(isset(".$varname.") && is_array(".$varname.")){
 // Link management functions (board, thread, profile, etc.)
 	// Note: These functions exist because of the possibility of SEO.
 	public function boardLink($bid, $bname){
-		return '<a href="?board='.$bid.'" title="'.$bname.'">'.$bname.'</a>';
+		return "?board=".$bid;
+	}
+	public function threadLink($tid, $tname){
+		return "?thread=".$tid;
 	}
 }
 

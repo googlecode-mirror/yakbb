@@ -3,10 +3,14 @@
 /*	TODO
 	- Make the nav tree parts into links
 	- Thread listing
-		- Redirect threads
-		- Error message if no threads
+		- Redirect threads go through tracker??
+		- Pagination
+		- Order by lastpost instead of timestamp
+			-> lporder actually; this will work better with the bump feature
+		- Sticky and announcements list
+		- New/no new replies info
 	- CHECK PASSWORDS
-	- Clear non-existing board cache data
+	- Send new thread, new poll, etc. permissions
 */
 
 if(!defined("SNAPONE")) exit;
@@ -22,11 +26,12 @@ if(!isset($_GET["board"]) || !is_numeric($_GET["board"]) || $_GET["board"] < 1){
 $bid = intval($_GET["board"]);
 
 // Make sure board exists
-$boarddat = $db->cacheQuery("SELECT * FROM ".DBPRE."boards WHERE id='".$bid."'", "board_data/".$bid);
+$boarddat = $db->cacheQuery("SELECT * FROM ".DBPRE."boards WHERE id='".$bid."' LIMIT 1", "board_data/".$bid);
 if(count($boarddat) == 0){
+	$db->clearCacheQuery("board_data/".$bid);
 	$tp->error("viewboard_doesnt_exist");
 }
-$boarddat = $boarddat[0];
+$boarddat = $boarddat[0]; // First result only. This is a cache issue... I maybe should rework that. =P
 
 $curboard = $boarddat;
 $boards = array();
@@ -40,7 +45,8 @@ while(true){
 }
 
 if($curboard["parentid"] != 0){
-	$cat = $db->cacheQuery("SELECT * FROM ".DBPRE."categories WHERE id='".$curboard["parentid"]."'", "category_data/".$curboard["parentid"]);
+	// Load the category if the ID isn't 0. (If it is zero, we don't really have a category. =P)
+	$cat = $db->cacheQuery("SELECT * FROM ".DBPRE."categories WHERE id='".$curboard["parentid"]."' LIMIT 1", "category_data/".$curboard["parentid"]);
 	$cat = $cat[0]; // Only want the first result... despite there being only one.
 	if(!$perms->checkPerm("viewcat", array("cid" => $cat["id"]))){
 		$tp->error("viewboard_no_permissions");
@@ -56,7 +62,33 @@ foreach($boards as $k => $v){
 }
 
 $tp->addNav($boarddat["name"]);
-$tp->setTitle($boarddat["name"]);
+$tp->setTitle($boarddat["name"], false);
 
+// Load threads
+$threads = array();
+$db->query("SELECT * FROM ".DBPRE."threads WHERE boardid='".$bid."' ORDER BY timestamp DESC");
+
+while($t = $db->fetch()){
+	$threads[] = array(
+		"id" => $t["id"],
+		"time" => $t["timestamp"],
+		"date" => makeDate($t["timestamp"]),
+		"title" => $t["title"],
+		"description" => $t["description"],
+		"creator" => $t["creatorid"],
+		"board" => $t["boardid"],
+		"replies" => $t["replies"],
+		"views" => $t["views"],
+		"icon" => "",
+		"announcement" => false,
+		"sticky" => $t["sticky"] == 1,
+		"locked" => $t["locked"] == 1,
+		"link" => (strlen($t["redirecturl"])>0?$t["redirecturl"]:$tp->threadLink($t["id"], $t["title"]))
+	);
+}
+
+$tp->addVar("board", array(
+	"threads" => $threads
+));
 
 ?>

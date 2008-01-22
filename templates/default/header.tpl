@@ -5,6 +5,9 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 <head>
 	<title>{board_title} - {title}</title>
 	<style type="text/CSS">
+	div#holder div {
+		text-align: left;
+	}
 	table.border {
 		background-color: #000000;
 		color: #FFFFFF;
@@ -13,7 +16,6 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	td.cell1, tr.cell1 td, td.title, tr.title td {
 		background-color: #FFFFFF;
 		color: #000000;
-		text-align: left;
 	}
 	span.smalltext {
 		font-size: 8pt;
@@ -35,7 +37,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	</style>
 </head>
 <body>
-<div align="center">
+<div align="center" id="holder">
 <div style="width: 750px">
 <table cellpadding="4" cellspacing="1" class="border">
 <tr><td class="cell1" style="text-align: center">

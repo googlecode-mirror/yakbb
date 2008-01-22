@@ -4,6 +4,7 @@
 	- Last post data
 	- Moderators list (if enabled)
 	- Sub-boards list (if enabled)
+	- On/off data (sub-boards included >.<)
 */
 
 if(!defined("SNAPONE")) exit;
