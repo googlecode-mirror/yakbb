@@ -234,7 +234,7 @@ if(!defined(\"SNAPONE\")) exit;";
 		// @param	Type	Description
 		// $file	String	The file/query file to be cleared
 
-		$this->clearCache($this->sql.$file.".php");
+		return $this->deleteFile($this->sql.$file.".php");
 	}
 }
 

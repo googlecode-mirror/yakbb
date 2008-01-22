@@ -47,7 +47,7 @@ class mysql extends db {
 			// Used it the file wasn't given a specific name
 			$name = md5($name);
 		}
-		$cache->queryCacheDelete($name);
+		return $cache->queryCacheDelete($name);
 	}
 	public function query($query){
 		$this->queries++;
