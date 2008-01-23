@@ -13,5 +13,5 @@ define("TEMPLATESDIR",	"./templates/");
 define("UPLOADSDIR",	"./uploads/");
 
 // Don't edit. These are used to keep YakBB up to date
-define("CURRENTDBVERSION", 2);
+define("CURRENTDBVERSION", 3);
 ?>
