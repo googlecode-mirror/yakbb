@@ -18,7 +18,9 @@ class upgrade_sql {
 		// echo $dat; exit;
 		$dat = preg_replace("/define\(\"DBVERSION\",.*?\"\d+\"\);/i", "define(\"DBVERSION\",\t \"".CURRENTDBVERSION."\");", $dat);
 		$ff->updateFile("../config.inc.php", $dat);
-		$cache->clearCache();
+		if(isset($cache)){
+			$cache->clearCache();
+		}
 	}
 
 	private function upgradeIt0(){} // Prevent possible errors
