@@ -3,6 +3,7 @@
 /*	TODO
 	- Check to see if magic_quotes_runtime is actually disabled
 	- Needs to check to see if the user is banned or not
+	- Change update for update if invisible or normal
 */
 
 if(!defined("SNAPONE")) exit;
@@ -43,6 +44,8 @@ if(ini_get('register_globals')){
 			unset($GLOBALS[$k]);
 		}
 	}
+	unset($noUnset);
+	unset($input);
 }
 
 // Start load time tracker
@@ -80,6 +83,7 @@ if(file_exists("./config.inc.php")){
 // Let's load the library stuff. Start with common.php since it loads most of what we need. We'll load any additional classes we need once we're inside the INCLUDESDIR files.
 require_once LIBDIR."common.php";
 $cache->loadSettings(); // Load our settings from the database.
+$sz->bans = $db->cacheQuery("SELECT id, type, value, expires FROM ".DBPRE."bans", "bans");
 
 // Define some global variables. These must NOT be overriden anywhere else or it will break the forum script.
 $user = array();
@@ -194,7 +198,9 @@ if(!isset($act)){
 if(in_array($act, array_keys($va)) && !empty($va[$act]) && file_exists(INCLUDESDIR.$va[$act].".php")){
 	// May have passed the action check, but the file may not exist because of a mistake or something.
 	require_once INCLUDESDIR.$va[$act].".php";
+	unset($va);
 } else {
+	unset($va);
 	$tp->error("invalid_include");
 }
 

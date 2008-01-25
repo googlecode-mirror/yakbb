@@ -2,10 +2,11 @@
 
 /*	TODO
 	- Need to add CAPTCHA
-	- Need to send e-mail
+	- Need to send registration e-mail
 	- Need to work with the activation stuff
 	- Need to add the JavaScript checks in for the system using AJAX and normal stuff
-	- Registration script needs to be tested along with all error messages.
+	- Make sure e-mail isn't valid
+	- Registration script needs to be tested along with all error messages (thoroughly)
 */
 
 if(!defined("SNAPONE")) exit;

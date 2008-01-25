@@ -120,6 +120,9 @@ class template {
 			$errors .= "<li>".$lang->item($e)."</li>\n";
 		}
 
+		// Fix the glitch of errors not overriding previous templates
+		$this->files = array("header" => $this->files["header"]);
+
 		$this->loadFile("error", "error.tpl", array(
 			"ERRORS" => $errors,
 			"NUM_ERRORS" => count($err)
