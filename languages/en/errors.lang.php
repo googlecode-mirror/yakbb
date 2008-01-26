@@ -10,14 +10,14 @@ $items = array(
 	// Core errors
 	"invalid_include" => "The specified include is invalid.",
 
-	// Registration errors
+	// includes/join.php errors
 	"join_logged_in" => "You must be logged out in order to register an account.",
 	"join_registration_disabled" => "Registration for this forum is disabled. Please check back at a later time.",
 
-	// Login errors
+	// includes/login.php errors
 	"login_logged_in" => "You are already logged in.",
 
-	// View board errors
+	// includes/viewboard.php errors
 	"viewboard_invalid_id" => "The specified board ID is invalid.",
 	"viewboard_doesnt_exist" => "The board you are trying to access does not exist.",
 	"viewboard_no_permission" => "You do not have permission to view this board.",

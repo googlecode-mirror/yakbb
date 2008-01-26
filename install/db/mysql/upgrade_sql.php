@@ -3,7 +3,7 @@
 if(!defined("SNAPONE")) exit;
 
 class upgrade_sql {
-	public function upgrade($n){
+	public function upgrade($n=DBVERSION){
 		// $n = current version. Will fully update to final version
 		global $cache;
 		while($n <= CURRENTDBVERSION && is_callable(array($this, "upgradeIt".$n))){
@@ -13,10 +13,14 @@ class upgrade_sql {
 
 		// Update config file
 		$ff = new flat_file();
-		$dat = $ff->loadFile("../config.inc.php");
-		if(!$dat) die("Can't locate config file for update query.");
+		$f = "../config.inc.php";
+		if(!file_exists($f)){
+			$f = "./config.inc.php";
+		}
+		$dat = $ff->loadFile($f);
+		if(!$dat) die("Can't locate config file for upgrade query.");
 		$dat = preg_replace("/define\(\"DBVERSION\",.*?\"\d+\"\);/i", "define(\"DBVERSION\",\t \"".CURRENTDBVERSION."\");", $dat);
-		$ff->updateFile("../config.inc.php", $dat);
+		$ff->updateFile($f, $dat);
 		if(isset($cache)){
 			$cache->clearCache();
 		}

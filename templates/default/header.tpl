@@ -62,4 +62,12 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 </td></tr>
 </table>
 <br /><br />
+
+<!-- if (CURRENTDBVERSION > DBVERSION or version_compare(CURRENTYAKVERSION, YAKVERSION) == 1) -->
+	<table class="border" cellpadding="4" cellspacing="1">
+	<tr><td class="cell1">
+		There are currently updates available. Click <a href="?action=upgrade">here</a> to upgrade.
+	</td></tr>
+	</table>
+<!-- endif -->
 <div id="nav" style="text-align: left">{navtree}</div>

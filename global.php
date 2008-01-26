@@ -172,6 +172,7 @@ $va = array( // Valid Actions
 	"thread" => "viewthread",
 
 	// Development tools only.
+	"upgrade" => "upgrade",
 	"cc" => "clear_cache",
 );
 
