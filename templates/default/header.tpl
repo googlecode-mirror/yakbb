@@ -69,5 +69,6 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 		There are currently updates available. Click <a href="?action=upgrade">here</a> to upgrade.
 	</td></tr>
 	</table>
+	<br /><br />
 <!-- endif -->
 <div id="nav" style="text-align: left">{navtree}</div>
