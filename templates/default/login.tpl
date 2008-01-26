@@ -29,22 +29,6 @@
 			</span>
 			<br class="clear" />
 		</fieldset>
-		<!-- <fieldset>
-			<legend>{LANG}settings_title{/LANG}</legend>
-			<span class="set1">
-				{LANG}email1_brief{/LANG} <input type="text" name="email1" value="{EMAIL}" /><br />
-				<span class="smalltext">
-					{LANG}email1_description{/LANG}
-				</span>
-			</span>
-			<span class="set2">
-				{LANG}email2_brief{/LANG} <input type="text" name="email2" value="{CEMAIL}" /><br />
-				<span class="smalltext">
-					{LANG}email2_description{/LANG}
-				</span>
-			</span>
-			<br class="clear" />
-		</fieldset> -->
 		<br />
 		<input type="submit" name="submitit" value="{LANG}login_button{/LANG}" /> 
 		<input type="reset" name="resetit" value="{LANG}reset_button{/LANG}" onclick="return confirm('{LANG}reset_confirmation{/LANG}');" />

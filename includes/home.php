@@ -5,6 +5,8 @@
 	- Moderators list (if enabled)
 	- Sub-boards list (if enabled)
 	- On/off data (sub-boards included >.<)
+	- Hide/show for categories
+	- Add support for only viewing a main page category
 */
 
 if(!defined("SNAPONE")) exit;
@@ -12,25 +14,42 @@ if(!defined("SNAPONE")) exit;
 $tp->setTitle("home");
 $tp->loadFile("home", "home.tpl");
 $lang->learn("home");
-$tp->addNav($lang->item("home_nav"));
 $plugins->callhook("homestart");
 
 // Categories
-$cats = $db->cacheQuery("SELECT * FROM ".DBPRE."categories WHERE showmain='1' ORDER BY `order` ASC", "categories_main");
+$extra = $extra2 = "";
+$singleCat = false; // Viewing single category
+if(isset($_REQUEST["cat"])){
+	$c = intval($_REQUEST["cat"]);
+	$extra = " AND id='".$c."'";
+	$extra2 = "_".$c;
+	$singleCat = true;
+}
+$cats = $db->cacheQuery("SELECT * FROM ".DBPRE."categories WHERE showmain='1'".$extra." ORDER BY `order` ASC", "categories_main".$extra2);
 $cats = $plugins->callhook("home_categories_loaded", $cats);
 
-$ids = array(0);
+if($singleCat === true){
+	$ids = array();
+} else {
+	$ids = array(0);
+}
 foreach($cats as $k => $v){
 	if(!$perms->checkPerm("viewcat", array("cid" => $v["id"]))){
 		unset($cats[$k]);
 	} else {
 		$ids[] = $v["id"];
+		$cats[$k]["link"] = $tp->catLink($cats[$k]["id"], $cats[$k]["name"]);
 	}
 }
-array_unshift($cats, array("id" => 0));
+if($singleCat === false){
+	array_unshift($cats, array("id" => 0));
+	$tp->addNav($lang->item("home_nav"));
+} else {
+	$tp->addNav($tp->catLink($cats[0]["id"], $cats[0]["name"]));
+}
 $cats = $plugins->callhook("home_categories_checked", $cats);
 
-
+ 
 // Boards
 $boards = array();
 $db->query("SELECT * FROM ".DBPRE."boards WHERE parenttype='c' AND parentid IN (".implode(",", $ids).") ORDER BY `order` ASC");

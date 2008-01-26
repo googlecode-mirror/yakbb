@@ -3,6 +3,16 @@
 if(!defined("SNAPONE")) exit;
 
 $items = array(
+	// Menu
+	"menu_home" => "Home",
+	"menu_help" => "Help",
+	"menu_search" => "Search",
+	"menu_login" => "Login",
+	"menu_register" => "Register",
+	"menu_usercp" => "User CP",
+	"menu_members" => "Members",
+	"menu_logout" => "Logout",
+
 	// Page Titles
 	"home_title" => "Home",
 	"help_title" => "Help",

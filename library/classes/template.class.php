@@ -7,6 +7,11 @@ if(!defined("SNAPONE")) exit;
 	of many forum systems. One large influence was phpBB2/3 and its templating 
 	system. It has had it's own tweaks added in however and is coded completely from
 	scratch.
+
+
+	TODO
+	userLink()
+		- Needs to add the group color
 */
 
 class template {
@@ -20,6 +25,7 @@ class template {
 
 	private $title = "No title"; // Title of the page
 	private $navs = array(); // Nav tree holder
+	private $seo = false; // Whether or not to use SEO
 
 	// Stat Variables
 	private $cachedAlready = 0; // Number of TPL files loaded from cache.
@@ -257,6 +263,12 @@ class template {
 		$this->navs[] = $nav;
 	}
 
+	public function setSEO(){
+		// Enables SEO links
+
+		$this->seo = true;
+	}
+
 
 
 
@@ -313,6 +325,11 @@ class template {
 
 		// Variables
 		$fdat = preg_replace_callback("/{([^\s]+?)}/", array($this, "variableParser"), $fdat);
+
+		// SEO stuff
+		if($this->seo === true){
+			$fdat = preg_replace("/\?action=(.+?)\b/i", "./$1.html", $fdat);
+		}
 
 		if($yak->settings["strip_tab_spacing"] == 1 || $yak->settings["strip_tab_spacing"] == true){
 			$fdat = preg_replace("/\t+/", "", $fdat);
@@ -431,12 +448,29 @@ if(isset(".$varname.") && is_array(".$varname.")){
 
 
 // Link management functions (board, thread, profile, etc.)
-	// Note: These functions exist because of the possibility of SEO.
 	public function boardLink($bid, $bname){
-		return "?board=".$bid;
+		if($this->seo){
+			return '<a href="./board-'.$bid.'.html">'.$bname.'</a>';
+		}
+		return '<a href="?board='.$bid.'">'.$bname.'</a>';
 	}
 	public function threadLink($tid, $tname){
-		return "?thread=".$tid;
+		if($this->seo){
+			return '<a href="./thread-'.$tid.'.html">'.$tname.'</a>';
+		}
+		return '<a href="?thread='.$tid.'">'.$tname.'</a>';
+	}
+	public function userLink($uid, $uname, $ugroup){
+		if($this->seo){
+			return '<a href="./user-'.$uid.'.html">'.$uname.'</a>';
+		}
+		return '<a href="?user='.$uid.'">'.$uname.'</a>';
+	}
+	public function catLink($cid, $cname){
+		if($this->seo){
+			return '<a href="./cat-'.$cid.'.html">'.$cname.'</a>';
+		}
+		return '<a href="?cat='.$cid.'">'.$cname.'</a>';
 	}
 }
 

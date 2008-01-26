@@ -5,14 +5,17 @@
 	{LANG}ic_title{/LANG}
 </td></tr><tr><td class="title" colspan="3">
 	{LANG}stats_title{/LANG}
-</td></tr><tr><td class="title" colspan="3">
-	{LANG}events_title{/LANG}
 </td></tr><tr><td class="cell1" width="1">
 	icon
-</td><td class="cell1">
-	These are the upcoming events: <br />
-	<a href="#">YakBB Goes Live!</a> [00/00/1990], <a href="#">TK Gets Laid</a> [12/31/2099]
-</td><td class="cell1">
+</td><td class="cell1" colspan="2">
+	Total Posts: {total_posts} - Total Threads: {total_threads} - Total Boards: {total_boards} - Total Categories: {total_cats} - Total Members: {total_mems}<br />
+	Recent Post: {lp_url} by {lp_data} ({lp_time})
+</td></tr>
+<tr><td class="title" colspan="3">
+	{LANG}birthdays_title{/LANG}
+</td></tr><tr><td class="cell1" width="1">
+	icon
+</td><td class="cell1" colspan="2">
 	Birthdays:
 		(Will do them later. Most likely list form.)
 </td></tr>

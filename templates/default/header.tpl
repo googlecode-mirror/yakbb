@@ -44,18 +44,18 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	{board_title}
 </td></tr><tr><td class="cell1">
 	<font size="2">
-		<a href="?">Home</a> - 
-		<a href="?action=help">Help</a> - 
-		<a href="?action=search">Search</a> - 
+		<a href="./">{LANG}menu_home{/LANG}</a> - 
+		<a href="?action=help">{LANG}menu_help{/LANG}</a> - 
+		<a href="?action=search">{LANG}menu_search{/LANG}</a> - 
 		<!-- if {guest} -->
-			<a href="?action=login">Login</a>
+			<a href="?action=login">{LANG}menu_login{/LANG}</a>
 			<!-- if {registration_enabled} -->
-				 - <a href="?action=register">Register</a>
+				 - <a href="?action=register">{LANG}menu_register{/LANG}</a>
 			<!-- endif -->
 		<!-- else -->
-			<a href="?action=usercp">User CP</a> - 
-			<a href="?action=members">Members</a> - 
-			<a href="?action=logout">Logout</a>
+			<a href="?action=usercp">{LANG}menu_usercp{/LANG}</a> - 
+			<a href="?action=members">{LANG}menu_members{/LANG}</a> - 
+			<a href="?action=logout">{LANG}menu_logout{/LANG}</a>
 		<!-- endif -->
 		
 	</font>

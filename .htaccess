@@ -1,0 +1,16 @@
+# This file will need a cleanup before release
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	
+	# You may need to set your board's URL path here.
+	# (See http://httpd.apache.org/docs-2.0/mod/mod_rewrite.html#rewritebase )
+	#RewriteBase /
+	
+	# General declarations	
+	RewriteRule ^board-(\d+).html$ index.php?board=$1 [L,QSA]
+	RewriteRule ^thread-(\d+).html$ index.php?thread=$1 [L,QSA]
+	RewriteRule ^user-(\d+).html$ index.php?user=$1 [L,QSA]
+	RewriteRule ^cat-(\d+).html$ index.php?cat=$1 [L,QSA]
+	RewriteRule ^(help|search|usercp|members|logout|login|signin|register|join|signup).html$ index.php?action=$1 [L,QSA]
+</IfModule>

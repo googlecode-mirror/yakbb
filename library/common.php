@@ -23,4 +23,10 @@ require_once LIBDIR."classes/db/".DBTYPE.".class.php";
 $db = new $connection["type"]();
 $db->connect($connection);
 unset($connection); // Security reasons
+
+// Load settings.
+$cache->loadSettings(); // Load our settings from the database.
+if($yak->settings["seo_engine"] === true){
+	$tp->setSEO();
+}
 ?>

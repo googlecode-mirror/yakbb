@@ -30,6 +30,10 @@ class mysql extends db {
 			return $dat;
 		}
 
+		if(is_array($dat) && count($dat) == 0){
+			return $dat;
+		}
+
 		// Current cache does not exist
 		$this->query($query);
 		$dat = array();
@@ -37,6 +41,10 @@ class mysql extends db {
 			$dat[] = $x; 
 		}
 		$this->free();
+		// If it's a count, only get the first since there won't be any more
+		if(strstr($query, "count(")){
+			$dat = $dat[0];
+		}
 		$cache->queryCacheStore($name, $dat, $query);
 		return $dat;
 	}

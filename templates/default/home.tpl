@@ -3,7 +3,7 @@
 		<table class="border" cellpadding="4" cellspacing="1">
 		<!-- if {repeat:CAT->id} is not 0 -->
 		<tr><td class="title" colspan="5">
-			{repeat:CAT->name}
+			{repeat:CAT->link}
 		</td></tr>
 		<!-- endif -->
 		<tr><td class="title" width="15">
@@ -25,7 +25,7 @@
 			<img src="{TPATH}images/off.gif" alt="-" title="{LANG}no_new_posts{/LANG}" />
 			<!-- endif -->
 		</td><td class="cell1">
-			<a href="{repeat:BOARD->link}">{repeat:BOARD->name}</a><br />
+			{repeat:BOARD->link}<br />
 			{repeat:BOARD->description}
 		</td><td class="cell1" align="center">
 			{repeat:BOARD->posts}

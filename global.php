@@ -82,7 +82,6 @@ if(file_exists("./config.inc.php")){
 
 // Let's load the library stuff. Start with common.php since it loads most of what we need. We'll load any additional classes we need once we're inside the INCLUDESDIR files.
 require_once LIBDIR."common.php";
-$cache->loadSettings(); // Load our settings from the database.
 $sz->bans = $db->cacheQuery("SELECT id, type, value, expires FROM ".DBPRE."bans", "bans");
 
 // Define some global variables. These must NOT be overriden anywhere else or it will break the forum script.

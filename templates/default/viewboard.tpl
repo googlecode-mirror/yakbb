@@ -14,7 +14,7 @@
 	</td></tr>
 	<!-- repeat:threads:thread -->
 	<tr><td class="cell1">
-		<a href="{repeat:thread->link}">{repeat:thread->title}</a>
+		{repeat:thread->link}
 	</td><td class="cell1" align="center">
 		{repeat:thread->replies}
 	</td><td class="cell1" align="center">

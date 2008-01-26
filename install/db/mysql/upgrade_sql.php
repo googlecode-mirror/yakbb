@@ -44,6 +44,12 @@ class upgrade_sql {
 		$db->query("CREATE TABLE ".DBPRE."_bans (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT, `type` TINYINT( 1 ) NOT NULL, `value` TEXT NOT NULL, PRIMARY KEY ( `id` )) ENGINE = MYISAM ");
 		$db->query("ALTER TABLE ".DBPRE."bans ADD `expires` INT NOT NULL, ADD `reason` TEXT NOT NULL, ADD `started` INT NOT NULL");
 	}
+	private function upgradeIt5(){
+		global $db;
+
+		// SEO work
+		$db->query("INSERT INTO ".DBPRE."config VALUES ('0', 'seo_engine', 'true')");
+	}
 }
 
 ?>
