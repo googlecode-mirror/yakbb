@@ -20,6 +20,7 @@ $items = array(
 	"login_title" => "Login",
 	"search_title" => "Search Forum",
 	"error_title" => "An Error Has Occurred",
+	"reply_title" => "Replying to Thread",
 
 	// Common form strings
 	"reset_confirmation" => "Are you sure you want to reset the form? (All changes since the start will be lost.)",

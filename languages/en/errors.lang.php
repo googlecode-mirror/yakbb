@@ -4,8 +4,10 @@ if(!defined("SNAPONE")) exit;
 
 $items = array(
 	// Specific text pieces
-	"error_occurred" => "The following error has occurred:", // One
+	"error_occured" => "The following error has occurred:", // One
 	"errors_occured" => "The following errors have occurred:", // Multiple
+	"nav_error" => "An Error Has Occured",
+	"error_title" => "An Error Has Occured",
 
 	// Core errors
 	"invalid_include" => "The specified include is invalid.",
@@ -21,6 +23,17 @@ $items = array(
 	"viewboard_invalid_id" => "The specified board ID is invalid.",
 	"viewboard_doesnt_exist" => "The board you are trying to access does not exist.",
 	"viewboard_no_permission" => "You do not have permission to view this board.",
+
+	// includes/viewthread.php errors
+	"viewthread_invalid_id" => "The specified thread ID is invalid.",
+	"viewthread_doesnt_exist" => "The thread you are trying to access does not exist",
+	"viewthread_no_permission" => "You do not have permission to view this thread.",
+
+	// includes/postreply.php errprs
+	"postreply_guest" => "Currently guests are not allowed to post.",
+	"postreply_invalid_id" => "The specified thread ID is invalid.",
+	"postreply_thread_doesnt_exist" => "The thread you are trying to reply to does not exist.",
+	"postreply_thread_locked" => "The thread you are trying to reply to is locked.",
 );
 
 ?>

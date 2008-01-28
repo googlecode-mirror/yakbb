@@ -2,13 +2,15 @@
 	<tr><td class="cell1">
 		{LANG}error_title{/LANG}
 	</td></tr><tr><td class="cell1">
-		<!-- if count({NUM_ERRORS}) is 1 -->
-			{LANG}error_occurred{/LANG}
+		<!-- if count({errors}) is 1 -->
+			{LANG}error_occured{/LANG}
 		<!-- else -->
 			{LANG}errors_occurred{/LANG}
 		<!-- endif --><br />
 		<ul>
-			{ERRORS}
+			<!-- repeat:errors:err -->
+			<li>{repeat:err}</li>
+			<!-- endrepeat -->
 		</ul>
 	</td></tr>
 </table>

@@ -25,7 +25,7 @@ class template {
 
 	private $title = "No title"; // Title of the page
 	private $navs = array(); // Nav tree holder
-	private $seo = false; // Whether or not to use SEO
+	public $seo = false; // Whether or not to use SEO
 
 	// Stat Variables
 	private $cachedAlready = 0; // Number of TPL files loaded from cache.
@@ -121,18 +121,14 @@ class template {
 		if(!is_array($err)){
 			$err = array($err);
 		}
-		$errors = "";
-		foreach($err as $e){
-			$errors .= "<li>".$lang->item($e)."</li>\n";
-		}
 
 		// Fix the glitch of errors not overriding previous templates
 		$this->files = array("header" => $this->files["header"]);
 
 		$this->loadFile("error", "error.tpl", array(
-			"ERRORS" => $errors,
-			"NUM_ERRORS" => count($err)
+			"errors" => array_map(array($lang, "item"), $err)
 		));
+		$this->addNav($lang->item("nav_error"));
 		$this->setTitle("error");
 		$this->display();
 	}
@@ -328,6 +324,7 @@ class template {
 
 		// SEO stuff
 		if($this->seo === true){
+			$fdat = preg_replace("/\?action=(.+?)&(amp;)?/i", "./$1.html?", $fdat);
 			$fdat = preg_replace("/\?action=(.+?)\b/i", "./$1.html", $fdat);
 		}
 

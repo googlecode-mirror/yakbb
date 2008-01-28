@@ -118,6 +118,7 @@ if($guest === true){
 	$plugins->callhook("global_guest_true");
 
 	$user = array(
+		"id" => 0,
 		"name" => "guest",
 		"display" => "Guest",
 		"group" => "-1",
@@ -170,6 +171,8 @@ $va = array( // Valid Actions
 	// Standard viewing pages
 	"board" => "viewboard",
 	"thread" => "viewthread",
+		"reply" => "postreply",
+	"user" => "viewprofile",
 
 	// Development tools only.
 	"upgrade" => "upgrade",
@@ -189,6 +192,8 @@ if(isset($_REQUEST["action"])){
 	$act = "board";
 } else if(isset($_REQUEST["thread"])){
 	$act = "thread";
+} else if(isset($_REQUEST["user"])){
+	$act = "user";
 }
 
 if(!isset($act)){

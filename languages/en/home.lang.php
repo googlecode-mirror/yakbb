@@ -19,6 +19,7 @@ $items = array(
 	// Errors
 	"nocats_title" => "An Error Has Occurred",
 	"nocats_message" => "There are currently no categories or boards that you are able to view.",
+	"category_zero" => "You are not allowed to view a category with an ID of 0."
 );
 
 ?>

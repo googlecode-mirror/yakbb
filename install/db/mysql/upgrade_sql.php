@@ -45,7 +45,7 @@ class upgrade_sql {
 		global $db;
 
 		// Ban table. =P
-		$db->query("CREATE TABLE ".DBPRE."_bans (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT, `type` TINYINT( 1 ) NOT NULL, `value` TEXT NOT NULL, PRIMARY KEY ( `id` )) ENGINE = MYISAM ");
+		$db->query("CREATE TABLE ".DBPRE."bans (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT, `type` TINYINT( 1 ) NOT NULL, `value` TEXT NOT NULL, PRIMARY KEY ( `id` )) ENGINE = MYISAM ");
 		$db->query("ALTER TABLE ".DBPRE."bans ADD `expires` INT NOT NULL, ADD `reason` TEXT NOT NULL, ADD `started` INT NOT NULL");
 	}
 	private function upgradeIt5(){
@@ -53,6 +53,14 @@ class upgrade_sql {
 
 		// SEO work
 		$db->query("INSERT INTO ".DBPRE."config VALUES ('0', 'seo_engine', 'true')");
+	}
+	private function upgradeIt6(){
+		global $db;
+
+		// Thread stuff
+		$db->query("INSERT INTO ".DBPRE."config VALUES ('0', 'thread_desc_max', '100')");
+		$db->query("INSERT INTO ".DBPRE."config VALUES ('0', 'thread_subject_max', '50')");
+		$db->query("INSERT INTO ".DBPRE."config VALUES ('0', 'thread_message_max', '25000')");
 	}
 }
 

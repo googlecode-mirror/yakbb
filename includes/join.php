@@ -149,7 +149,7 @@ if(isset($_POST["submitit"])){
 		"CEMAIL" => $email2,
 		"SHOWEMAIL" => !!$showemail,
 		"EMAILOPTIN" => !!$emailoptin,
-		"ERRORS" => array_map(array($lang, "item"),$errors)
+		"ERRORS" => array_map(array($lang, "item"), $errors)
 	));
 } else {
 	// Add these to prevent notice errors.

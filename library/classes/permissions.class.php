@@ -7,7 +7,7 @@ class permissions {
 		$this->validTypes = array(
 			"viewcat" => array(&$this, "checkCategory"),
 			"viewboard" => array(&$this, "checkBoard"),
-			"viewthread" => array(&$this, "checkThread")
+			"replylocked" => array(&$this, "replyToLockedThreads")
 		);
 	}
 
@@ -47,19 +47,16 @@ class permissions {
 		// Return	Return		Returns true if a user can view the board.
 
 		$board = $var["bid"];
-		// $cat = $var["cid"];
-		return true; //$this->checkPerm("viewcat", $var);
+		return true;
 	}
-	private function checkThread($var){
-		// Checks to see if a thread is viewable by the current user.
+	private function replyToLockedThreads($var){
+		// Checks to see if the user can reply to locked threads (global) or in specified board
 		// @param	Type		Description
-		// $var		Array		An array containing data about the thread.
-		// Return	Return		Returns true if a user can view the thread.
+		// $var		Array		An array containing data about the board.
+		// Return	Return		Returns true if a user can view the board.
 
-		$thread = $var["tid"];
-		// $board = $var["bid"];
-		// $cat = $var["cid"];
-		return true; //$this->checkPerm("viewboard", $var);
+		$board = $var["bid"];
+		return true;
 	}
 }
 

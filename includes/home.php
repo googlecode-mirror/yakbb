@@ -4,9 +4,10 @@
 	- Last post data
 	- Moderators list (if enabled)
 	- Sub-boards list (if enabled)
-	- On/off data (sub-boards included >.<)
+	- On/off data
+	- Sub-board data affects parents
 	- Hide/show for categories
-	- Add support for only viewing a main page category
+	- Add support for viewing category 0 on the main page
 */
 
 if(!defined("SNAPONE")) exit;
@@ -21,9 +22,13 @@ $extra = $extra2 = "";
 $singleCat = false; // Viewing single category
 if(isset($_REQUEST["cat"])){
 	$c = intval($_REQUEST["cat"]);
-	$extra = " AND id='".$c."'";
-	$extra2 = "_".$c;
-	$singleCat = true;
+	if($c != 0){
+		$extra = " AND id='".$c."'";
+		$extra2 = "_".$c;
+		$singleCat = true;
+	} else {
+		$tp->error("category_zero");
+	}
 }
 $cats = $db->cacheQuery("SELECT * FROM ".DBPRE."categories WHERE showmain='1'".$extra." ORDER BY `order` ASC", "categories_main".$extra2);
 $cats = $plugins->callhook("home_categories_loaded", $cats);
