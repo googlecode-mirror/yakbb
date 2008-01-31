@@ -1,9 +1,10 @@
 <?php
 
 /*	TODO
-	- Check to see if magic_quotes_runtime is actually disabled
+	- Check to see if magic_quotes_runtime is actually disabled originally so we can 
+	check to make sure it's working
 	- Needs to check to see if the user is banned or not
-	- Change update for update if invisible or normal
+	- Change update for login times if invisible or normal
 */
 
 if(!defined("SNAPONE")) exit;
@@ -142,7 +143,7 @@ if($guest === true){
 
 	// Update last login time, etc. if needed
 	if(!isset($_SESSION["last_login"]) || $_SESSION["last_login"] < time()-15){
-		$db->query("UPDATE ".DBPRE."users SET lastlogin='".time()."', lastip='".$yak->ip."' WHERE name='".$user["name"]."'");
+		$db->query("UPDATE ".DBPRE."users SET lastlogin='".time()."', lastip='".$yak->ip."' WHERE id='".$user["id"]."'");
 		$_SESSION["last_login"] = time();
 	}
 }
@@ -170,6 +171,7 @@ $va = array( // Valid Actions
 
 	// Standard viewing pages
 	"board" => "viewboard",
+		"newthread" => "newthread",
 	"thread" => "viewthread",
 		"reply" => "postreply",
 	"user" => "viewprofile",

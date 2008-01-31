@@ -26,9 +26,10 @@ abstract class db {
 		return $this->cacheQuery($query, $name);
 	}
 	abstract public function cacheQuery($query, $name=false);
-	abstract public function clearCacheQuery($name,$query=false);
+	abstract public function clearCacheQuery($name, $query=false);
 	abstract public function query($query);
 	abstract public function insert($table, array $ins);
+	abstract public function insertId();
 	abstract public function numRows($res=false);
 	abstract public function affectedRows($res=false);
 	abstract public function fetchAssoc($res=false);

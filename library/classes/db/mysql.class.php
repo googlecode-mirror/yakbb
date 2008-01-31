@@ -60,12 +60,20 @@ class mysql extends db {
 	public function query($query){
 		$this->queries++;
 		$this->last = mysql_query($query);
+		if(mysql_error()){
+			die(mysql_error());
+		}
 		return $this->last;
 	}
 	public function insert($table, array $ins){
 		// We use the query function because we could change it up for some reason and forget to change here, plus it saves coding then too if there are changes.
 		$ins = array_map(array($this, "secure"), $ins);
 		return $this->query("INSERT INTO `".DBPRE.$table."` (`".implode("`,`", array_keys($ins))."`) VALUES(\"".implode("\",\"", $ins)."\")");
+	}
+	public function insertId(){
+		if($this->dbc){
+			return mysql_insert_id($this->dbc);
+		}
 	}
 	public function numRows($res=false){
 		if($res === false){

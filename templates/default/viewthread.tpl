@@ -10,7 +10,7 @@
 <tr><td class="cell1" width="20%">
 	{repeat:post->userlink}
 </td><td class="cell1" width="80%">
-	Posted on {repeat:post->date} - [ <a href="?action=reply&amp;id={tid}">Reply</a> | <a href="?action=reply&amp;id={tid}&amp;quote={repeat:post->pid}">Quote</a> | Modify | Delete ]
+	{repeat:post->ptitle} - Posted on {repeat:post->date} - [ <a href="?action=reply&amp;id={tid}">Reply</a> | <a href="?action=reply&amp;id={tid}&amp;quote={repeat:post->pid}">Quote</a> | Modify | Delete ]
 	<hr size="1" />
 	{repeat:post->message}
 </td></tr>

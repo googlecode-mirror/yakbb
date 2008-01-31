@@ -62,6 +62,12 @@ class upgrade_sql {
 		$db->query("INSERT INTO ".DBPRE."config VALUES ('0', 'thread_subject_max', '50')");
 		$db->query("INSERT INTO ".DBPRE."config VALUES ('0', 'thread_message_max', '25000')");
 	}
+	private function upgradeIt7(){
+		global $db;
+
+		// Add title to posts
+		$db->query("ALTER TABLE `".DBPRE."posts` ADD `title` TEXT NOT NULL AFTER `message` ");
+	}
 }
 
 ?>

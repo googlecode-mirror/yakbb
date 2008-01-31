@@ -2,16 +2,19 @@
 
 /*	TODO
 	- Pagination
+	- Quick reply
 	- Buttons
-	- Load attachements if the post has any.
-		- This should be cached since it shouldn't be editted, unless removing.
+	- Last edit
+	- Load attachments if the post has any.
+		- This should be cached since it shouldn't be editted, unless removing, but
+		that would cause a lot of cache files... >.<
 	- Everything else. =P
 */
 
 if(!defined("SNAPONE")) exit;
 
 $tid = intval($_REQUEST["thread"]);
-if($tid < 0){
+if($tid <= 0){
 	$tp->error("viewthread_invalid_id");
 }
 
@@ -21,6 +24,7 @@ if($db->numRows() == 0){
 }
 $tdat = $db->fetch();
 $db->free();
+$db->query("UPDATE ".DBPRE."threads SET views=views+1 WHERE id='".$tid."'");
 
 $curboard = array(
 	"parentid" => $tdat["boardid"],
@@ -43,7 +47,7 @@ if($curboard["parentid"] != 0){
 	if(!$perms->checkPerm("viewcat", array("cid" => $cat["id"]))){
 		$tp->error("viewboard_no_permissions");
 	}
-	$tp->addNav($cat["name"]);
+	$tp->addNav($tp->catLink($cat["id"], $cat["name"]));
 	unset($cat);
 }
 unset($curboard);
@@ -52,26 +56,28 @@ foreach($boards as $k => $v){
 	if(!$perms->checkPerm("viewboard", array("bid" => $v["id"]))){
 		$tp->error("viewboard_no_permission");
 	}
-	$tp->addNav($v["name"]);
+	$tp->addNav($tp->boardLink($v["id"], $v["name"]));
 }
 unset($boards);
 
-$tp->addNav($tdat["title"]);
+$tp->addNav($tp->threadLink($tid, $tdat["title"]));
 $tp->setTitle($tdat["title"], false);
 $tp->loadFile("thread", "viewthread.tpl", array(
 	"tid" => $tid
 ));
 
 $posts = $db->query("SELECT
-					p.*, u.*
+					p.*, p.id AS postid, u.*
 					FROM ".DBPRE."posts p
 					LEFT JOIN ".DBPRE."users u ON (u.id = p.userid)
 					WHERE p.threadid='".$tid."'
+					ORDER BY postid ASC
 ");
 $pholder = array();
 while($p = $db->fetch()){
 	$pholder[] = array(
-		"pid" => $p["id"],
+		"pid" => $p["postid"],
+		"ptitle" => $p["title"],
 		"time" => $p["timestamp"],
 		"date" => makeDate($p["timestamp"]),
 		"userlink" => $tp->userLink($p["userid"], $p["name"], $p["group"]),

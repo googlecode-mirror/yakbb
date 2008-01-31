@@ -85,7 +85,7 @@ class template {
 
 		global $user, $yak, $db, $starttime, $lang;
 
-		array_unshift($this->navs, $yak->settings["board_title"]);
+		array_unshift($this->navs, '<a href="./">'.$yak->settings["board_title"].'</a>');
 		$this->addGlobal($yak->settings); // Register settings in global variables.
 		$this->addGlobal(array(
 			"TPATH" => $this->dir, // MUST NOT BE OVERRIDDEN

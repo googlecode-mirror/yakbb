@@ -1,6 +1,6 @@
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title" colspan="4">
-	(BUTTONS)
+	[ <a href="?action=newthread&amp;board={bid}">New Thread</a> ]
 </td></tr>
 <!-- if count({threads}) is not 0 -->
 	<tr><td class="title">

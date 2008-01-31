@@ -10,12 +10,12 @@ $items = array(
 	"message_too_long" => "Your message is too long. It may only be ".$yak->settings["thread_message_max"]." characters.",
 
 	// Page title and text sections
-	"nav_postreply" => "Replying to Thread",
+	"nav_newthread" => "Creating a Thread",
 	"text_title" => "Title: ",
 	"text_message" => "Message: ",
 
 	// Misc
-	"submit_button" => "Post Reply!",
+	"submit_button" => "Create Thread",
 );
 
 ?>

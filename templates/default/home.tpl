@@ -10,9 +10,9 @@
 		</td><td class="title" width="583">
 			{LANG}forum_data{/LANG}
 		</td><td class="title" width="1" align="center">
-			{LANG}posts{/LANG}
-		</td><td class="title" width="1" align="center">
 			{LANG}threads{/LANG}
+		</td><td class="title" width="1" align="center">
+			{LANG}posts{/LANG}
 		</td><td class="title" width="150">
 			{LANG}last_post{/LANG}
 		</td></tr>
@@ -28,9 +28,9 @@
 			{repeat:BOARD->link}<br />
 			{repeat:BOARD->description}
 		</td><td class="cell1" align="center">
-			{repeat:BOARD->posts}
-		</td><td class="cell1" align="center">
 			{repeat:BOARD->threads}
+		</td><td class="cell1" align="center">
+			{repeat:BOARD->posts}
 		</td><td class="cell1">
 			LAST POST INFO
 		</td></tr>

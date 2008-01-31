@@ -8,6 +8,6 @@
 	RewriteRule ^thread-(\d+).html$ index.php?thread=$1 [L,QSA]
 	RewriteRule ^user-(\d+).html$ index.php?user=$1 [L,QSA]
 	RewriteRule ^cat-(\d+).html$ index.php?cat=$1 [L,QSA]
-	RewriteRule ^(reply|print).html?(.+?)$ index.php?action=$1&$2 [L,QSA]
+	RewriteRule ^(reply|print|newthread).html?(.+?)$ index.php?action=$1&$2 [L,QSA]
 	RewriteRule ^(help|search|usercp|members|logout|login|signin|register|join|signup|upgrade).html$ index.php?action=$1 [L,QSA]
 </IfModule>

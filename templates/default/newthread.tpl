@@ -19,9 +19,9 @@
 <!-- endif -->
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title">
-	{LANG}reply_title{/LANG}
+	{LANG}newthread_title{/LANG}
 </td></tr><tr><td class="cell1">
-	<form action="?action=reply&amp;id={tid}" method="post" name="replyForm">
+	<form action="?action=newthread&amp;board={bid}" method="post" name="newThreadForm">
 		{LANG}text_title{/LANG} <input type="text" value="{posttitle}" name="posttitle" maxlength="{thread_subject_max}" size="30" /><br />
 		{LANG}text_message{/LANG}<br />
 		<textarea name="postmessage">{postmessage}</textarea>

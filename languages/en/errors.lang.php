@@ -29,11 +29,16 @@ $items = array(
 	"viewthread_doesnt_exist" => "The thread you are trying to access does not exist",
 	"viewthread_no_permission" => "You do not have permission to view this thread.",
 
-	// includes/postreply.php errprs
+	// includes/postreply.php errors
 	"postreply_guest" => "Currently guests are not allowed to post.",
 	"postreply_invalid_id" => "The specified thread ID is invalid.",
 	"postreply_thread_doesnt_exist" => "The thread you are trying to reply to does not exist.",
 	"postreply_thread_locked" => "The thread you are trying to reply to is locked.",
+
+	// includes/newthread.php errors
+	"newthread_guest" => "Guests are not allowed to create threads in this board.",
+	"newthread_invalid_id" => "The specified thread ID is invalid.",
+	"newthread_cant_view" => "You are not allowed to view this board.",
 );
 
 ?>

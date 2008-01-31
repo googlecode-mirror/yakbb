@@ -2,37 +2,38 @@
 
 /*	TODO
 	- Thread summary below reply
+	- Thread description
 	- Preview
 	- Guests posting stuff
-	- Quotes
+	- Check permissions to create a thread
 	- Post limits (time)
+	- Redirect URL options. (Mainly for moved threads)
+	- Attachments support
 	- Disable ubbc/smilies options
-	- Attachments
 */
 
 if(!defined("SNAPONE")) exit;
 
-$lang->learn("postreply");
-$tid = intval($_REQUEST["id"]);
-if($tid < 0){
-	$tp->error("postreply_invalid_id");
+$lang->learn("newthread");
+$bid = intval($_REQUEST["board"]);
+if($bid < 0){
+	$tp->error("newthread_invalid_id");
 } else if($guest){
-	$tp->error("postreply_guest");
+	$tp->error("newthread_guest");
 }
 
 // Make sure the thread exists
-$thread = $db->query("SELECT * FROM ".DBPRE."threads WHERE id='".$tid."' LIMIT 1");
+$board = $db->query("SELECT * FROM ".DBPRE."boards WHERE id='".$bid."' LIMIT 1");
 if($db->numRows() == 0){
-	$tp->error("postreply_thread_doesnt_exist");
+	$tp->error("newthread_board_doesnt_exist");
+} else if(!$perms->checkPerm("viewboard", array("bid" => $bid))){
+	$tp->erorr("newthread_cant_view");
 }
-$tdat = $db->fetch();
+$bdat = $db->fetch();
 $db->free();
 
 // Load parent boards and category and see if user can reply
-$curboard = array(
-	"parentid" => $tdat["boardid"],
-	"parenttype" => "b"
-);
+$curboard = $bdat;
 $boards = array();
 while(true){
 	if($curboard["parenttype"] == "c"){
@@ -64,17 +65,12 @@ foreach($boards as $k => $v){
 }
 unset($boards);
 
-// Check if thread is locked or user can override
-if($tdat["locked"] == 1 && !$perms->checkPerm("replylocked", array("bid" => $tdat["boardid"]))){
-	$tp->error("postreply_thread_locked");
-}
-
-$tp->addNav($lang->item("nav_postreply"));
-$tp->setTitle("reply");
-$tp->loadFile("reply", "postreply.tpl", array(
-	"tid" => $tid,
+$tp->addNav($lang->item("nav_newthread"));
+$tp->setTitle("newthread");
+$tp->loadFile("newthread", "newthread.tpl", array(
+	"bid" => $bid,
 	"errors" => array(),
-	"posttitle" => "Re: ".$tdat["title"],
+	"posttitle" => "",
 	"postmessage" => ""
 ));
 
@@ -101,6 +97,22 @@ if(isset($_REQUEST["submitit"])){
 
 	if(count($errors) == 0){
 		// Passes checks. Good to go.
+		$db->insert("threads", array(
+			"id" => 0,
+			"timestamp" => time(),
+			"title" => $title,
+			"description" => " ",
+			"creatorid" => $user["id"],
+			"boardid" => $bid,
+			"icon" => 1,
+			"announcement" => 0,
+			"sticky" => 0,
+			"locked" => 0,
+			"redirecturl" => ""
+		));
+
+		$tid = $db->insertId();
+
 		$db->insert("posts", array(
 			"id" => 0,
 			"threadid" => $tid,
@@ -114,8 +126,7 @@ if(isset($_REQUEST["submitit"])){
 		));
 
 		// Update board, thread, and user counts
-		$db->query("UPDATE ".DBPRE."boards SET posts=posts+1 WHERE id='".$tdat["boardid"]."'");
-		$db->query("UPDATE ".DBPRE."threads SET replies=replies+1 WHERE id='".$tid."'");
+		$db->query("UPDATE ".DBPRE."boards SET posts=posts+1, threads=threads+1 WHERE id='".$bid."'");
 		if($guest !== false){
 			$db->query("UPDATE ".DBPRE."users SET posts=posts+1 WHERE id='".$user["id"]."'");
 		}

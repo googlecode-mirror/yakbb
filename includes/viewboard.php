@@ -1,7 +1,6 @@
 <?php
 
 /*	TODO
-	- Make the nav tree parts into links
 	- Thread listing
 		- Redirect threads go through tracker??
 		- Pagination
@@ -9,6 +8,7 @@
 			-> lporder actually; this will work better with the bump feature
 		- Sticky and announcements list
 		- New/no new replies info
+		- Add commas to views and replies
 	- CHECK PASSWORDS
 	- Sub-boards list
 	- Send new thread, new poll, etc. permissions for buttons
@@ -53,17 +53,17 @@ if($curboard["parentid"] != 0){
 	if(!$perms->checkPerm("viewcat", array("cid" => $cat["id"]))){
 		$tp->error("viewboard_no_permissions");
 	}
-	$tp->addNav($cat["name"]);
+	$tp->addNav($tp->catLink($cat["id"], $cat["name"]));
 }
 $boards = array_reverse($boards);
 foreach($boards as $k => $v){
 	if(!$perms->checkPerm("viewboard", array("bid" => $v["id"]))){
 		$tp->error("viewboard_no_permission");
 	}
-	$tp->addNav($v["name"]);
+	$tp->addNav($tp->boardLink($v["id"], $v["name"]));
 }
 
-$tp->addNav($boarddat["name"]);
+$tp->addNav($tp->boardLink($boarddat["id"], $boarddat["name"]));
 $tp->setTitle($boarddat["name"], false);
 
 // Load threads
@@ -92,7 +92,8 @@ while($t = $db->fetch()){
 $db->free();
 
 $tp->addVar("board", array(
-	"threads" => $threads
+	"threads" => $threads,
+	"bid" => $bid
 ));
 
 ?>
