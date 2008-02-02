@@ -103,7 +103,7 @@ $i[] = "INSERT INTO `".DBPRE."config` (`id`, `name`, `value`) VALUES
 (16, 'switch_users', 'true'),
 (17, 'nav_divider', ' :: '),
 (18, 'mod_list_main', 'true'),
-(19, 'seo_engine', 'true'),
+(19, 'seo_engine', 'false'),
 (20, 'thread_desc_max', '100'),
 (21, 'thread_subject_max', '50'),
 (22, 'thread_message_max', '25000')";
