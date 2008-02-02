@@ -19,7 +19,7 @@
 <!-- endif -->
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title">
-	{LANG}reply_title{/LANG}
+	{LANG}post_title2{/LANG}
 </td></tr><tr><td class="cell1">
 	<form action="{form_action}" method="post" name="postForm">
 		{LANG}text_title{/LANG} <input type="text" value="{posttitle}" name="posttitle" maxlength="{thread_subject_max}" size="30" /><br />

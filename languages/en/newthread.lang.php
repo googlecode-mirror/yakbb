@@ -15,6 +15,7 @@ $items = array(
 	"text_title" => "Title: ",
 	"text_desc" => "Description: ",
 	"text_message" => "Message: ",
+	"post_title2" => "Create a Thread",
 
 	// Misc
 	"submit_button" => "Create Thread",

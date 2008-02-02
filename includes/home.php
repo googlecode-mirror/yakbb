@@ -75,13 +75,16 @@ $db->free();
 
 // Add to the template
 $tp->addVar("home", array(
-	"CATS" => $cats,
-	"BOARDS" => $boards
+	"cats" => $cats,
+	"boards" => $boards,
+	"single" => $singleCat
 ));
 
 
 // Load the IC stats
-$yak->loadIC();
+if($singleCat != true){
+	$yak->loadIC();
+}
 
 
 $plugins->callhook("home_end");

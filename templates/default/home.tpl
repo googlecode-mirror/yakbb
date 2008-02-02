@@ -1,9 +1,9 @@
-<!-- if count({BOARDS}) > 0 || count({CATS}) > 0 -->
-	<!-- repeat:CATS:CAT -->
+<!-- if count({boards}) > 0 || count({cats}) > 0 -->
+	<!-- repeat:cats:cat -->
 		<table class="border" cellpadding="4" cellspacing="1">
-		<!-- if {repeat:CAT->id} is not 0 -->
+		<!-- if {repeat:cat->id} is not 0 -->
 		<tr><td class="title" colspan="5">
-			{repeat:CAT->link}
+			{repeat:cat->link}
 		</td></tr>
 		<!-- endif -->
 		<tr><td class="title" width="15">
@@ -16,27 +16,30 @@
 		</td><td class="title" width="150">
 			{LANG}last_post{/LANG}
 		</td></tr>
-		<!-- repeat:BOARDS:BOARD -->
-		<!-- if {repeat:BOARD->parentid} == {repeat:CAT->id} -->
+		<!-- repeat:boards:board -->
+		<!-- if {repeat:board->parentid} == {repeat:cat->id} -->
 		<tr><td class="cell1" align="center">
-			<!-- if {repeat:BOARD->new_posts} -->
+			<!-- if {repeat:board->new_posts} -->
 			<img src="{TPATH}images/on.gif" alt="*" title="{LANG}new_posts{/LANG}" />
 			<!-- else -->
 			<img src="{TPATH}images/off.gif" alt="-" title="{LANG}no_new_posts{/LANG}" />
 			<!-- endif -->
 		</td><td class="cell1">
-			{repeat:BOARD->link}<br />
-			{repeat:BOARD->description}
+			{repeat:board->link}<br />
+			{repeat:board->description}
 		</td><td class="cell1" align="center">
-			{repeat:BOARD->threads}
+			{repeat:board->threads}
 		</td><td class="cell1" align="center">
-			{repeat:BOARD->posts}
+			{repeat:board->posts}
 		</td><td class="cell1">
 			LAST POST INFO
 		</td></tr>
 		<!-- endif -->
 		<!-- endrepeat -->
-		</table><br /><br />
+		</table>
+		<!-- if !{single} -->
+		<br /><br />
+		<!-- endif -->
 	<!-- endrepeat -->
 <!-- else -->
 	<table class="border" cellpadding="4" cellspacing="1">
@@ -51,4 +54,6 @@
 
 
 
+<!-- if !{single} -->
 <!-- include: infocenter.tpl -->
+<!-- endif -->

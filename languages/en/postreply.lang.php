@@ -13,6 +13,7 @@ $items = array(
 	"nav_postreply" => "Replying to Thread",
 	"text_title" => "Title: ",
 	"text_message" => "Message: ",
+	"post_title2" => "Reply to Thread",
 
 	// Misc
 	"submit_button" => "Post Reply!",
