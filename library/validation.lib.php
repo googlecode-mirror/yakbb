@@ -9,7 +9,7 @@
 
 if(!defined("SNAPONE")) exit;
 
-function validEmail($email){
+function validEmail($email1, $email2){
 	// Confirms if it is a valid e-mail or not
 
 	global $yak, $db;
@@ -99,7 +99,7 @@ function validPassword($pass1, $pass2, $username=false){
 
 
 
-function validDisplayname($disp){
+function validDisplayname($display){
 	// Confirms if the display is valid
 
 	global $yak;
