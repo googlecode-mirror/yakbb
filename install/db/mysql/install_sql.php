@@ -51,10 +51,10 @@ PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci";
 
 
-INSERT INTO `".DBPRE."boards` (`id`, `parentid`, `parenttype`, `name`, `description`, `threads`, `posts`, `order`, `sublist`) VALUES
+$i[] = "INSERT INTO `".DBPRE."boards` (`id`, `parentid`, `parenttype`, `name`, `description`, `threads`, `posts`, `order`, `sublist`) VALUES
 (1, 1, 'c', 'Board 1', 'o.o', 0, 0, 1, 0),
 (2, 2, 'c', 'Board 2', 'Should be under category 2', 0, 0, 1, 0),
-(3, 0, 'c', 'Board 3', 'This should appear under no category.', 0, 0, 0, 0);
+(3, 0, 'c', 'Board 3', 'This should appear under no category.', 0, 0, 0, 0)";
 
 
 
@@ -69,10 +69,10 @@ PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci";
 
 
-INSERT INTO `".DBPRE."categories` (`id`, `name`, `hideshow`, `showmain`, `order`) VALUES
+$i[] = "INSERT INTO `".DBPRE."categories` (`id`, `name`, `hideshow`, `showmain`, `order`) VALUES
 (1, 'Category 1', 1, 1, 1),
 (2, 'Category 2', 1, 1, 2),
-(3, 'Category 3', 1, 1, 3);
+(3, 'Category 3', 1, 1, 3)";
 
 
 
@@ -85,7 +85,7 @@ PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci";
 
 
-INSERT INTO `".DBPRE."config` (`id`, `name`, `value`) VALUES
+$i[] = "INSERT INTO `".DBPRE."config` (`id`, `name`, `value`) VALUES
 (1, 'default_template', 'default'),
 (2, 'default_language', 'en'),
 (3, 'strip_tab_spacing', 'false'),
@@ -106,7 +106,7 @@ INSERT INTO `".DBPRE."config` (`id`, `name`, `value`) VALUES
 (19, 'seo_engine', 'true'),
 (20, 'thread_desc_max', '100'),
 (21, 'thread_subject_max', '50'),
-(22, 'thread_message_max', '25000');
+(22, 'thread_message_max', '25000')";
 
 
 
