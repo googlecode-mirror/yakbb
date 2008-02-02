@@ -8,6 +8,8 @@
 	- Post limits (time)
 	- Disable ubbc/smilies options
 	- Attachments
+	- Notifications
+	- Make sure the thread isn't a redirect URL
 */
 
 if(!defined("SNAPONE")) exit;
@@ -71,8 +73,10 @@ if($tdat["locked"] == 1 && !$perms->checkPerm("replylocked", array("bid" => $tda
 
 $tp->addNav($lang->item("nav_postreply"));
 $tp->setTitle("reply");
-$tp->loadFile("reply", "postreply.tpl", array(
+$tp->loadFile("reply", "post.tpl", array(
+	"mode" => "reply",
 	"tid" => $tid,
+	"form_action" => ($tp->seo?"./reply.html?":"?action=reply&amp;")."id=".$tid,
 	"errors" => array(),
 	"posttitle" => "Re: ".$tdat["title"],
 	"postmessage" => ""
@@ -80,23 +84,23 @@ $tp->loadFile("reply", "postreply.tpl", array(
 
 if(isset($_REQUEST["submitit"])){
 	// Form was sent. Let's test out the post.
-	$title = secure($_REQUEST["posttitle"]);
-	$message = secure($_REQUEST["postmessage"]);
+	libraryLoad("validation.lib");
+
+	$title = secure(trim($_REQUEST["posttitle"]));
+	$message = secure(trim($_REQUEST["postmessage"]));
 
 	$errors = array();
 
-	// Title errors.
-	if(strlen($title) < 1 || empty($title)){
-		$errors[] = "title_empty";
-	} else if(strlen($title) > $yak->settings["thread_subject_max"]){
-		$errors[] = "title_too_long";
+	// Title
+	$tCheck = validTitle($title);
+	if($tCheck !== true){
+		$errors = array_merge($errors, $tCheck);
 	}
 
-	// Message errors
-	if(strlen($message) < 1 || empty($message)){
-		$errors[] = "message_empty";
-	} else if(strlen($message) > $yak->settings["thread_message_max"]){
-		$errors[] = "message_too_long";
+	// Message
+	$mCheck = validMessage($message);
+	if($mCheck !== true){
+		$errors = array_merge($errors, $mCheck);
 	}
 
 	if(count($errors) == 0){
@@ -114,10 +118,10 @@ if(isset($_REQUEST["submitit"])){
 		));
 
 		// Update board, thread, and user counts
-		$db->query("UPDATE ".DBPRE."boards SET posts=posts+1 WHERE id='".$tdat["boardid"]."'");
-		$db->query("UPDATE ".DBPRE."threads SET replies=replies+1 WHERE id='".$tid."'");
-		if($guest !== false){
-			$db->query("UPDATE ".DBPRE."users SET posts=posts+1 WHERE id='".$user["id"]."'");
+		$db->query("UPDATE ".DBPRE."boards SET posts=posts+1 WHERE id='".$tdat["boardid"]."' LIMIT 1");
+		$db->query("UPDATE ".DBPRE."threads SET replies=replies+1 WHERE id='".$tid."' LIMIT 1");
+		if($guest === false){
+			$db->query("UPDATE ".DBPRE."users SET posts=posts+1 WHERE id='".$user["id"]."' LIMIT 1");
 		}
 
 		if($tp->seo){

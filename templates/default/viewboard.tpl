@@ -14,7 +14,7 @@
 	</td></tr>
 	<!-- repeat:threads:thread -->
 	<tr><td class="cell1">
-		{repeat:thread->link}
+		{repeat:thread->link} - {repeat:thread->description}
 	</td><td class="cell1" align="center">
 		{repeat:thread->replies}
 	</td><td class="cell1" align="center">
@@ -24,9 +24,9 @@
 	</td></tr>
 	<!-- endrepeat -->
 <!-- else -->
-<tr><td class="cell1">
-	{LANG}no_threads{/LANG}
-</td></tr>
+	<tr><td class="cell1">
+		{LANG}no_threads{/LANG}
+	</td></tr>
 <!-- endif -->
 <tr><td class="title" colspan="4">
 	(BUTTONS)

@@ -12,7 +12,7 @@
 	- CHECK PASSWORDS
 	- Sub-boards list
 	- Send new thread, new poll, etc. permissions for buttons
-	- Look into threads list loading with actual error message
+	- Mark board as read
 */
 
 if(!defined("SNAPONE")) exit;

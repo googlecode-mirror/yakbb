@@ -1,8 +1,6 @@
 <?php
 
 /*	TODO
-	- Thread summary below reply
-	- Thread description
 	- Preview
 	- Guests posting stuff
 	- Check permissions to create a thread
@@ -65,34 +63,46 @@ foreach($boards as $k => $v){
 }
 unset($boards);
 
+$tp->addNav($tp->boardLink($bdat["id"], $bdat["name"]));
+
 $tp->addNav($lang->item("nav_newthread"));
 $tp->setTitle("newthread");
-$tp->loadFile("newthread", "newthread.tpl", array(
+$tp->loadFile("newthread", "post.tpl", array(
+	"mode" => "newthread",
 	"bid" => $bid,
+	"form_action" => ($tp->seo?"./newthread.html?":"?action=newthread&amp;")."board=".$bid,
 	"errors" => array(),
 	"posttitle" => "",
+	"postdesc" => "",
 	"postmessage" => ""
 ));
 
 if(isset($_REQUEST["submitit"])){
 	// Form was sent. Let's test out the post.
-	$title = secure($_REQUEST["posttitle"]);
-	$message = secure($_REQUEST["postmessage"]);
+	libraryLoad("validation.lib");
+
+	$title = secure(trim($_REQUEST["posttitle"]));
+	$desc = secure(trim($_REQUEST["postdesc"]));
+	$message = secure(trim($_REQUEST["postmessage"]));
 
 	$errors = array();
 
-	// Title errors.
-	if(strlen($title) < 1 || empty($title)){
-		$errors[] = "title_empty";
-	} else if(strlen($title) > $yak->settings["thread_subject_max"]){
-		$errors[] = "title_too_long";
+	// Title
+	$tCheck = validTitle($title);
+	if($tCheck !== true){
+		$errors = array_merge($errors, $tCheck);
 	}
 
-	// Message errors
-	if(strlen($message) < 1 || empty($message)){
-		$errors[] = "message_empty";
-	} else if(strlen($message) > $yak->settings["thread_message_max"]){
-		$errors[] = "message_too_long";
+	// Desc
+	$dCheck = validDescription($desc);
+	if($dCheck !== true){
+		$errors = array_merge($errors, $dCheck);
+	}
+
+	// Message
+	$mCheck = validMessage($message);
+	if($mCheck !== true){
+		$errors = array_merge($errors, $mCheck);
 	}
 
 	if(count($errors) == 0){
@@ -139,9 +149,11 @@ if(isset($_REQUEST["submitit"])){
 	} else {
 		// We'll add the errors now
 		$lang->learn("errors");
-		$tp->addVar("reply", array(
+		var_dump(array_map(array($lang, "item"), $errors));
+		$tp->addVar("newthread", array(
 			"errors" => array_map(array($lang, "item"), $errors),
 			"posttitle" => $title,
+			"postdesc" => $desc,
 			"postmessage" => $message
 		));
 	}

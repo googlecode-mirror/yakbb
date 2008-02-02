@@ -12,6 +12,7 @@ if(!defined("SNAPONE")) exit;
 	TODO
 	userLink()
 		- Needs to add the group color
+		- Prefixes??
 */
 
 class template {

@@ -5,7 +5,7 @@
 	- Moderators list (if enabled)
 	- Sub-boards list (if enabled)
 	- On/off data
-	- Sub-board data affects parents
+	- Sub-board data affects parents (if enabled)
 	- Hide/show for categories
 	- Add support for viewing category 0 on the main page
 */

@@ -30,7 +30,8 @@ if(isset($_REQUEST["submitit"]) && isset($_REQUEST["username"]) && isset($_REQUE
 	));
 
 	$error = array();
-	if(strlen($username) <= $yak->settings["username_max_length"]){
+	libraryLoad("validation.lib");
+	if(validUsername($username) === true){
 		$x = $db->query("SELECT password FROM ".DBPRE."users WHERE name='".$username."'");
 		if($db->numRows($x) == 1){
 			$x = $db->fetch($x);

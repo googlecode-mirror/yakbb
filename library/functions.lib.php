@@ -2,10 +2,11 @@
 
 if(!defined("SNAPONE")) exit;
 
-/*	TODO
-	validEmail()
-		- Needs to be finished. Just returns true currently
-*/
+function libraryLoad($n){
+	// Loads a library section that is not loaded by default (deletion, validation, etc.)
+
+	require_once LIBDIR.$n.".php";
+}
 
 function redirect($url){
 	// Redirects to the specified page. It then exits the script.
@@ -26,12 +27,6 @@ function secure($data){
 
 function makeDate($time){
 	return date("D M d, Y g:i a", $time);
-}
-
-function validEmail($email){
-	// Confirms if it is a valid e-mail or not
-
-	return true;
 }
 
 function sha256($data){

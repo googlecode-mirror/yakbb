@@ -2,11 +2,12 @@
 
 /*	TODO
 	- Need to add CAPTCHA
-	- Need to send registration e-mail
+	- Need to send an e-mail to the given one
 	- Need to work with the activation stuff
 	- Need to add the JavaScript checks in for the system using AJAX and normal stuff
 	- Make sure e-mail isn't valid
 	- Registration script needs to be tested along with all error messages (thoroughly)
+	- Needs to clear the cached member count
 */
 
 if(!defined("SNAPONE")) exit;
@@ -23,6 +24,7 @@ $lang->learn("join");
 $tp->addNav($lang->item("join_nav"));
 
 if(isset($_POST["submitit"])){
+	libraryLoad("validation.lib");
 	// Form submitted. Let's check the information.
 	$errors = array();
 
@@ -36,65 +38,28 @@ if(isset($_POST["submitit"])){
 	$emailoptin = intval($_POST["emailoptin"]);
 
 
-	if(empty($username)){
-		$errors[] = "username_empty";
-	} else if(strlen($username) > $yak->settings["username_max_length"]){
-		$errors[] = "username_max_length";
-	} else if(strlen($username) < $yak->settings["username_min_length"]){
-		$errors[] = "username_min_length";
+	// Username
+	$uCheck = validUsername($username, true);
+	if($uCheck !== true){
+		$errors = array_merge($errors, $uCheck);
 	}
 
-	if(count($errors) == 0){
-		// Check first to save a query, because they have to change their username if the above are false anyway
-		$db->query("SELECT id FROM ".DBPRE."users WHERE name='".$db->secure($username)."' LIMIT 1");
-		if($db->numRows() == 1){
-			$errors[] = "username_taken";
-		}
-		$db->free();
+	// Displayname
+	$dCheck = validDisplayname($display);
+	if($dCheck !== true){
+		$errors = array_merge($errors, $dCheck);
 	}
 
-	if(!preg_match("/^[a-z0-9_]+$/i", $username)){
-		$errors[] = "username_invalid_char";
+	// Password
+	$pCheck = validPassword($pass1, $pass2, $username);
+	if($pCheck !== true){
+		$errors = array_merge($errors, $pCheck);
 	}
 
-
-	if(empty($display)){
-		$errors[] = "displayname_empty";
-	} else if(strlen($display) > $yak->settings["displayname_max_length"]){
-		$errors[] = "displayname_max_length";
-	} else if(strlen($display) < $yak->settings["displayname_min_length"]){
-		$errors[] = "displayname_min_length";
-	}
-
-
-	if($pass1 !== $pass2){
-		$errors[] = "password_no_match";
-	}
-
-	if(empty($pass1)){
-		$errors[] = "password_empty";
-	} else if(strlen($pass1) < 6){
-		$errors[] = "password_too_short";
-	} else if($pass1 == $username){
-		$errors[] = "password_username";
-	} else if($pass1 == strrev($username)){
-		$errors[] = "password_username_reversed";
-	}
-
-
-	if(empty($email1)){
-		$errors[] = "email_empty";
-	} else if($email1 !== $email2){
-		$errors[] = "email_no_match";
-	} else if(!validEmail($email1)){
-		$errors[] = "email_invalid";
-	} else if($yak->settings["unique_email"] == 1){
-		// Gotta check for a unique e-mail if they have that enabled. 
-		$db->query("SELECT id FROM ".DBPRE."users WHERE email='".$db->secure($email1)."'");
-		if($db->numRows() == 1){
-			$errors[] = "email_taken";
-		}
-		$db->free();
+	// E-mail
+	$eCheck = validEmail($email1, $email2);
+	if($eCheck !== true){
+		$errors = array_merge($errors, $eCheck);
 	}
 
 	if(count($errors) == 0){
