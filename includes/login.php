@@ -4,7 +4,6 @@
 	- Session/Public login
 	- Switch-users
 	- For now it logs you in forever. Change to a selectable amount of time
-	- Need to add the errors to the login.tpl file
 */
 
 if(!defined("SNAPONE")) exit;
@@ -31,7 +30,9 @@ if(isset($_REQUEST["submitit"]) && isset($_REQUEST["username"]) && isset($_REQUE
 
 	$error = array();
 	libraryLoad("validation.lib");
-	if(validUsername($username) === true){
+	if(empty($username)){
+		$error[] = "username_empty";
+	} else if(strlen($username) < $yak->settings["username_max_length"]){
 		$x = $db->query("SELECT password FROM ".DBPRE."users WHERE name='".$username."'");
 		if($db->numRows($x) == 1){
 			$x = $db->fetch($x);
@@ -52,11 +53,15 @@ if(isset($_REQUEST["submitit"]) && isset($_REQUEST["username"]) && isset($_REQUE
 			$error[] = "username_doesnt_exist";
 		}
 	} else {
-		$error[] = "username_too_long";
+		$error = "username_too_long";
 	}
 
 	// Errored
 	$error = $plugins->callhook("login_error", $error);
+	$lang->learn("errors");
+	$tp->addVar("login", array(
+		"errors" => array_map(array($lang, "item"), $error)
+	));
 }
 
 

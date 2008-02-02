@@ -23,9 +23,10 @@ $items = array(
 	"reset_button" => "Reset",
 
 	// Login errors
-	"username_too_long" => "Your username is longer then the maximum possible.",
+	"username_too_long" => "Your username is longer than the maximum possible.",
 	"username_doesnt_exist" => "The specified username does not exist.",
-	"wrong_password" => "The given password is not correct.",
+	"username_empty" => "You must enter a username.",
+	"wrong_password" => "The given password is not correct for the selected account.",
 
 	// Misc.
 	"regsuccess_message" => "You have successfully registered for the forum.",
