@@ -111,7 +111,7 @@ if(isset($_REQUEST["submitit"])){
 			"id" => 0,
 			"timestamp" => time(),
 			"title" => $title,
-			"description" => " ",
+			"description" => $desc,
 			"creatorid" => $user["id"],
 			"boardid" => $bid,
 			"icon" => 1,

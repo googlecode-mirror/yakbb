@@ -13,6 +13,9 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 		color: #FFFFFF;
 		width: 750px;
 	}
+	table.php {
+		width: 550px;
+	}
 	td.cell1, tr.cell1 td, td.title, tr.title td {
 		background-color: #FFFFFF;
 		color: #000000;

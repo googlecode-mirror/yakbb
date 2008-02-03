@@ -1,16 +1,19 @@
 <?php
 
 /*	TODO
-		Step 0
-			- Check config.inc.php writability.
-			- Check uploadability to uploads directories
-			- Check writability to cache directory
-		Step 1
-			- Beautify
-			- Add support for port and prefix
-		Step 2
-			- Needs to generate valid salt
-			- Add support for port and prefix
+	- Add support for multiple languages
+	Step 0
+		- Beautify
+		- Check config.inc.php writability.
+		- Check uploadability to uploads directories
+		- Check writability to cache directory
+	Step 1
+		- Beautify
+		- Add support for port and prefix
+	Step 2
+		- Beautify
+		- Needs to generate valid salt
+		- Add support for port and prefix
 */
 
 define("SNAPONE", 1);
@@ -51,7 +54,7 @@ if($step == 0){
 		) */
 		array(
 			"PHP Version",
-			"You must be using PHP 5. PHP 5.1.2 is recommended for the minimum.",
+			"You must be using PHP 5. A minimum of PHP 5.1.2 is recommended",
 			(version_compare("5.0.0", phpversion()) < 0),
 			phpversion(),
 			"5.0.0"
@@ -110,6 +113,7 @@ if($step == 0){
 	}
 	$dbtype = $_REQUEST["dbtype"];
 	$dbpre  = "yakbb_";
+	$dbport = 21;
 	define("DBPRE", $dbpre); // Just for compatibility purposes
 	$dbhost = $_REQUEST["dbhost"];
 	$dbname = $_REQUEST["dbname"];
@@ -147,11 +151,11 @@ if($step == 0){
 		1,
 		'#@C$#$%&^#$B%#$G%#%saFDSADFSA@',
 		$dbtype,
-		"yakbb_",
+		$dbpre,
 		$dbuser,
 		$dbpass,
 		$dbhost,
-		21,
+		$dbport,
 		$dbname
 	);
 	$dat = preg_replace($searches, $replaces, $dat);
