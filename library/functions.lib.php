@@ -32,16 +32,7 @@ function makeDate($time){
 function sha256($data){
 	// sha256 hash on the data.
 
-	// Add the random salt for security
-	$data .= DBSALT;
-	if(function_exists("hash")){ // Faster than the other options.
-		return hash("sha256", $data);
-	} else {
-		return sha256::hash($data);
-	}
-}
-if(!function_exists("hash") || !function_exists("hash_algos") || !in_array("sha256", hash_algos())){
-	// Only load the sha256 class if the function doesn't exist to save time and processing power. It's a huge file (26.8kb for both files)
-	require_once LIBDIR."hash_sha256.php";
+	// Add the random salt for security and then return the sha256 hash
+	return hash("sha256", $data.DBSALT);
 }
 ?>

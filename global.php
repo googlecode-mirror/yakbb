@@ -1,24 +1,34 @@
 <?php
-
-/*==================================*\
-|| Program: YakBB					||
-|| Version: 0.0.1a					||
-|| Author: Chris Dessonville		||
-|| File: $Id$						||
-\*==================================*/
+/*==================================================*\
+|| ___     ___  ___     _        ______    ______
+|| \--\   /--/ /---\   |-|   __ |--___-\  |--___-\
+||  \--\_/--/ /--_--\  |-|  /-/ |-|___\-| |-|___\-|
+||   \_---_/ /--/_\--\ |--\/-/  |------<  |------<
+||     |-|   |---_---| |-----\  |--____-\ |--____-\
+||     |-|   |--/ \--| |--/\--\ |-|___/-| |-|___/-|
+||     |_|   |_|   |_| |_|  |__||______/  |_______/
+||
+||==================================================||
+|| Program: YakBB
+|| Author: Chris Dessonville
+||==================================================||
+|| File: /global.php
+|| File Version: v0.0.1a
+|| $Id$
+\*==================================================*/
 
 /*	TODO
 	- Check to see if magic_quotes_runtime is actually disabled originally so we can 
 	check to make sure it's working
 	- Needs to check to see if the user is banned or not
-	- Change update for login times if invisible or normal
+	- Change update for login times if invisible or not
 */
 
 if(!defined("SNAPONE")) exit;
 
-// Check PHP version. It could have changed since installation
-if(version_compare(phpversion(), "5.0.0") < 0){
-	die("You must be running at least PHP 5.0.0 to use YakBB. 5.1.2 is recommended and the current release of PHP would be the optimal selection.");
+// Check PHP version. It could have changed since installation for some reason
+if(version_compare(phpversion(), "5.1.2") < 0){
+	die("You must be running at least PHP 5.1.2.");
 }
 
 // Check install. Redirect if not installed.
@@ -84,9 +94,7 @@ session_start();
 
 // Load some constants and a bit of config.
 require_once "./constants.inc.php";
-if(file_exists("./config.inc.php")){
-	require_once "./config.inc.php";
-}
+require_once "./config.inc.php";
 
 // Let's load the library stuff. Start with common.php since it loads most of what we need. We'll load any additional classes we need once we're inside the INCLUDESDIR files.
 require_once LIBDIR."common.php";
@@ -211,8 +219,12 @@ if(!isset($act)){
 
 if(in_array($act, array_keys($va)) && !empty($va[$act]) && file_exists(INCLUDESDIR.$va[$act].".php")){
 	// May have passed the action check, but the file may not exist because of a mistake or something.
-	require_once INCLUDESDIR.$va[$act].".php";
+	$n = $va[$act];
 	unset($va);
+	require_once INCLUDESDIR.$n.".php";
+	if(class_exists($n)){
+		new $n();
+	}
 } else {
 	unset($va);
 	$tp->error("invalid_include");

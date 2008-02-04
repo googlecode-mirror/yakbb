@@ -7,6 +7,8 @@
 		- Check config.inc.php writability.
 		- Check uploadability to uploads directories
 		- Check writability to cache directory
+		- Check support for PDO?? and hash+sha256
+		- Check support for PHP 5.1.2 (for hash functions)
 	Step 1
 		- Beautify
 		- Add support for port and prefix
@@ -54,10 +56,10 @@ if($step == 0){
 		) */
 		array(
 			"PHP Version",
-			"You must be using PHP 5. A minimum of PHP 5.1.2 is recommended",
-			(version_compare("5.0.0", phpversion()) < 0),
+			"You must be using at least PHP 5.1.2.",
+			(version_compare("5.1.2", phpversion()) < 0),
 			phpversion(),
-			"5.0.0"
+			"5.1.2"
 		)
 	);
 	?>
