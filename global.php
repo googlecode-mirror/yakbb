@@ -1,5 +1,12 @@
 <?php
 
+/*==================================*\
+|| Program: YakBB					||
+|| Version: 0.0.1a					||
+|| Author: Chris Dessonville		||
+|| File: $Id$						||
+\*==================================*/
+
 /*	TODO
 	- Check to see if magic_quotes_runtime is actually disabled originally so we can 
 	check to make sure it's working
