@@ -2,6 +2,12 @@
 
 if(!defined("SNAPONE")) exit;
 
-$tp->setTitle("search");
+class search {
+	public function __construct(){
+		global $tp;
+
+		$tp->setTitle("search");
+	}
+}
 
 ?>

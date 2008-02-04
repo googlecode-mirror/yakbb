@@ -22,6 +22,7 @@ $items = array(
 	"error_title" => "An Error Has Occurred",
 	"reply_title" => "Replying to Thread",
 	"newthread_title" => "Creating a Thread",
+	"upgrade_title" => "Upgrade Forum",
 
 	// Common form strings
 	"reset_confirmation" => "Are you sure you want to reset the form? (All changes since the start will be lost.)",

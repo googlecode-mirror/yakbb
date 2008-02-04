@@ -4,11 +4,11 @@ if(!defined("SNAPONE")) exit;
 
 /*
 	TODO
-	- Finish conversion to YakBB
-	- Make README use language variable? (Language loads after README, right? o.o;; )
-	- Finish query-cache functions. (They're at the bottom. =P)
+	- Make README use language variable? (Language loads after README, doesn't it? o.o;; )
+	- Finish query-cache functions.
 		-> Add expiration time settings
 		-> Convert the makeDate() to actually use a custom date format
+		-> If it creates a parent folder, make sure to create an index.html
 	- Add the SNAPONE security check to all cached files tops. Including templates. =P
 */
 

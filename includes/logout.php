@@ -2,15 +2,21 @@
 
 if(!defined("SNAPONE")) exit;
 
-$plugins->callhook("logout_start");
+class logout {
+	public function __construct(){
+		global $plugins;
 
-setcookie(DBPRE."user", "", 0);
-setcookie(DBPRE."pass", "", 0);
-session_regenerate_id();
+		$plugins->callhook("logout_start");
 
-$plugins->callhook("logout_end");
+		setcookie(DBPRE."user", "user", 0);
+		setcookie(DBPRE."pass", "pass", 0);
+		session_regenerate_id();
 
-redirect("?");
+		$plugins->callhook("logout_end");
+
+		redirect("?");
+	}
+}
 
 
 ?>

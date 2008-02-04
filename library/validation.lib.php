@@ -3,8 +3,6 @@
 /*	TODO
 	validEmail()
 		- Needs to be finished to actually check e-mail
-	validDescription()
-		- Needs to be added
 */
 
 if(!defined("SNAPONE")) exit;

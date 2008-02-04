@@ -2,6 +2,12 @@
 
 if(!defined("SNAPONE")) exit;
 
-$tp->setTitle("help");
+class help {
+	public function __construct(){
+		global $tp;
+
+		$tp->setTitle("help");
+	}
+}
 
 ?>

@@ -2,6 +2,12 @@
 
 if(!defined("SNAPONE")) exit;
 
-$cache->clearCache();
-redirect("?");
+class clear_cache {
+	public function __construct(){
+		global $cache;
+
+		$cache->clearCache();
+		redirect("?");
+	}
+}
 ?>
