@@ -9,7 +9,7 @@
 ||     |_|   |_|   |_| |_|  |__||______/  |_______/
 ||
 ||==================================================||
-|| Program: YakBB
+|| Program: YakBB v1.0.0
 || Author: Chris Dessonville
 ||==================================================||
 || File: /global.php
@@ -18,10 +18,14 @@
 \*==================================================*/
 
 /*	TODO
-	- Check to see if magic_quotes_runtime is actually disabled originally so we can 
-	check to make sure it's working
-	- Needs to check to see if the user is banned or not
-	- Change update for login times if invisible or not
+		CORE
+			- Check to see if magic_quotes_runtime is actually disabled originally so we can 
+			check to make sure it's working
+			- Check to see if register_globals is on and the safety is working or if runs when
+			register_globals is disabled
+		BAN SYSTEM
+			- Enable wild cards for the IPs
+			- Needs a cache time or to not be cached??
 */
 
 if(!defined("SNAPONE")) exit;
@@ -55,7 +59,7 @@ if(ini_get('register_globals')){
 	$input = array_merge($_GET,		$_POST,
 						 $_COOKIE,	$_SERVER,
 						 $_ENV,		$_FILES,
-                         isset($_SESSION) && is_array($_SESSION)?$_SESSION:array());
+						 isset($_SESSION) && is_array($_SESSION)?$_SESSION:array());
    
 	foreach($input as $k => $v){
 		if(!in_array($k, $noUnset) && isset($GLOBALS[$k])){
@@ -98,6 +102,8 @@ require_once "./config.inc.php";
 
 // Let's load the library stuff. Start with common.php since it loads most of what we need. We'll load any additional classes we need once we're inside the INCLUDESDIR files.
 require_once LIBDIR."common.php";
+
+// Load cache of bans... this may be switched to not using a cache later
 $sz->bans = $db->cacheQuery("SELECT id, type, value, expires FROM ".DBPRE."bans", "bans");
 
 // Define some global variables. These must NOT be overriden anywhere else or it will break the forum script.
@@ -108,6 +114,7 @@ $guest = true; // We'll use this to help us figure out if the user has logged in
 if(isset($_COOKIE[DBPRE."user"]) && isset($_COOKIE[DBPRE."pass"])){
 	$plugins->callhook("global_user_validation_start");
 
+	// Store the username, query the DB, and check the password
 	$username = $db->secure(secure($_COOKIE[DBPRE."user"]));
 	$db->query("SELECT * FROM ".DBPRE."users WHERE name='".$username."' LIMIT 1");
 	if($db->numRows() == 1){
@@ -119,6 +126,7 @@ if(isset($_COOKIE[DBPRE."user"]) && isset($_COOKIE[DBPRE."pass"])){
 	}
 	$db->free();
 
+	// User didn't pass, so let's unset the other stuff
 	if($guest === true){
 		unset($user); // Security reasons. Just in case.
 		setcookie(DBPRE."user", "", 0);
@@ -158,14 +166,46 @@ if($guest === true){
 
 	// Update last login time, etc. if needed
 	if(!isset($_SESSION["last_login"]) || $_SESSION["last_login"] < time()-15){
-		$db->query("UPDATE ".DBPRE."users SET lastlogin='".time()."', lastip='".$yak->ip."' WHERE id='".$user["id"]."'");
+		// Set invisible section
+		if($user["invisible"] == 1){
+			$invis = "invis";
+		} else {
+			$invis = "";
+		}
+
+		// Update last login time and ip
+		$db->query("UPDATE ".DBPRE."users SET lastlogin".$invis."='".time()."', lastip='".$yak->ip."' WHERE id='".$user["id"]."'");
 		$_SESSION["last_login"] = time();
+	}
+}
+
+// Check if user is banned
+foreach($sz->bans as $k => $v){
+	if($v["expires"] <= time()){ // Make sure the ban hasn't expired
+		continue;
+	}
+	switch($v["type"]){
+		case 1: // IP
+			if($v["value"] == $sz->ip){
+				$tp->error("banned");
+			}
+			break;
+		case 2: // e-mail
+			if($guest === false && $user["email"] == $v["value"]){
+				$tp->error("banned");
+			}
+			break;
+		case 3: // username
+			if($guest === false && $user["name"] == $v["value"]){
+				$tp->error("banned");
+			}
+			break;
 	}
 }
 
 
 // Load specified actions
-$def = "home"; // Action to default to. This is changeable by a plugin
+$def = "home"; // Action to default to. This is changeable by a plugin later on
 $va = array( // Valid Actions
 	// SYNTAX: "urlaccess" => "modulefile", // <-- No comma on last line
 	// BLANK ONES HAVE NOT HAD FILES ADDED YET
@@ -202,7 +242,7 @@ $def = $plugins->callhook("global_default_action", $def);
 $va = $plugins->callhook("global_valid_actions", $va);
 
 // Use request because it can be POST or GET.... COOKIE too though.
-// Let's look at that again later.
+// Let's look at that again later for the cookie reason
 if(isset($_REQUEST["action"])){
 	$act = $_REQUEST["action"];
 } else if(isset($_REQUEST["board"])){

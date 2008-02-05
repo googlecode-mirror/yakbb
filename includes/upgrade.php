@@ -16,16 +16,21 @@ class upgrade {
 			"page3" => true
 		));
 
+		// DB Upgrades
 		if(CURRENTDBVERSION > DBVERSION){
 			$this->upgrade_db();
 		}
 
+		// Update the actual Yak version
 		if(version_compare(CURRENTYAKVERSION, YAKVERSION) == 1){
 			$this->upgrade_yak();
 		}
 	}
 
+
+
 	private function upgrade_db(){
+		// Upgrade the DB.
 		global $tp;
 
 		require "./install/db/".DBTYPE."/upgrade_sql.php";
@@ -37,7 +42,10 @@ class upgrade {
 		));
 	}
 
+
+
 	private function upgrade_yak(){
+		// Used when there's an upgrade to the actual YakBB source that needs patching
 		global $tp;
 
 		$tp->addVar("upgrade", array(

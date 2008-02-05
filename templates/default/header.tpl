@@ -47,7 +47,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	{board_title}
 </td></tr><tr><td class="cell1">
 	<font size="2">
-		<a href="./">{LANG}menu_home{/LANG}</a> - 
+		<a href="?action=home">{LANG}menu_home{/LANG}</a> - 
 		<a href="?action=help">{LANG}menu_help{/LANG}</a> - 
 		<a href="?action=search">{LANG}menu_search{/LANG}</a> - 
 		<!-- if {guest} -->
