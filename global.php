@@ -1,12 +1,12 @@
 <?php
 /*==================================================*\
-|| ___     ___  ___     _        ______    ______
-|| \--\   /--/ /---\   |-|   __ |--___-\  |--___-\
-||  \--\_/--/ /--_--\  |-|  /-/ |-|___\-| |-|___\-|
-||   \_---_/ /--/_\--\ |--\/-/  |------<  |------<
-||     |-|   |---_---| |-----\  |--____-\ |--____-\
-||     |-|   |--/ \--| |--/\--\ |-|___/-| |-|___/-|
-||     |_|   |_|   |_| |_|  |__||______/  |_______/
+|| ___     ___  ___     _     __  ______    ______
+|| \--\   /--/ /---\   |-|   /-/ |--___-\  |--___-\
+||  \--\_/--/ /--_--\  |-|  /-/  |-|___\-| |-|___\-|
+||   \_---_/ /--/_\--\ |--\/-/   |------<  |------<
+||     |-|   |---_---| |-----\   |--____-\ |--____-\
+||     |-|   |--/ \--| |--/\--\  |-|___/-| |-|___/-|
+||     |_|   |_|   |_| |_|  |__| |______/  |_______/
 ||
 ||==================================================||
 || Program: YakBB v1.0.0
@@ -26,6 +26,7 @@
 		BAN SYSTEM
 			- Enable wild cards for the IPs
 			- Needs a cache time or to not be cached??
+			- Test e-mail and username
 */
 
 if(!defined("SNAPONE")) exit;
@@ -104,7 +105,7 @@ require_once "./config.inc.php";
 require_once LIBDIR."common.php";
 
 // Load cache of bans... this may be switched to not using a cache later
-$sz->bans = $db->cacheQuery("SELECT id, type, value, expires FROM ".DBPRE."bans", "bans");
+$yak->bans = $db->cacheQuery("SELECT id, type, value, expires FROM ".DBPRE."bans", "bans");
 
 // Define some global variables. These must NOT be overriden anywhere else or it will break the forum script.
 $user = array();
@@ -180,13 +181,13 @@ if($guest === true){
 }
 
 // Check if user is banned
-foreach($sz->bans as $k => $v){
+foreach($yak->bans as $k => $v){
 	if($v["expires"] <= time()){ // Make sure the ban hasn't expired
 		continue;
 	}
 	switch($v["type"]){
 		case 1: // IP
-			if($v["value"] == $sz->ip){
+			if($v["value"] == $yak->ip){
 				$tp->error("banned");
 			}
 			break;

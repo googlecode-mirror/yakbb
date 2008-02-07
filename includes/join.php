@@ -45,6 +45,7 @@ class join {
 
 	public function formSent(){
 		global $db, $tp, $lang, $yak;
+
 		libraryLoad("validation.lib");
 		// Form submitted. Let's check the information.
 		$errors = array();
@@ -90,9 +91,10 @@ class join {
 			// Generate an activation string randomly. 10 characters, may change later.
 			$possibles = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-";
 			$i = 0;
+			$le = strlen($possibles);
 			$acode = "";
 			while(++$i <= 10){
-				$acode .= $possibles[rand(0, strlen($possibles))];
+				$acode .= $possibles[rand(0, $le)];
 			}
 
 			// Check $adminLoadIt stuff

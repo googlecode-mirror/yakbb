@@ -11,6 +11,7 @@ $items = array(
 
 	// Core errors
 	"invalid_include" => "The specified include is invalid.",
+	"banned" => "You are banned from this forum currently.",
 
 	// includes/join.php errors
 	"join_logged_in" => "You must be logged out in order to register an account.",

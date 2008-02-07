@@ -3,6 +3,10 @@
 /*	TODO
 	validEmail()
 		- Needs to be finished to actually check e-mail
+	validUsername()
+		- Make sure isn't censored word
+	validDisplayname()
+		- Make sure isn't censored word
 */
 
 if(!defined("SNAPONE")) exit;
