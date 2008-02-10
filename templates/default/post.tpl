@@ -26,7 +26,7 @@
 		<!-- if {mode} is "newthread" -->{LANG}text_desc{/LANG} <input type="text" value="{postdesc}" name="postdesc" maxlength="{thread_desc_max}" size="30" /><br /> <!-- endif -->
 		{LANG}text_message{/LANG}<br />
 		<textarea name="postmessage">{postmessage}</textarea>
-		<br /><br /><input type="submit" value="{LANG}submit_button{/LANG}" name="submitit" />
+		<br /><br /><input type="submit" value="{LANG}submit_button{/LANG}" name="submitit" accesskey="s" />
 	</form>
 </td></tr>
 </table>

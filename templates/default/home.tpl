@@ -24,7 +24,7 @@
 			<!-- else -->
 			<img src="{TPATH}images/off.gif" alt="-" title="{LANG}no_new_posts{/LANG}" />
 			<!-- endif -->
-		</td><td class="cell1">
+		</td><td class="cell1" onmouseover="this.style.backgroundColor='#DDDDDD'" onmouseout="this.style.backgroundColor='#FFFFFF'" onclick="if(linkBubble) location.href = this.getElementsByTagName('a')[0].href">
 			{repeat:board->link}<br />
 			{repeat:board->description}
 		</td><td class="cell1" align="center">

@@ -448,15 +448,15 @@ if(isset(".$varname.") && is_array(".$varname.")){
 // Link management functions (board, thread, profile, etc.)
 	public function boardLink($bid, $bname){
 		if($this->seo){
-			return '<a href="./board-'.$bid.'.html">'.$bname.'</a>';
+			return '<a href="./board-'.$bid.'.html" onclick="linkBubble=false">'.$bname.'</a>';
 		}
-		return '<a href="?board='.$bid.'">'.$bname.'</a>';
+		return '<a href="?board='.$bid.'" onclick="linkBubble=false">'.$bname.'</a>';
 	}
 	public function threadLink($tid, $tname){
 		if($this->seo){
-			return '<a href="./thread-'.$tid.'.html">'.$tname.'</a>';
+			return '<a href="./thread-'.$tid.'.html" onclick="linkBubble=false">'.$tname.'</a>';
 		}
-		return '<a href="?thread='.$tid.'">'.$tname.'</a>';
+		return '<a href="?thread='.$tid.'" onclick="linkBubble=false">'.$tname.'</a>';
 	}
 	public function userLink($uid, $uname, $ugroup){
 		if($this->seo){

@@ -38,6 +38,9 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 		clear: both;
 	}
 	</style>
+	<script type="text/Javascript">
+	var linkBubble = true;
+	</script>
 </head>
 <body>
 <div align="center" id="holder">

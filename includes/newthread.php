@@ -141,6 +141,10 @@ if(isset($_REQUEST["submitit"])){
 			$db->query("UPDATE ".DBPRE."users SET posts=posts+1 WHERE id='".$user["id"]."'");
 		}
 
+		// Clear some cached stuff
+		$db->clearCacheQuery("stats/posts_count");
+		$db->clearCacheQuery("stats/threads_count");
+
 		if($tp->seo){
 			redirect("/thread-".$tid.".html");
 		} else {
