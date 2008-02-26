@@ -5,8 +5,8 @@ class permissions {
 
 	public function __construct(){
 		$this->validTypes = array(
-			"viewcat" => array(&$this, "checkCategory"),
-			"viewboard" => array(&$this, "checkBoard"),
+			"viewboard" => array(&$this, "checkBoard"), // Deprecated and should be removed
+			"viewcat" => array(&$this, "checkCategory"), // Deprecated and should be removed
 			"replylocked" => array(&$this, "replyToLockedThreads")
 		);
 	}
@@ -37,8 +37,7 @@ class permissions {
 		// $var		Array		An array containing data about the category.
 		// Return	Return		Returns true if a user can view the category.
 
-		$cat = $var["cid"];
-		return true;
+		die("Deprecated call to permissions::checkCategory");
 	}
 	private function checkBoard($var){
 		// Checks to see if a board is viewable by the current user.
@@ -46,8 +45,7 @@ class permissions {
 		// $var		Array		An array containing data about the board.
 		// Return	Return		Returns true if a user can view the board.
 
-		$board = $var["bid"];
-		return true;
+		die("Deprecated call to permissions::checkBoard");
 	}
 	private function replyToLockedThreads($var){
 		// Checks to see if the user can reply to locked threads (global) or in specified board

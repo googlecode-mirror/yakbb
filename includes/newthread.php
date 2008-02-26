@@ -3,7 +3,7 @@
 /*	TODO
 	- Preview
 	- Guests posting stuff
-	- Check permissions to create a thread
+	- Double check permissions to create a thread
 	- Post limits (time)
 	- Redirect URL options. (Mainly for moved threads)
 	- Attachments support
@@ -24,11 +24,15 @@ if($bid < 0){
 $board = $db->query("SELECT * FROM ".DBPRE."boards WHERE id='".$bid."' LIMIT 1");
 if($db->numRows() == 0){
 	$tp->error("newthread_board_doesnt_exist");
-} else if(!$perms->checkPerm("viewboard", array("bid" => $bid))){
-	$tp->erorr("newthread_cant_view");
 }
 $bdat = $db->fetch();
-$db->free();
+$db->free(); 
+
+// Check if they can view the board.
+$bperms = unserialize($bdat["permissions"]);
+if(!isset($bperms[$user["group"]]) || $bperms[$user["group"]]["thread"] == false){
+	$tp->error("newthread_cant_view");
+}
 
 // Load parent boards and category and see if user can reply
 $curboard = $bdat;
@@ -46,9 +50,14 @@ if($curboard["parentid"] != 0){
 	// Load the category if the ID isn't 0. (If it is zero, we don't really have a category. =P)
 	$cat = $db->cacheQuery("SELECT * FROM ".DBPRE."categories WHERE id='".$curboard["parentid"]."' LIMIT 1", "category_data/".$curboard["parentid"]);
 	$cat = $cat[0]; // Only want the first result... despite there being only one.
-	if(!$perms->checkPerm("viewcat", array("cid" => $cat["id"]))){
+
+	// Check view perms
+	$catperms = unserialize($cat["permissions"]);
+	if(!isset($catperms[$user["group"]]) || $catperms[$user["group"]]["view"] == false){
 		$tp->error("viewboard_no_permissions");
 	}
+
+	// Add nav and cleanup
 	$tp->addNav($tp->catLink($cat["id"], $cat["name"]));
 	unset($cat);
 }
@@ -56,7 +65,9 @@ unset($curboard);
 
 $boards = array_reverse($boards);
 foreach($boards as $k => $v){
-	if(!$perms->checkPerm("viewboard", array("bid" => $v["id"]))){
+	// Check view permissions and then add nav
+	$bperms = unserialize($v["permissions"]);
+	if(!isset($bperms[$user["group"]]) || $bperms[$user["group"]]["view"] == false){
 		$tp->error("viewboard_no_permission");
 	}
 	$tp->addNav($tp->boardLink($v["id"], $v["name"]));

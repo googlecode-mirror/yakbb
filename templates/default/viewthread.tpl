@@ -1,7 +1,11 @@
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title">
-	<!-- POSTING LINKS HERE LATER -->
-	[ <a href="?action=reply&amp;id={tid}">Reply</a> | Print ]
+	[ 
+	<!-- if {can_reply} is true -->
+		<a href="?action=reply&amp;id={tid}">Reply</a> | 
+	<!-- endif -->
+	Print
+	]
 </td></tr>
 </table><br /><br />
 
@@ -20,6 +24,11 @@
 
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title">
-	POSTING LINKS HERE LATER
+	[ 
+	<!-- if {can_reply} is true -->
+		<a href="?action=reply&amp;id={tid}">Reply</a> | 
+	<!-- endif -->
+	Print
+	]
 </td></tr>
 </table>

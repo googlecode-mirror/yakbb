@@ -14,5 +14,5 @@ define("UPLOADSDIR",	"./uploads/");
 
 // Don't edit. These are used to keep YakBB up to date
 define("CURRENTYAKVERSION", "0.0.1a");
-define("CURRENTDBVERSION", 1);
+define("CURRENTDBVERSION", 2);
 ?>

@@ -10,6 +10,7 @@
 	- Attachments
 	- Notifications
 	- Make sure the thread isn't a redirect URL
+	- Make sure permissions work for replying
 */
 
 if(!defined("SNAPONE")) exit;
@@ -49,9 +50,14 @@ if($curboard["parentid"] != 0){
 	// Load the category if the ID isn't 0. (If it is zero, we don't really have a category. =P)
 	$cat = $db->cacheQuery("SELECT * FROM ".DBPRE."categories WHERE id='".$curboard["parentid"]."' LIMIT 1", "category_data/".$curboard["parentid"]);
 	$cat = $cat[0]; // Only want the first result... despite there being only one.
-	if(!$perms->checkPerm("viewcat", array("cid" => $cat["id"]))){
+
+	// Check view perms
+	$catperms = unserialize($cat["permissions"]);
+	if(!isset($catperms[$user["group"]]) || $catperms[$user["group"]]["view"] == false){
 		$tp->error("viewboard_no_permissions");
 	}
+
+	// Add nav and cleanup
 	$tp->addNav($tp->catLink($cat["id"], $cat["name"]));
 	unset($cat);
 }
@@ -59,15 +65,20 @@ unset($curboard);
 
 $boards = array_reverse($boards);
 foreach($boards as $k => $v){
-	if(!$perms->checkPerm("viewboard", array("bid" => $v["id"]))){
+	// Check view permissions and then add nav
+	$bperms = unserialize($v["permissions"]);
+	if(!isset($bperms[$user["group"]]) || $bperms[$user["group"]]["view"] == false){
 		$tp->error("viewboard_no_permission");
 	}
 	$tp->addNav($tp->boardLink($v["id"], $v["name"]));
 }
 unset($boards);
 
-// Check if thread is locked or user can override
-if($tdat["locked"] == 1 && !$perms->checkPerm("replylocked", array("bid" => $tdat["boardid"]))){
+// Check for specific scenarios.
+if(!isset($bperms[$user["group"]]) || $bperms[$user["group"]]["view"] == false){
+	$tp->error("postreply_no_permission");
+} else if($tdat["locked"] == 1 && !$perms->checkPerm("replylocked", array("bid" => $tdat["boardid"]))){
+	// Thread is locked and the user can't reply to locked threads.
 	$tp->error("postreply_thread_locked");
 }
 

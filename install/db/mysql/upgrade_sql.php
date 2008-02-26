@@ -28,6 +28,19 @@ class upgrade_sql {
 
 	private function upgradeIt0(){} // Prevent possible errors
 	private function upgradeIt1(){} // Prevent possible errors
+	private function upgradeIt2(){
+		global $db;
+
+		// Change to enum from tinyint
+		$db->query("ALTER TABLE `".DBPRE."boards` CHANGE `sublist` `sublist` ENUM( '0', '1' ) NOT NULL DEFAULT '1'");
+
+		// Add the permissions group to boards and categories
+		$db->query("ALTER TABLE `".DBPRE."categories` ADD `permissions` TEXT NOT NULL");
+
+		// Fix sub list and permissions
+		$db->query('UPDATE `'.DBPRE.'boards` SET `sublist`=\'1\', `permissions`=\'a:3:{i:-1;a:5:{s:4:"view";b:1;s:5:"reply";b:0;s:4:"poll";b:0;s:6:"thread";b:0;s:6:"attach";b:0;}i:0;a:5:{s:4:"view";b:1;s:5:"reply";b:1;s:4:"poll";b:1;s:6:"thread";b:1;s:6:"attach";b:0;}i:1;a:5:{s:4:"view";b:1;s:5:"reply";b:1;s:4:"poll";b:1;s:6:"thread";b:1;s:6:"attach";b:1;}}\'');
+		$db->query('UPDATE `'.DBPRE.'categories` SET `permissions`=\'a:3:{i:-1;a:1:{s:4:"view";b:1;}i:0;a:1:{s:4:"view";b:1;}i:1;a:1:{s:4:"view";b:1;}}\'');
+	}
 }
 
 ?>

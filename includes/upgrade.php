@@ -15,6 +15,7 @@ class upgrade {
 			"page2" => false,
 			"page3" => true
 		));
+		$tp->addGlobal("upgrade_check", true);
 
 		// DB Upgrades
 		if(CURRENTDBVERSION > DBVERSION){

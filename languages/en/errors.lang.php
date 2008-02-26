@@ -35,6 +35,7 @@ $items = array(
 	"postreply_invalid_id" => "The specified thread ID is invalid.",
 	"postreply_thread_doesnt_exist" => "The thread you are trying to reply to does not exist.",
 	"postreply_thread_locked" => "The thread you are trying to reply to is locked.",
+	"postreply_no_permission" => "You do not have permission to post replies in this board.",
 
 	// includes/newthread.php errors
 	"newthread_guest" => "Guests are not allowed to create threads in this board.",

@@ -69,10 +69,10 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 </table>
 <br /><br />
 
-<!-- if (CURRENTDBVERSION > DBVERSION or version_compare(CURRENTYAKVERSION, YAKVERSION) == 1) -->
+<!-- if (CURRENTDBVERSION > DBVERSION or version_compare(CURRENTYAKVERSION, YAKVERSION) == 1) and !isset({upgrade_check}) -->
 	<table class="border" cellpadding="4" cellspacing="1">
 	<tr><td class="cell1">
-		There are currently updates available. Click <a href="?action=upgrade">here</a> to upgrade.
+		There are currently updates available. Click <a href="?action=upgrade">here</a> to upgrade your forum.
 	</td></tr>
 	</table>
 	<br /><br />

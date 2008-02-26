@@ -8,6 +8,7 @@
 	- Sub-board data affects parents (if enabled)
 	- Hide/show for categories
 	- Add support for viewing category 0 on the main page
+	- Checking the viewing permissions for categories
 */
 
 if(!defined("SNAPONE")) exit;
@@ -16,9 +17,14 @@ class home {
 	// Category stuff
 	private $cats = array(); // Category data holder
 	private $catids = array(); // List of category IDs
-	private $singleCat = false; // Whether or not only a single category is bieng loaded
-	
+	private $singleCat = false; // Whether or not only a single category is being loaded
 
+	// Boards stuff
+	private $boards = array(); // Board data holder
+
+
+
+	// Begin functions
 	public function __construct(){
 		global $tp, $lang, $plugins, $yak;
 
@@ -53,7 +59,7 @@ class home {
 
 	private function loadCats(){
 		// Load the categories
-		global $tp, $lang, $db, $plugins, $perms;
+		global $tp, $lang, $db, $plugins, $user;
 
 		// Extra info for single category stuff
 		$extra = $extra2 = "";
@@ -80,7 +86,9 @@ class home {
 
 		// Check permissions
 		foreach($this->cats as $k => $v){
-			if(!$perms->checkPerm("viewcat", array("cid" => $v["id"]))){
+			// Check category perms. Unset it if not valid.
+			$catperms = unserialize($v["permissions"]);
+			if(!isset($catperms[$user["group"]]) || $catperms[$user["group"]]["view"] == false){
 				unset($this->cats[$k]);
 			} else {
 				$this->catids[] = $v["id"];
@@ -103,20 +111,25 @@ class home {
 
 	private function loadBoards(){
 		// Load boards, check permissions, and add to array.
-		global $db, $perms, $parser, $tp, $plugins;
+		global $db, $parser, $tp, $plugins, $user;
 
-		$db->query("SELECT * FROM ".DBPRE."boards WHERE parenttype='c' AND parentid IN (".implode(",", $this->catids).") ORDER BY `order` ASC");
-		while($b = $db->fetch()){
-			if($perms->checkPerm("viewboard", array(
-				"bid" => $b["id"],
-				"cid" => $b["parentid"]
-			))){
-				$b["description"] = $parser->parse($b["description"]);
-				$b["new_posts"] = false;
-				$b["link"] = $tp->boardLink($b["id"], $b["name"]);
-				$this->boards[] = $b;
+		$bdat = $db->query("SELECT * FROM ".DBPRE."boards WHERE parenttype='c' AND parentid IN (".implode(",", $this->catids).") ORDER BY `order` ASC");
+		while($b = $db->fetch($bdat)){
+
+			// Check perms and skip the board if it doesn't pass
+			$boardperms = unserialize($b["permissions"]);
+			if(!isset($boardperms[$user["group"]]) || $boardperms[$user["group"]]["view"] == false){
+				continue;
 			}
+
+			// Add the data to the listing
+			$b["description"] = $parser->parse($b["description"]);
+			$b["new_posts"] = false;
+			$b["link"] = $tp->boardLink($b["id"], $b["name"]);
+			$this->boards[] = $b;
 		}
+
+		// Run through hook and clean up
 		$this->boards = $plugins->callhook("home_boards_checked", $this->boards);
 		$db->free();
 	}
