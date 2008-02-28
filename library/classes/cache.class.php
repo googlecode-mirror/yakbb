@@ -110,16 +110,41 @@ class cache extends flat_file {
 			$v = $con["value"];
 
 			// Convert the types for storage easier. This is because settings should actually be this type anyway.
-			if(is_numeric($v))
+			if(is_numeric($v)){
 				$v = intval($v);
-			else if($v == "true")
+			} else if($v == "true"){
 				$v = true;
-			else if($v == "false")
+			} else if($v == "false"){
 				$v = false;
+			}
 
 			$yak->settings[$con["name"]] = $v;
 		}
-		$this->saveData("settings", '$yak->settings = '.var_export($yak->settings, true).';', "This file was created in order to save a query and loading time. You may delete it if needed.");
+		$this->saveData("settings", '$yak->settings = '.var_export($yak->settings, true).';', "This file was created in order to save a query and loading time. You may delete it if needed, but it will be recreated.");
+		$db->free($x);
+		return true;
+	}
+
+	public function loadGroups(){
+		// Loads the groups from the cache or via query.
+
+		global $yak;
+
+		if(file_exists($this->dir."groups.php")){
+			require_once $this->dir."groups.php";
+			return true; // Stop from executing scripting below.
+		}
+
+		// Doesn't exist yet.
+		global $db;
+
+		$yak->groups = array(); // Is this really necessary? I guess so. =P
+		$x = $db->query("SELECT * FROM ".DBPRE."groups");
+		while($con = $db->fetch($x)){
+			$yak->groups[$con["id"]] = $con;
+		}
+
+		$this->saveData("groups", '$yak->groups = '.var_export($yak->groups, true).';', "This file was created in order to save a query and loading time. You may delete it if needed, but it will be recreated.");
 		$db->free($x);
 		return true;
 	}

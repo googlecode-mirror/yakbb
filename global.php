@@ -104,9 +104,6 @@ require_once "./config.inc.php";
 // Let's load the library stuff. Start with common.php since it loads most of what we need. We'll load any additional classes we need once we're inside the INCLUDESDIR files.
 require_once LIBDIR."common.php";
 
-// Load cache of bans... this may be switched to not using a cache later
-$yak->bans = $db->cacheQuery("SELECT id, type, value, expires FROM ".DBPRE."bans", "bans");
-
 // Define some global variables. These must NOT be overriden anywhere else or it will break the forum script.
 $user = array();
 $guest = true; // We'll use this to help us figure out if the user has logged in.
@@ -181,6 +178,8 @@ if($guest === true){
 }
 
 // Check if user is banned
+// Load cache of bans... this may be switched to not using a cache later
+$yak->bans = $db->cacheQuery("SELECT id, type, value, expires FROM ".DBPRE."bans", "bans");
 foreach($yak->bans as $k => $v){
 	if($v["expires"] <= time()){ // Make sure the ban hasn't expired
 		continue;

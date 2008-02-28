@@ -9,7 +9,9 @@ if(!defined("SNAPONE")) exit;
 
 class yakbb {
 	// Define core variables
-	public $settings = array();
+	public $settings = array(); // Settings
+	public $groups = array(); // List of groups
+	public $bans = array(); // Holds a list of bans
 	public $ip; // The user's secured IP
 
 	// Functions
@@ -18,7 +20,7 @@ class yakbb {
 	}
 
 	public function loadIC(){
-		// This function is here because of its possible use on all pages.
+		// This function is here because of its possible to use on all pages.
 
 		global $lang, $tp, $plugins, $db;
 		$stats = array(); // Stats/info holder. Add it globally in a bit.

@@ -41,6 +41,13 @@ class upgrade_sql {
 		$db->query('UPDATE `'.DBPRE.'boards` SET `sublist`=\'1\', `permissions`=\'a:3:{i:-1;a:5:{s:4:"view";b:1;s:5:"reply";b:0;s:4:"poll";b:0;s:6:"thread";b:0;s:6:"attach";b:0;}i:0;a:5:{s:4:"view";b:1;s:5:"reply";b:1;s:4:"poll";b:1;s:6:"thread";b:1;s:6:"attach";b:0;}i:1;a:5:{s:4:"view";b:1;s:5:"reply";b:1;s:4:"poll";b:1;s:6:"thread";b:1;s:6:"attach";b:1;}}\'');
 		$db->query('UPDATE `'.DBPRE.'categories` SET `permissions`=\'a:3:{i:-1;a:1:{s:4:"view";b:1;}i:0;a:1:{s:4:"view";b:1;}i:1;a:1:{s:4:"view";b:1;}}\'');
 	}
+	private function upgradeIt3(){
+		global $db;
+
+		// Start groups stuff
+		$db->query("CREATE TABLE `".DBPRE."groups` ( `id` INT UNSIGNED NOT NULL AUTO_INCREMENT , `name` TEXT NOT NULL , `color` TEXT NOT NULL , PRIMARY KEY ( `id` ) ) ENGINE = MYISAM ");
+		$db->query("INSERT INTO `".DBPRE."groups` (`id` ,`name` ,`color`) VALUES ('1', 'Admin', 'a:0:{}')");
+	}
 }
 
 ?>
