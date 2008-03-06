@@ -1,0 +1,15 @@
+$templates["default"]["config"] = array(
+	"name" => "Default Template",
+	"development" => false,
+	"ic_global" => false
+);
+
+$templates["default"] => "default" is the template ID. This is decided by the folder and
+	should keep in track with that in order to avoid conflicts. If it isn't correct, the
+	ACP just might break... or attempt to auto-correct it. =P
+name => Actual name of the template.
+development => Boolean of whether or not this template is in development mode. If in 
+	development mode, a check should be performed to check and see if the user has 
+	permisison to view the template.
+ic_global => Boolean of whether or not this template needs to execute the global queries
+	for the info center. If this is false, it is only executed in the home.php include.

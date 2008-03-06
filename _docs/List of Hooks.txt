@@ -1,0 +1,98 @@
+GENERAL FILES
+global.php
+	global_user_validation_started -> Cookies for user found. Validation starting.
+
+	global_user_validation_success -> User successfully validated.
+
+	global_guest_true -> User is a guest.
+
+	global_guest_settings -> The guest's settings are being set.
+		"user" -> The $user array for guests.
+
+	global_user_settings -> The user's settings are being set.
+		"user" -> The $user array for a logged in user.
+
+	global_default_action -> Used to change the default action for portals and such.
+		"def" -> The current default action
+
+	global_valid_actions -> User to add/remove valid actions for users.
+		"va" -> A list of the current valid actions
+
+
+
+LIBRARY FILES
+lib/classes/db/db.abstract.class.php
+
+lib/classes/db/mysql.class.php
+
+lib/classes/cache.class.php
+
+lib/classes/flat_file.class.php
+
+lib/classes/language.class.php
+
+lib/classes/permissions.class.php
+
+lib/classes/plugin.class.php
+	global_start -> Global coding started. Only prefix that doesn't match file name.
+
+lib/classes/post_parser.class.php
+
+lib/classes/template.class.php
+
+lib/classes/yakbb.class.php
+	ic_start -> Stats for the info center have begun.
+	ic_end -> Stats for the info center have ended.
+		"stats" -> A list of the stats compiled. This is sent for any changes that
+				   should be made.
+
+lib/common.php
+
+lib/deletion.lib.php
+
+lib/functions.lib.php
+
+lib/validation.lib.php
+
+
+
+INCLUDES
+includes/clear_cache.php
+
+includes/help.php
+
+includes/home.php
+	home_start -> Home page coding has been started.
+	home_categories_checked -> Called once the categories have been checked for perms.
+		"cats" -> A list of the categories to be scanned after perms have been checked.
+	home_boards_checked -> Called once the boards have been loaded, checked, and data 
+		has been turned into a parsed form.
+		"boards" -> A list of the boards to be scanned after checks were performed.
+	home_end -> Called once the home page coding has ended. (Called after the IC.)
+
+includes/join.php
+
+includes/login.php
+	login_start -> The login page started.
+	login_form_sent -> Called only when the login form was sent.
+	login_success_start -> The login was successful. Called before cookies.
+	login_success_end -> The login was successful. Called after cookies.
+	login_error -> The login had errors.
+		"error" -> The errors that occured.
+	login_end -> The login page ended.
+
+includes/logout.php
+	logout_start -> Called at the start of the logout.
+	logout_end -> Called at the end of the logout.
+
+includes/newthread.php
+
+includes/postreply.php
+
+includes/search.php
+
+includes/upgrade.php
+
+includes/viewboard.php
+
+includes/viewthread.php

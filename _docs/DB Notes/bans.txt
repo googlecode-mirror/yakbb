@@ -1,0 +1,9 @@
+Stores bans data
+
+FIELD		DESCRIPTION
+id			ID of the bans. Unique and auto-increment
+type		1 = ip, 2 = e-mail, 3 = username
+value		value of he ban.
+expires		At what time the ban expires.
+reason		A reason given for the ban
+stated		Start time of ban

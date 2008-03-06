@@ -1,0 +1,4 @@
+	The general concept behind this idea is that you don't have to logout in order to 
+switch users. You just click the "Login" or "Switch User" links available and they'll do 
+the work for you. It's just like logging in again, except you automatically get logged 
+out of your old account.

@@ -74,6 +74,7 @@ foreach($boards as $k => $v){
 }
 unset($boards);
 
+// Template stuff
 $tp->addNav($tp->boardLink($bdat["id"], $bdat["name"]));
 
 $tp->addNav($lang->item("nav_newthread"));

@@ -1,0 +1,7 @@
+	0 = no activation
+	1 = e-mail
+	2 = admin
+	3 = both.
+
+	Should use bit numbers to get the right amount. Maybe? What other kinds of activation
+could be required? =/

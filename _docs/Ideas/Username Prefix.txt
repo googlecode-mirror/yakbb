@@ -1,0 +1,8 @@
+	This allows users in specific usergroups to have a prefix before their name. The
+prefix is defined by their usergroup and can be almost anything and it specified via the
+admin CP. Some common examples of prefixes are deviantArt's use of *, ^, $, and other
+various symbols to represent their members, subscribers, mods, admins, development team, 
+etc. It's an effective system and could also be used for something like clans if a system
+was needed.
+
+	A suffix system may also be added.

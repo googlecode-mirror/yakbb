@@ -1,0 +1,32 @@
+Brandon *unicef says:
+	Oh, I had a cool idea for the forum system.
+Brandon *unicef says:
+	For modification puroses it'd be very useful.
+Brandon *unicef says:
+	Okay, you have the normal forums set up
+Brandon *unicef says:
+	But create a second version only accessible by users that can access the Admin 
+	Panel.
+Chris says:
+	They can do that by just copying and pasting the files. :P
+Brandon *unicef says:
+	You'd be able to test new skins or modifications in there before it goes fully 
+	live.
+Brandon *unicef says:
+	Yes, but it'd be better if it could be developed on the main site
+Chris says:
+	I can add an option to only run modules (how code modifications will work) for 
+	admins I guess.
+Brandon *unicef says:
+	Oh, okay, nevermind, that sounds even better.
+Chris says:
+	There will be a "development" mode option for templates though. Meaning, only if
+	you're given access can you access them.
+Brandon *unicef says:
+	Oh, that sounds cool.
+
+
+SUMMARY
+- Allow plugins to only be run for certain groups (for testing purposes and plugins that only
+need to run for admin, etc.)
+- "Development Mode" for skins. Only can view them if you're set to be allowed to.

@@ -1,0 +1,61 @@
+(Not complete. Only done with language variables.)
+
+Covers:
+	- basic and language variables
+	- if, else, else-if, and endif.
+	- repeat, endrepeat, and variables inside a repeat.
+	- includes (coming soon - system isn't developed yet.)
+
+	The template system is a somewhat tricky system to use. First off, it is important 
+to understand how the template system works. What the system does is it parses your 
+template files directly into PHP. This PHP version is actually saved in the "cache" 
+directory (assuming you haven't changed the name.) This will save parse time later. 
+	The PHP file is then included by the script and executed. This is why if your 
+template file is not edited correctly, it may produce PHP syntax errors. The system 
+allows you to use variables passed to the template files by the forum script and any 
+variable that is an ID in the yakbb_config table. Because of the combination of PHP 
+and the direct access to plenty of information, you can easily use built in PHP 
+functions in order to produce an efficient scheme of coding that will make your 
+templating life easier.
+	Please note that you can use PHP directly inside the template files. This includes 
+PHP comments. This makes it easy to leave comments to yourself that you want no one 
+else to see.
+
+
+
+[ Basic and Language Variables ]
+	Variables are the basic, but most important part of this system. They can be used 
+to display info; they can be used to check certain criteria inside if statements; they 
+can be used to display language specific strings and more. They basic usage in the 
+template system is relaying information to you or the template from the forum script.
+	To use a variable, we begin by finding out the name of the variable we want. Some 
+files have usable variables listed at the top. Sometimes the variable is a config 
+variable which requires us to look up values either in documentation or manually from 
+the database listing. We can also use the cache/settings.php file.
+	The next step in using a variable is to locate where we want to put it in the file 
+so that it appears in the proper spot. Once we've found the location, we take the name 
+of the variable and put it between two curly brackets like so:
+
+	{var_name_here}
+
+It should not matter whether or not the variable name is caps or lower case, but it is 
+best to be consistent with the coding.
+	Just placing a variable like that in the middle of a page will display the 
+contents of the variable. It is extremely important to be cautious when displaying 
+data because of the possibility of security information being displayed to a user. 
+Please double check what variable you are adding.
+
+	Using language variables is only slightly different from using regular variables. 
+The biggest difference is the surrounding brackets and the fact that a language 
+variable can NOT be used inside an if statement or as a repeat-variable. (We will dive 
+into repeats later.) To use a language variable, we place its name inside a set of 
+{LANG} and {/LANG} tags. Below is an example.
+
+	{LANG}lang_var_name_here{/LANG}
+
+	For consistency reasons, the {LANG} tags should be capatilized, but don't need to 
+be for the script to parse it. The inside variable name should be lower case, but 
+again, it is up to your discression. The main thing about language variables is that 
+sometimes not all language files will have language variables for that item. If this 
+is the case and you know that your template will need the language item, we can add 
+custom language items using the lang_override file. We'll discuss that later.

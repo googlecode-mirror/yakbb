@@ -1,0 +1,5 @@
+	The public login idea consists of the ability to use sessions to login. (It would
+also be referred to as the "session login.") The main theory behind this is when using
+a public computer (thus, the name) a user would not want to let another user access 
+their account. This way when the browser closes, they are logged out because the 
+session expires.

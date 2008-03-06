@@ -1,0 +1,25 @@
+	These are just some plugins that may come with the default release of the forum 
+system. More details will be added for each plugin as time goes on and more thoughts 
+are put into them. Some may be dropped, etc. Ideas with a question mark after them are 
+questionable/unsure/whatever.
+
+1. Calendar
+	- Events in info center addition?
+	- Calendar most likely won't be initial release
+2. Portal
+	- More advanced statistics
+	- Affiliates section
+	- Show latest news
+	- Set as "home" action
+3. Links in/out tracker
+	- Part of an affiliates manager program?
+	- Integration with ad manager and portal?
+4. Ad manager
+	- Randomize
+	- Application area for members
+5. Error Log
+	- Logs all SQL or standard errors for checking later. Or, at least it records all 
+	errors that should be looked into.
+6. SEO Style Links
+	- Restyles all links into SEO style links. This is done by modifying the template
+	links returned.

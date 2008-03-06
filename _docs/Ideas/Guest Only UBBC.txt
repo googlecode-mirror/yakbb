@@ -1,0 +1,8 @@
+	This will be a UBBC tag that's contents are only shown to guests and admin's with the 
+correct permissions. Admin's are able to view the content to make sure the feature is not 
+abused.
+
+The following would be setting for the tag's use:
+	- Limit user groups that can use
+	- Disable in posts/overall/nowhere
+	- Define color/replacement HTML
