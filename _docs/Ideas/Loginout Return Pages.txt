@@ -1,3 +1,4 @@
 	The concept is straight forward. The page which the login/logout function returns a
-user to is either customizable OR can be set to return them to the previous page. Both 
-should work well.
+user to is either customizable via the ACP (direct to PMs, portal, etc.) OR can be set to 
+return them to the previous page. This would be passed via the URL. Both should work well
+for the concept.

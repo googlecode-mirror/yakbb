@@ -1,6 +1,8 @@
 	Language Override allows a template creator to override specific language 
-variables or provide unique language variables only needed for that template. The only 
-downside to this ability is the fact that it is not section specific (admin panel vs 
+variables or provide unique language variables only needed for that template. The 
+downsides to this ability are the fact that it is not section specific (admin panel vs 
 viewing boards.) It is a global override and can override many language variables, so 
 unique variable names for custom ones are key. There shouldn't be any two identical 
-language variable names anyway. If there are, that would be a bug.
+language variable names anyway. If there are, that would be a bug. The other issue is
+that some languages may not be supported by the template since they may not have a file.
+This also is an issue with plugins and their language files.

@@ -23,3 +23,4 @@ questionable/unsure/whatever.
 6. SEO Style Links
 	- Restyles all links into SEO style links. This is done by modifying the template
 	links returned.
+	- DEFAULT feature??
