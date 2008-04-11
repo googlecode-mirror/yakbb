@@ -16,8 +16,7 @@
 		</td><td class="title" width="150">
 			{LANG}last_post{/LANG}
 		</td></tr>
-		<!-- repeat:boards:board -->
-		<!-- if {repeat:board->parentid} == {repeat:cat->id} -->
+		<!-- repeat:boards:board --> <!-- if {repeat:board->parentid} == {repeat:cat->id} -->
 		<tr><td class="cell1" align="center">
 			<!-- if {repeat:board->new_posts} -->
 			<img src="{TPATH}images/on.gif" alt="*" title="{LANG}new_posts{/LANG}" />
@@ -34,8 +33,7 @@
 		</td><td class="cell1">
 			LAST POST INFO
 		</td></tr>
-		<!-- endif -->
-		<!-- endrepeat -->
+		<!-- endif --> <!-- endrepeat -->
 		</table>
 		<!-- if !{single} -->
 		<br /><br />

@@ -13,7 +13,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 		color: #FFFFFF;
 		width: 750px;
 	}
-	table.php {
+	table.php, table.quote {
 		width: 550px;
 	}
 	td.cell1, tr.cell1 td, td.title, tr.title td {
@@ -22,6 +22,9 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	}
 	span.smalltext {
 		font-size: 8pt;
+	}
+	a:visited {
+		color: #0000FF;
 	}
 
 	/* Form Details */

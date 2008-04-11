@@ -62,6 +62,11 @@ class post_parser {
 		}
 		$str = preg_replace("/\[code\](.*?)\[\/code\]/si", "<b>Code:</b><br /><table cellpadding=\"3\" cellspacing=\"1\" class=\"border\"><tr><td class=\"cell1\">$1</td></tr></table>", $str);
 
+		// Quote
+		while(preg_match("/\[quote\].+?\[\/quote\]/si", $str)){
+			$str = preg_replace_callback("/\[quote\](.*?)\[\/quote\]/si", array($this, "ubbc_quote"), $str);
+		}
+
 		// Simple UBBCs
 		$search = array(
 			"/\[(b|i|u|s|su[pb]|tt|blockquote)\](.*?)\[\/\\1\]/si"
@@ -94,6 +99,12 @@ class post_parser {
 		// Parses the PHP UBBC tag
 
 		return "<b>PHP:</b><br /><table cellpadding=\"3\" cellspacing=\"1\" class=\"border php\"><tr><td class=\"cell1\">".highlight_string(html_entity_decode($m[1]), true)."</td></tr></table>";
+	}
+
+	private function ubbc_quote($m){
+		// Parses the quote UBBC tag
+
+		return "<b>Quote:</b><br /><table cellpadding=\"3\" cellspacing=\"1\" class=\"border quote\"><tr><td class=\"cell1\">".$m[1]."</td></tr></table>";
 	}
 
 	private function smilies($str){

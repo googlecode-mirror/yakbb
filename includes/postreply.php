@@ -11,6 +11,7 @@
 	- Notifications
 	- Make sure the thread isn't a redirect URL
 	- Make sure permissions work for replying
+	- Nav tree needs to include link to thread you're replying to
 */
 
 if(!defined("SNAPONE")) exit;
@@ -92,6 +93,20 @@ $tp->loadFile("reply", "post.tpl", array(
 	"posttitle" => "Re: ".$tdat["title"],
 	"postmessage" => ""
 ));
+
+// Load quote stuff
+if(isset($_REQUEST["quote"])){
+	$quote = intval($_REQUEST["quote"]);
+	if($quote > 0){
+		$check = $db->query("SELECT * FROM ".DBPRE."posts WHERE id='".$quote."' LIMIT 1");
+		if($db->numRows() == 1){
+			$x = $db->fetch();
+			$data = "[quote]".$x["message"]."[/quote]";
+			$tp->addVar("reply", "postmessage", $data);
+		}
+		$db->free();
+	}
+}
 
 if(isset($_REQUEST["submitit"])){
 	// Form was sent. Let's test out the post.

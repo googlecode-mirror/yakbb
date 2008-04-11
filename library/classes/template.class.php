@@ -13,6 +13,7 @@ if(!defined("SNAPONE")) exit;
 	userLink()
 		- Needs to add the group color
 		- Prefixes??
+	- Nav tree dividers should be template specific
 */
 
 class template {
