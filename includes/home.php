@@ -75,7 +75,16 @@ class home {
 		}
 
 		// Query DB (or cache)
-		$this->cats = $db->cacheQuery("SELECT * FROM ".DBPRE."categories WHERE showmain='1'".$extra." ORDER BY `order` ASC", "categories_main".$extra2);
+		$this->cats = $db->cacheQuery("
+			SELECT
+				c.*
+			FROM
+				".DBPRE."categories c
+			WHERE
+				c.showmain='1'".$extra."
+			ORDER BY
+				`order` ASC
+		", "categories_main".$extra2);
 
 		// Set the category IDs array and take care of the single cat stuff
 		if($this->singleCat === true){
@@ -113,7 +122,15 @@ class home {
 		// Load boards, check permissions, and add to array.
 		global $db, $parser, $tp, $plugins, $user;
 
-		$bdat = $db->query("SELECT * FROM ".DBPRE."boards WHERE parenttype='c' AND parentid IN (".implode(",", $this->catids).") ORDER BY `order` ASC");
+		$bdat = $db->query("
+			SELECT
+				b.*
+			FROM
+				".DBPRE."boards b
+			WHERE
+				b.parenttype='c' AND b.parentid IN (".implode(",", $this->catids).")
+			ORDER BY
+				`order` ASC");
 		while($b = $db->fetch($bdat)){
 
 			// Check perms and skip the board if it doesn't pass

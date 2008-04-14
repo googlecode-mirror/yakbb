@@ -99,7 +99,12 @@ class join {
 
 			// Check $adminLoadIt stuff
 			$adminLoadIt = false;
-			$m = $db->fetch($db->query("SELECT count(id) AS totmem FROM ".DBPRE."users"));
+			$m = $db->fetch($db->query("
+				SELECT
+					count(id) AS totmem
+				FROM
+					".DBPRE."users
+			"));
 			if($m["totmem"] == 0){
 				$adminLoadIt = true;
 			}

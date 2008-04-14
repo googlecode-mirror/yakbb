@@ -114,7 +114,15 @@ if(isset($_COOKIE[DBPRE."user"]) && isset($_COOKIE[DBPRE."pass"])){
 
 	// Store the username, query the DB, and check the password
 	$username = $db->secure(secure($_COOKIE[DBPRE."user"]));
-	$db->query("SELECT * FROM ".DBPRE."users WHERE name='".$username."' LIMIT 1");
+	$db->query("
+		SELECT
+			u.*
+		FROM
+			".DBPRE."users u
+		WHERE
+			u.name='".$username."'
+		LIMIT 1
+	");
 	if($db->numRows() == 1){
 		$user = $db->fetch();
 		if($_COOKIE[DBPRE."pass"] == $user["password"]){ // Compare login here.
@@ -179,7 +187,12 @@ if($guest === true){
 
 // Check if user is banned
 // Load cache of bans... this may be switched to not using a cache later
-$yak->bans = $db->cacheQuery("SELECT id, type, value, expires FROM ".DBPRE."bans", "bans");
+$yak->bans = $db->cacheQuery("
+	SELECT
+		id, type, value, expires
+	FROM
+		".DBPRE."bans
+", "bans");
 foreach($yak->bans as $k => $v){
 	if($v["expires"] <= time()){ // Make sure the ban hasn't expired
 		continue;

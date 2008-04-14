@@ -52,7 +52,15 @@ class login {
 		if(empty($username)){
 			$error[] = "username_empty";
 		} else if(strlen($username) < $yak->settings["username_max_length"]){
-			$x = $db->query("SELECT password FROM ".DBPRE."users WHERE name='".$username."'");
+			$x = $db->query("
+				SELECT
+					password
+				FROM
+					".DBPRE."users
+				WHERE
+					name='".$username."'
+				LIMIT 1
+			");
 			if($db->numRows($x) == 1){
 				$x = $db->fetch($x);
 				if($x["password"] == $password){

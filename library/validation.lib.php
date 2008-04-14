@@ -58,7 +58,15 @@ function validUsername($username, $reg=false){
 
 	if(count($errors) == 0 && $reg == true){
 		// Check first to save a query, because they have to change their username if the above are false anyway
-		$db->query("SELECT id FROM ".DBPRE."users WHERE name='".$db->secure($username)."' LIMIT 1");
+		$db->query("
+			SELECT
+				u.id
+			FROM
+				".DBPRE."users u
+			WHERE
+				u.name='".$db->secure($username)."'
+			LIMIT 1
+		");
 		if($db->numRows() == 1){
 			$errors[] = "username_taken";
 		}

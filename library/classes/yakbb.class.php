@@ -28,13 +28,28 @@ class yakbb {
 		$lang->learn("infocenter");
 
 		// Basic stats
-		$mems = $db->queryCache("SELECT count(id) AS mems FROM ".DBPRE."users", "stats/member_count");
+		$mems = $db->queryCache("
+			SELECT
+				count(id) AS mems
+			FROM
+				".DBPRE."users
+		", "stats/member_count");
 		$stats["total_mems"] = $mems["mems"];
 
-		$threads = $db->queryCache("SELECT count(id) AS threads FROM ".DBPRE."threads", "stats/threads_count");
+		$threads = $db->queryCache("
+			SELECT
+				count(id) AS threads
+			FROM
+				".DBPRE."threads
+		", "stats/threads_count");
 		$stats["total_threads"] = $threads["threads"];
 
-		$posts = $db->queryCache("SELECT count(id) AS posts FROM ".DBPRE."posts", "stats/posts_count");
+		$posts = $db->queryCache("
+			SELECT
+				count(id) AS posts
+			FROM
+				".DBPRE."posts
+		", "stats/posts_count");
 		$stats["total_posts"] = $posts["posts"];
 
 		$tp->addGlobal($stats);

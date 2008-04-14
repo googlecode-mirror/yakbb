@@ -21,7 +21,15 @@ if($bid < 0){
 }
 
 // Make sure the thread exists
-$board = $db->query("SELECT * FROM ".DBPRE."boards WHERE id='".$bid."' LIMIT 1");
+$board = $db->query("
+	SELECT
+		b.*
+	FROM
+		".DBPRE."boards b
+	WHERE
+		b.id='".$bid."'
+	LIMIT 1
+");
 if($db->numRows() == 0){
 	$tp->error("newthread_board_doesnt_exist");
 }
@@ -41,14 +49,30 @@ while(true){
 	if($curboard["parenttype"] == "c"){
 		break;
 	}
-	$curboard = $db->cacheQuery("SELECT * FROM ".DBPRE."boards WHERE id='".$curboard["parentid"]."' LIMIT 1", "board_data/".$curboard["parentid"]);
+	$curboard = $db->cacheQuery("
+		SELECT
+			b.*
+		FROM
+			".DBPRE."boards b
+		WHERE
+			b.id='".$curboard["parentid"]."'
+		LIMIT 1
+	", "board_data/".$curboard["parentid"]);
 	$curboard = $curboard[0]; // We only want the first result... despite there being only one.
 	$boards[] = $curboard;
 }
 
 if($curboard["parentid"] != 0){
 	// Load the category if the ID isn't 0. (If it is zero, we don't really have a category. =P)
-	$cat = $db->cacheQuery("SELECT * FROM ".DBPRE."categories WHERE id='".$curboard["parentid"]."' LIMIT 1", "category_data/".$curboard["parentid"]);
+	$cat = $db->cacheQuery("
+		SELECT
+			c.*
+		FROM
+			".DBPRE."categories c
+		WHERE
+			c.id='".$curboard["parentid"]."'
+		LIMIT 1
+	", "category_data/".$curboard["parentid"]);
 	$cat = $cat[0]; // Only want the first result... despite there being only one.
 
 	// Check view perms

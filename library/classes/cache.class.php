@@ -105,7 +105,12 @@ class cache extends flat_file {
 		global $db;
 
 		$yak->settings = array(); // Is this really necessary? I guess so. =P
-		$x = $db->query("SELECT name, value FROM ".DBPRE."config");
+		$x = $db->query("
+			SELECT
+				name, value
+			FROM
+				".DBPRE."config
+		");
 		while($con = $db->fetch($x)){
 			$v = $con["value"];
 
@@ -139,7 +144,12 @@ class cache extends flat_file {
 		global $db;
 
 		$yak->groups = array(); // Is this really necessary? I guess so. =P
-		$x = $db->query("SELECT * FROM ".DBPRE."groups");
+		$x = $db->query("
+			SELECT
+				*
+			FROM
+				".DBPRE."groups
+		");
 		while($con = $db->fetch($x)){
 			$yak->groups[$con["id"]] = $con;
 		}

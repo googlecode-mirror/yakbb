@@ -63,7 +63,14 @@ function deleteCategories($catids){
 	$db->query("DELETE FROM ".DBPRE."categories WHERE id IN (".$cats.")");
 
 	// Let's clean up the boards also.
-	$x = $db->query("SELECT id FROM ".DBPRE."boards WHERE catid IN (".$cats.")");
+	$x = $db->query("
+		SELECT
+			b.id
+		FROM
+			".DBPRE."boards b
+		WHERE
+			b.catid IN (".$cats.")
+	");
 	if($db->numRows($x) > 0){
 		// Boards exist in the category. Let's compile a list and then delete them
 
