@@ -1,0 +1,14 @@
+Stores pm relationships
+
+FIELD		DESCRIPTION
+id			ID of the relation. Unique.
+pmid		ID of the PM it relates to.
+userid		ID of the user is relates to.
+status		That status of the message. See below
+
+
+MESSAGE STATUSES
+0 = unread
+1 = read
+2 = replied
+3 = deleted (for other user's outbox)
