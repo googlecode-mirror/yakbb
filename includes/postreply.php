@@ -31,7 +31,7 @@ $thread = $db->query("
 	FROM
 		".DBPRE."threads t
 	WHERE
-		t,id='".$tid."'
+		t.id='".$tid."'
 	LIMIT 1
 ");
 if($db->numRows() == 0){
