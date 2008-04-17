@@ -110,6 +110,8 @@ class cache extends flat_file {
 				name, value
 			FROM
 				".DBPRE."config
+			ORDER BY
+				name ASC
 		");
 		while($con = $db->fetch($x)){
 			$v = $con["value"];
@@ -149,6 +151,8 @@ class cache extends flat_file {
 				*
 			FROM
 				".DBPRE."groups
+			ORDER BY
+				id ASC
 		");
 		while($con = $db->fetch($x)){
 			$yak->groups[$con["id"]] = $con;

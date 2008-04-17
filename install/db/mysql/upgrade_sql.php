@@ -9,9 +9,8 @@ class upgrade_sql {
 		global $cache, $db;
 		$this->db = &$db;
 
-		while($n <= CURRENTDBVERSION && is_callable(array($this, "upgradeIt".$n))){
+		while(++$n <= CURRENTDBVERSION && is_callable(array($this, "upgradeIt".$n))){
 			call_user_func(array($this, "upgradeIt".$n));
-			$n++;
 		}
 
 		// Update config file
@@ -72,6 +71,10 @@ class upgrade_sql {
 				PRIMARY KEY ( `id` )
 			) ENGINE = MYISAM
 		");
+	}
+	private function upgradeIt5(){
+		// Preliminary stuff for group colors (4/16/08)
+		$this->db->query("UPDATE `".DBPRE."groups` SET `color` = 'a:2:{s:7:\"default\";s:7:\"#FF0000\";s:9:\"template2\";s:7:\"#0000FF\";}' WHERE `".DBPRE."groups`.`id` =1 LIMIT 1 ;");
 	}
 }
 
