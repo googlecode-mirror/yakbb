@@ -6,7 +6,7 @@ class upgrade_sql {
 	var $db;
 	public function upgrade($n=DBVERSION){
 		// $n = current version. Will fully update to final version
-		global $cache, $db
+		global $cache, $db;
 		$this->db = &$db;
 
 		while($n <= CURRENTDBVERSION && is_callable(array($this, "upgradeIt".$n))){
@@ -36,6 +36,7 @@ class upgrade_sql {
 		$this->db->query("ALTER TABLE `".DBPRE."boards` CHANGE `sublist` `sublist` ENUM( '0', '1' ) NOT NULL DEFAULT '1'");
 
 		// Add the permissions group to boards and categories
+		$this->db->query("ALTER TABLE `".DBPRE."boards` ADD `permissions` TEXT NOT NULL");
 		$this->db->query("ALTER TABLE `".DBPRE."categories` ADD `permissions` TEXT NOT NULL");
 
 		// Fix sub list and permissions
