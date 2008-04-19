@@ -23,8 +23,6 @@ if(!defined("SNAPONE")) exit;
 	TODO
 	- Make README use language variable? (Language loads after README, doesn't it? o.o;; )
 	- Finish query-cache functions.
-		-> Add expiration time settings
-		-> Convert the makeDate() to actually use a custom date format
 		-> If it creates a parent folder, make sure to create an index.html
 	- Add the SNAPONE security check to all cached files tops. Including templates. =P
 */
@@ -32,7 +30,6 @@ if(!defined("SNAPONE")) exit;
 class cache extends flat_file {
 	private $dir = false; // Cache folder
 	private $sql = false; // SQL cache folder = sql
-	private $tpl = false; // Template cache folder = tpl
 	private $cache = array(); // Holds loaded cache data.
 
 	// Construct
@@ -44,9 +41,6 @@ class cache extends flat_file {
 		if(!file_exists($dir."sql/index.html")){
 			$this->updateFile($dir."sql/index.html", "");
 		}
-		if(!file_exists($dir."tpl/index.html")){
-			$this->updateFile($dir."tpl/index.html", "");
-		}
 		if(!file_exists($dir."index.html")){
 			$this->updateFile($dir."index.html", "");
 		}
@@ -56,7 +50,6 @@ class cache extends flat_file {
 
 		$this->dir = $dir;
 		$this->sql = $dir."sql/";
-		$this->tpl = $dir."tpl/";
 	}
 
 	public function clearCache($file=false){
@@ -83,9 +76,9 @@ class cache extends flat_file {
 		// @param	Type	Description
 		// $file	String	The file inside the $this->dir folder.
 		// $data	String	The data to be added. Make sure that it's been set correctly.
-		// $comm	Mixed	The comment to be added. If false, add a created date.
+		// $comm	String	The comment to be added before the creation date.
 
-		$d2 = "<"."?php\n\n/*\n".$comm."\nCreated: ".date("F d Y h:i:s A", time())."\n*/\n\n".$data."\n?".">";
+		$d2 = "<"."?php\n\n/*\n".$comm."\nCreated: ".date("F d Y h:i:s A", time())."\n*/\n\n".$data."?".">";
 		$this->updateFile($this->dir.$file.".php", $d2);
 	}
 
@@ -189,61 +182,6 @@ class cache extends flat_file {
 
 
 
-	// Template functions
-	public function isCachedTemplate($file, $tp, $time=0){
-		// Checks whether a cached template exists or not.
-		// @param	Type	Description
-		// $file	String	The file to check for.
-		// $tp		String	The template dirKey.
-		// $time	Integer	The last time the real template file was edited.
-		// Return	Return	Returns true if file exists, false otherwise
-
-		$cached = true; // Set default value
-		$fpath = $this->tpl.$tp."/".$file.".php"; // Save line space
-
-		if(!file_exists($fpath)){ // Make sure file exists. Otherwise, kill it
-			$cached = false;
-		} else if($time > filemtime($fpath)){ // Check last edited times
-			$cached = false;
-			$this->deleteFile($fpath);
-		}
-
-		return $cached;
-	}
-
-	public function createCachedTemplate($file, $tp, $data){
-		// Saves the specified data inside the specified file.
-		// @param	Type	Description
-		// $file	String	The file to be saved as.
-		// $tp		String	The template dirKey.
-		// $data	String	The actual template information.
-
-		if(!file_exists($this->tpl.$tp."/index.html")){
-			$this->updateFile($this->tpl.$tp."/index.html", "");
-		}
-		$this->updateFile($this->tpl.$tp."/".$file.".php", $data);
-	}
-
-	public function displayCachedTemplate($file, $tp, $vars=array()){
-		// Displays the contents of a cached template.
-		// @param	Type	Description
-		// $file	String	The file to load from cache.
-		// $tp		String	The template dirKey
-		// $vars	Array	The vars array that is used to load information
-
-		global $lang; // Load for language items to use
-		require $this->tpl.$tp."/".$file.".php";
-	}
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -254,23 +192,31 @@ class cache extends flat_file {
 	public function queryCache($file){
 		// Loads data from the cache of a query. Returns false on failure.
 		// @param	Type	Description
-		// $file	String	The file name (md5 of the query)
+		// $file	String	The file name (md5 of the query or a custom file name)
 		// Return	Return	Returns false on failure and the data on success.
 
 		if(file_exists($this->sql.$file.".php")){
 			require $this->sql.$file.".php";
-			return $return_value;
+			if($timeout == -1 || $timeout > time()){
+				return $return_value;
+			}
 		}
 		return false;
 	}
 
-	public function queryCacheStore($file, $dat, $query){
+	public function queryCacheStore($file, $dat, $query, $timeout=-1){
 		// Stores the data from a query in the cache.
 		// @param	Type	Description
 		// $file	String	The file name (md5 of the query or custom)
 		// $dat		Array	The result of the query to be stored.
 		// $query	String	The actual query. Stored to keep track of data.
-		
+		// $timeout	Integer	The time before the file should be considered expired. -1 means it doesn't expire.
+
+		// Fix $timeout if it isn't a correct number
+		if(!is_numeric($timeout) || $timeout < -1){
+			$timeout = -1;
+		}
+
 		$s = "<"."?php
 /*
 Query: ".$query."
@@ -278,9 +224,9 @@ Created: ".makeDate(time())."
 */
 
 if(!defined(\"SNAPONE\")) exit;";
-		$s .= "\n\n\$return_value = ".var_export($dat, true);
+		$s .= "\n\n\$timeout = ".$timeout.";";
+		$s .= "\n\$return_value = ".var_export($dat, true);
 		$s .= "?".">";
-
 		$this->updateFile($this->sql.$file.".php", $s);
 		
 	}

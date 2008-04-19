@@ -17,6 +17,13 @@
 || $Id$
 \*==================================================*/
 
+/*	TODO
+	makeDate()
+		- Make it load the user's default format if $format is null.
+	redirect()
+		- Make it accept external URLs
+*/
+
 if(!defined("SNAPONE")) exit;
 
 function libraryLoad($n){
@@ -42,8 +49,8 @@ function secure($data){
 	return htmlentities($data, ENT_QUOTES);
 }
 
-function makeDate($time){
-	return date("D M d, Y g:i a", $time);
+function makeDate($time, $format="D M d, Y g:i a"){
+	return date($format, $time);
 }
 
 function sha256($data){

@@ -58,11 +58,11 @@ class home {
 		$this->loadBoards();
 
 		// Add to the template
-		$tp->addVar("home", array(
-			"cats" => $this->cats,
-			"boards" => $this->boards,
-			"single" => $this->singleCat
-		));
+		//$tp->addVar("home", array(
+		//	"cats" => $this->cats,
+		//	"boards" => $this->boards,
+		//	"single" => $this->singleCat
+		//));
 
 		// Load the IC stats
 		if($this->singleCat != true){
@@ -82,7 +82,7 @@ class home {
 		$extra = $extra2 = "";
 		if(isset($_REQUEST["cat"])){
 			$c = intval($_REQUEST["cat"]);
-			if($c != 0){
+			if($c > 0){
 				$extra = " AND id='".$c."'";
 				$extra2 = "_".$c;
 				$this->singleCat = true;
@@ -101,7 +101,7 @@ class home {
 				c.showmain='1'".$extra."
 			ORDER BY
 				`order` ASC
-		", "categories_main".$extra2);
+		", -1, "categories_main".$extra2);
 
 		// Set the category IDs array and take care of the single cat stuff
 		if($this->singleCat === true){
@@ -147,7 +147,8 @@ class home {
 			WHERE
 				b.parenttype='c' AND b.parentid IN (".implode(",", $this->catids).")
 			ORDER BY
-				`order` ASC");
+				`order` ASC
+		");
 		while($b = $db->fetch($bdat)){
 
 			// Check perms and skip the board if it doesn't pass

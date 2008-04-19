@@ -192,7 +192,7 @@ $yak->bans = $db->cacheQuery("
 		id, type, value, expires
 	FROM
 		".DBPRE."bans
-", "bans");
+", 10, "bans");
 foreach($yak->bans as $k => $v){
 	if($v["expires"] <= time()){ // Make sure the ban hasn't expired
 		continue;
@@ -276,7 +276,7 @@ if(in_array($act, array_keys($va)) && !empty($va[$act]) && file_exists(INCLUDESD
 	unset($va);
 	require_once INCLUDESDIR.$n.".php";
 	if(class_exists($n)){
-		new $n();
+		${$n} = new $n();
 	}
 } else {
 	unset($va);

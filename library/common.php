@@ -31,6 +31,7 @@ require_once LIBDIR."classes/flat_file.class.php";
 require_once LIBDIR."classes/cache.class.php";
 require_once LIBDIR."classes/language.class.php";
 require_once LIBDIR."classes/template.class.php";
+require_once LIBDIR."classes/post_parser.class.php";
 
 // Load the database abstraction and actual database classes. Then, make the $db class from that and run a few cores.
 require_once LIBDIR."classes/db/db.abstract.class.php";

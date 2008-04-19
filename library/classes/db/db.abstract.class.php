@@ -39,10 +39,10 @@ abstract class db {
 	public $last;
 
 	abstract public function connect($data);
-	public function queryCache($query, $name=false){
-		return $this->cacheQuery($query, $name);
+	public function queryCache($query, $timeout=-1, $name=false){
+		return $this->cacheQuery($query, $timeout, $name);
 	}
-	abstract public function cacheQuery($query, $name=false);
+	abstract public function cacheQuery($query, $timeout=-1, $name=false);
 	abstract public function clearCacheQuery($name, $query=false);
 	abstract public function query($query);
 	abstract public function insert($table, array $ins);

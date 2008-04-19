@@ -38,7 +38,7 @@ class mysql extends db {
 		$this->dbc = mysql_connect($c["host"], $c["username"], $c["password"]) or die("Unable to connect to MySQL.");
 		mysql_select_db($c["db"]) or die("Unable to select MySQL database.");
 	}
-	public function cacheQuery($query, $name=false){
+	public function cacheQuery($query, $timeout=-1, $name=false){
 		global $cache;
 		if($name === false){
 			$name = md5($query);
@@ -47,7 +47,7 @@ class mysql extends db {
 			return $dat;
 		}
 
-		if(is_array($dat) && count($dat) == 0){
+		if(is_array($dat) && count($dat) == 0){ // It'll return false sometimes if $dat is empty
 			return $dat;
 		}
 
@@ -62,7 +62,7 @@ class mysql extends db {
 		if(strstr($query, "count(")){
 			$dat = $dat[0];
 		}
-		$cache->queryCacheStore($name, $dat, $query);
+		$cache->queryCacheStore($name, $dat, $query, $timeout);
 		return $dat;
 	}
 	public function clearCacheQuery($name, $query=false){
