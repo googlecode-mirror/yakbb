@@ -1,4 +1,21 @@
 <?php
+/*==================================================*\
+|| ___     ___  ___     _     __  ______    ______
+|| \--\   /--/ /---\   |-|   /-/ |--___-\  |--___-\
+||  \--\_/--/ /--_--\  |-|  /-/  |-|___\-| |-|___\-|
+||   \_---_/ /--/_\--\ |--\/-/   |------<  |------<
+||     |-|   |---_---| |-----\   |--____-\ |--____-\
+||     |-|   |--/ \--| |--/\--\  |-|___/-| |-|___/-|
+||     |_|   |_|   |_| |_|  |__| |______/  |_______/
+||
+||==================================================||
+|| Program: YakBB v1.0.0
+|| Author: Chris Dessonville
+||==================================================||
+|| File: /library/common.php
+|| File Version: v0.1.0a
+|| $Id: global.php 64 2008-04-14 15:32:04Z cddude229 $
+\*==================================================*/
 
 if(!defined("SNAPONE")) exit;
 
@@ -14,8 +31,6 @@ require_once LIBDIR."classes/flat_file.class.php";
 require_once LIBDIR."classes/cache.class.php";
 require_once LIBDIR."classes/language.class.php";
 require_once LIBDIR."classes/template.class.php";
-require_once LIBDIR."classes/permissions.class.php";
-require_once LIBDIR."classes/post_parser.class.php";
 
 // Load the database abstraction and actual database classes. Then, make the $db class from that and run a few cores.
 require_once LIBDIR."classes/db/db.abstract.class.php";

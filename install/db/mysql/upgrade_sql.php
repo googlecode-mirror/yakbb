@@ -30,56 +30,6 @@ class upgrade_sql {
 
 	private function upgradeIt0(){} // Prevent possible errors
 	private function upgradeIt1(){} // Prevent possible errors
-	private function upgradeIt2(){
-		// Change to enum from tinyint
-		$this->db->query("ALTER TABLE `".DBPRE."boards` CHANGE `sublist` `sublist` ENUM( '0', '1' ) NOT NULL DEFAULT '1'");
-
-		// Add the permissions group to boards and categories
-		$this->db->query("ALTER TABLE `".DBPRE."boards` ADD `permissions` TEXT NOT NULL");
-		$this->db->query("ALTER TABLE `".DBPRE."categories` ADD `permissions` TEXT NOT NULL");
-
-		// Fix sub list and permissions
-		$this->db->query('UPDATE `'.DBPRE.'boards` SET `sublist`=\'1\', `permissions`=\'a:3:{i:-1;a:5:{s:4:"view";b:1;s:5:"reply";b:0;s:4:"poll";b:0;s:6:"thread";b:0;s:6:"attach";b:0;}i:0;a:5:{s:4:"view";b:1;s:5:"reply";b:1;s:4:"poll";b:1;s:6:"thread";b:1;s:6:"attach";b:0;}i:1;a:5:{s:4:"view";b:1;s:5:"reply";b:1;s:4:"poll";b:1;s:6:"thread";b:1;s:6:"attach";b:1;}}\'');
-		$this->db->query('UPDATE `'.DBPRE.'categories` SET `permissions`=\'a:3:{i:-1;a:1:{s:4:"view";b:1;}i:0;a:1:{s:4:"view";b:1;}i:1;a:1:{s:4:"view";b:1;}}\'');
-	}
-	private function upgradeIt3(){
-		// Start groups stuff
-		$this->db->query("CREATE TABLE `".DBPRE."groups` ( `id` INT UNSIGNED NOT NULL AUTO_INCREMENT , `name` TEXT NOT NULL , `color` TEXT NOT NULL , PRIMARY KEY ( `id` ) ) ENGINE = MYISAM ");
-		$this->db->query("INSERT INTO `".DBPRE."groups` (`id` ,`name` ,`color`) VALUES ('1', 'Admin', 'a:0:{}')");
-	}
-	private function upgradeIt4(){
-		// Pagination for threads and posts
-		$this->db->query("INSERT INTO `".DBPRE."config` (`id` ,`name` ,`value`)VALUES ('0', 'posts_per_page', '15'), ('0', 'threads_per_page', '30')");
-		$this->db->query("
-			CREATE TABLE `".DBPRE."messages_relations` (
-				`id` int(10) unsigned NOT NULL auto_increment,
-				`pmid` int(11) NOT NULL,
-				`userid` int(11) NOT NULL,
-				`status` enum('0','1','2','3') NOT NULL,
-				PRIMARY KEY  (`id`)
-			) ENGINE=MYISAM
-		");
-		$this->db->query("
-			CREATE TABLE `".DBPRE."messages` (
-				`id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-				`title` TEXT NOT NULL ,
-				`message` TEXT NOT NULL ,
-				`senderid` INT NOT NULL ,
-				`time` INT NOT NULL ,
-				`disableubbc` ENUM( '0', '1' ) NOT NULL ,
-				`disablesmilies` ENUM( '0', '1' ) NOT NULL ,
-				PRIMARY KEY ( `id` )
-			) ENGINE = MYISAM
-		");
-	}
-	private function upgradeIt5(){
-		// Preliminary stuff for group colors (4/16/08)
-		$this->db->query("UPDATE `".DBPRE."groups` SET `color` = 'a:2:{s:7:\"default\";s:7:\"#FF0000\";s:9:\"template2\";s:7:\"#0000FF\";}' WHERE `".DBPRE."groups`.`id` =1 LIMIT 1 ;");
-	}
-	private function updateIt6(){
-		// Adding a sub-board for testing purposes (4/18/08)
-		$this->db->query('INSERT INTO `'.DBPRE.'boards` (`id`, `parentid`, `parenttype`, `name`, `description`, `threads`, `posts`, `order`, `sublist`, `permissions`) VALUES (\'0\', \'3\', \'b\', \'Sub-Board 1\', \'Testing... 1, 2, 3. :)\', \'0\', \'0\', \'0\', \'1\', \'a:3:{i:-1;a:5:{s:4:"view";b:1;s:5:"reply";b:0;s:4:"poll";b:0;s:6:"thread";b:0;s:6:"attach";b:0;}i:0;a:5:{s:4:"view";b:1;s:5:"reply";b:1;s:4:"poll";b:1;s:6:"thread";b:1;s:6:"attach";b:0;}i:1;a:5:{s:4:"view";b:1;s:5:"reply";b:1;s:4:"poll";b:1;s:6:"thread";b:1;s:6:"attach";b:1;}}\');');
-	}
 }
 
 ?>

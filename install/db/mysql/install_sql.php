@@ -5,8 +5,8 @@ if(!defined("SNAPONE")) exit;
 $d = array(); // Drops
 $c = array(); // Creates
 $i = array(); // Inserts
-$d[] = "DROP TABLE IF EXISTS `".DBPRE."attachments`";
-$c[] = "CREATE TABLE `".DBPRE."attachments` (
+$d[] = "DROP TABLE IF EXISTS `\".DBPRE.\"attachments`";
+$c[] = "CREATE TABLE `\".DBPRE.\"attachments` (
 `id` int(10) unsigned NOT NULL auto_increment,
 `postid` int(11) NOT NULL,
 `originalname` text collate latin1_general_ci NOT NULL,
@@ -21,8 +21,8 @@ PRIMARY KEY (`id`)
 
 
 
-$d[] = "DROP TABLE IF EXISTS `".DBPRE."bans`";
-$c[] = "CREATE TABLE `".DBPRE."bans` (
+$d[] = "DROP TABLE IF EXISTS `\".DBPRE.\"bans`";
+$c[] = "CREATE TABLE `\".DBPRE.\"bans` (
 `id` int(10) unsigned NOT NULL auto_increment,
 `type` tinyint(1) NOT NULL,
 `value` text NOT NULL,
@@ -36,48 +36,51 @@ PRIMARY KEY (`id`)
 
 
 
-$d[] = "DROP TABLE IF EXISTS `".DBPRE."boards`";
-$c[] = "CREATE TABLE `".DBPRE."boards` (
+$d[] = "DROP TABLE IF EXISTS `\".DBPRE.\"boards`";
+$c[] = "CREATE TABLE `\".DBPRE.\"boards` (
 `id` int(10) unsigned NOT NULL auto_increment,
 `parentid` int(11) NOT NULL,
-`parenttype` enum('b','c') collate latin1_general_ci NOT NULL,
+`parenttype` enum(\'b\',\'c\') collate latin1_general_ci NOT NULL,
 `name` text collate latin1_general_ci NOT NULL,
 `description` text collate latin1_general_ci NOT NULL,
 `threads` int(11) NOT NULL,
 `posts` int(11) NOT NULL,
 `order` int(11) NOT NULL,
-`sublist` tinyint(4) NOT NULL,
+`sublist` enum(\'0\',\'1\') collate latin1_general_ci NOT NULL default \'1\',
+`permissions` text collate latin1_general_ci NOT NULL,
 PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci";
 
 
-$i[] = "INSERT INTO `".DBPRE."boards` (`id`, `parentid`, `parenttype`, `name`, `description`, `threads`, `posts`, `order`, `sublist`) VALUES
-(1, 1, 'c', 'Board 1', 'o.o', 0, 0, 1, 0),
-(2, 2, 'c', 'Board 2', 'Should be under category 2', 0, 0, 1, 0),
-(3, 0, 'c', 'Board 3', 'This should appear under no category.', 0, 0, 0, 0)";
+$i[] = "INSERT INTO `\".DBPRE.\"boards` (`id`, `parentid`, `parenttype`, `name`, `description`, `threads`, `posts`, `order`, `sublist`, `permissions`) VALUES
+(1, 1, \'c\', \'Board 1\', \'o.o\', 5, 14, 1, \'1\', \'a:3:{i:-1";a:5:{s:4:\"view\";b:1;s:5:\"reply\";b:0;s:4:\"poll\";b:0;s:6:\"thread\";b:0;s:6:\"attach\";b:0;}i:0;a:5:{s:4:\"view\";b:1;s:5:\"reply\";b:1;s:4:\"poll\";b:1;s:6:\"thread\";b:1;s:6:\"attach\";b:0;}i:1;a:5:{s:4:\"view\";b:1;s:5:\"reply\";b:1;s:4:\"poll\";b:1;s:6:\"thread\";b:1;s:6:\"attach\";b:1;}}\'),
+(2, 2, \'c\', \'Board 2\', \'Should be [b]u[i]nde[/i]r[/b] category 2\', 0, 0, 1, \'1\', \'a:3:{i:-1;a:5:{s:4:\"view\";b:1;s:5:\"reply\";b:0;s:4:\"poll\";b:0;s:6:\"thread\";b:0;s:6:\"attach\";b:0;}i:0;a:5:{s:4:\"view\";b:1;s:5:\"reply\";b:1;s:4:\"poll\";b:1;s:6:\"thread\";b:1;s:6:\"attach\";b:0;}i:1;a:5:{s:4:\"view\";b:1;s:5:\"reply\";b:1;s:4:\"poll\";b:1;s:6:\"thread\";b:1;s:6:\"attach\";b:1;}}\'),
+(3, 0, \'c\', \'Board 3\', \'This should appear under no category.\', 0, 0, 0, \'1\', \'a:3:{i:-1;a:5:{s:4:\"view\";b:1;s:5:\"reply\";b:0;s:4:\"poll\";b:0;s:6:\"thread\";b:0;s:6:\"attach\";b:0;}i:0;a:5:{s:4:\"view\";b:1;s:5:\"reply\";b:1;s:4:\"poll\";b:1;s:6:\"thread\";b:1;s:6:\"attach\";b:0;}i:1;a:5:{s:4:\"view\";b:1;s:5:\"reply\";b:1;s:4:\"poll\";b:1;s:6:\"thread\";b:1;s:6:\"attach\";b:1;}}\'),
+(4, 3, \'b\', \'Sub-Board 1\', \'Testing... 1, 2, 3. :)\', 0, 0, 0, \'1\', \'a:3:{i:-1;a:5:{s:4:\"view\";b:1;s:5:\"reply\";b:0;s:4:\"poll\";b:0;s:6:\"thread\";b:0;s:6:\"attach\";b:0;}i:0;a:5:{s:4:\"view\";b:1;s:5:\"reply\";b:1;s:4:\"poll\";b:1;s:6:\"thread\";b:1;s:6:\"attach\";b:0;}i:1;a:5:{s:4:\"view\";b:1;s:5:\"reply\";b:1;s:4:\"poll\";b:1;s:6:\"thread\";b:1;s:6:\"attach\";b:1;}}\');
 
 
 
-$d[] = "DROP TABLE IF EXISTS `".DBPRE."categories`";
-$c[] = "CREATE TABLE `".DBPRE."categories` (
+$d[] = "DROP TABLE IF EXISTS `\".DBPRE.\"categories`";
+$c[] = "CREATE TABLE `\".DBPRE.\"categories` (
 `id` int(11) unsigned NOT NULL auto_increment,
 `name` text collate latin1_general_ci NOT NULL,
 `hideshow` int(1) NOT NULL,
 `showmain` int(1) NOT NULL,
 `order` int(11) NOT NULL,
+`permissions` text collate latin1_general_ci NOT NULL,
 PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci";
 
 
-$i[] = "INSERT INTO `".DBPRE."categories` (`id`, `name`, `hideshow`, `showmain`, `order`) VALUES
-(1, 'Category 1', 1, 1, 1),
-(2, 'Category 2', 1, 1, 2),
-(3, 'Category 3', 1, 1, 3)";
+$i[] = "INSERT INTO `\".DBPRE.\"categories` (`id`, `name`, `hideshow`, `showmain`, `order`, `permissions`) VALUES
+(1, \'Category 1\', 1, 1, 1, \'a:3:{i:-1";a:1:{s:4:\"view\";b:1;}i:0;a:1:{s:4:\"view\";b:1;}i:1;a:1:{s:4:\"view\";b:1;}}\'),
+(2, \'Category 2\', 1, 1, 2, \'a:3:{i:-1;a:1:{s:4:\"view\";b:1;}i:0;a:1:{s:4:\"view\";b:1;}i:1;a:1:{s:4:\"view\";b:1;}}\'),
+(3, \'Category 3\', 1, 1, 3, \'a:3:{i:-1;a:1:{s:4:\"view\";b:1;}i:0;a:1:{s:4:\"view\";b:1;}i:1;a:1:{s:4:\"view\";b:1;}}\');
 
 
 
-$d[] = "DROP TABLE IF EXISTS `".DBPRE."config`";
-$c[] = "CREATE TABLE `".DBPRE."config` (
+$d[] = "DROP TABLE IF EXISTS `\".DBPRE.\"config`";
+$c[] = "CREATE TABLE `\".DBPRE.\"config` (
 `id` int(10) unsigned NOT NULL auto_increment,
 `name` text collate latin1_general_ci NOT NULL,
 `value` text collate latin1_general_ci NOT NULL,
@@ -85,33 +88,80 @@ PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci";
 
 
-$i[] = "INSERT INTO `".DBPRE."config` (`id`, `name`, `value`) VALUES
-(1, 'default_template', 'default'),
-(2, 'default_language', 'en'),
-(3, 'strip_tab_spacing', 'false'),
-(4, 'defaulttimezone', '-6'),
-(5, 'dst', 'true'),
-(6, 'board_title', 'Message Board'),
-(7, 'registration_enabled', 'true'),
-(8, 'session_login', 'true'),
-(10, 'username_max_length', '30'),
-(11, 'displayname_max_length', '30'),
-(12, 'activation_required', 'false'),
-(13, 'username_min_length', '2'),
-(14, 'displayname_min_length', '1'),
-(15, 'unique_email', 'true'),
-(16, 'switch_users', 'true'),
-(17, 'nav_divider', ' :: '),
-(18, 'mod_list_main', 'true'),
-(19, 'seo_engine', 'false'),
-(20, 'thread_desc_max', '100'),
-(21, 'thread_subject_max', '50'),
-(22, 'thread_message_max', '25000')";
+$i[] = "INSERT INTO `\".DBPRE.\"config` (`id`, `name`, `value`) VALUES
+(1, \'default_template\', \'default\'),
+(2, \'default_language\', \'en\'),
+(3, \'strip_tab_spacing\', \'false\'),
+(4, \'defaulttimezone\', \'-6\'),
+(5, \'dst\', \'true\'),
+(6, \'board_title\', \'Message Board\'),
+(7, \'registration_enabled\', \'true\'),
+(8, \'session_login\', \'true\'),
+(10, \'username_max_length\', \'30\'),
+(11, \'displayname_max_length\', \'30\'),
+(12, \'activation_required\', \'false\'),
+(13, \'username_min_length\', \'2\'),
+(14, \'displayname_min_length\', \'1\'),
+(15, \'unique_email\', \'true\'),
+(16, \'switch_users\', \'true\'),
+(17, \'nav_divider\', \' :: \'),
+(18, \'mod_list_main\', \'true\'),
+(19, \'seo_engine\', \'true\'),
+(20, \'thread_desc_max\', \'100\'),
+(21, \'thread_subject_max\', \'50\'),
+(22, \'thread_message_max\', \'25000\'),
+(23, \'posts_per_page\', \'15\'),
+(24, \'threads_per_page\', \'30\'),
+(25, \'posts_per_page\', \'15\'),
+(26, \'threads_per_page\', \'30\')";
 
 
 
-$d[] = "DROP TABLE IF EXISTS `".DBPRE."polls`";
-$c[] = "CREATE TABLE `".DBPRE."polls` (
+$d[] = "DROP TABLE IF EXISTS `\".DBPRE.\"groups`";
+$c[] = "CREATE TABLE `\".DBPRE.\"groups` (
+`id` int(10) unsigned NOT NULL auto_increment,
+`name` text NOT NULL,
+`color` text NOT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1";
+
+
+$i[] = "INSERT INTO `\".DBPRE.\"groups` (`id`, `name`, `color`) VALUES
+(1, \'Admin\', \'a:2:{s:7:\"default\"";s:7:\"#FF0000\";s:9:\"template2\";s:7:\"#0000FF\";}\');
+
+
+
+$d[] = "DROP TABLE IF EXISTS `\".DBPRE.\"messages`";
+$c[] = "CREATE TABLE `\".DBPRE.\"messages` (
+`id` int(10) unsigned NOT NULL auto_increment,
+`title` text NOT NULL,
+`message` text NOT NULL,
+`senderid` int(11) NOT NULL,
+`time` int(11) NOT NULL,
+`disableubbc` enum(\'0\',\'1\') NOT NULL,
+`disablesmilies` enum(\'0\',\'1\') NOT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1";
+
+
+
+
+
+$d[] = "DROP TABLE IF EXISTS `\".DBPRE.\"messages_relations`";
+$c[] = "CREATE TABLE `\".DBPRE.\"messages_relations` (
+`id` int(10) unsigned NOT NULL auto_increment,
+`pmid` int(11) NOT NULL,
+`userid` int(11) NOT NULL,
+`status` enum(\'0\',\'1\',\'2\',\'3\') NOT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1";
+
+
+
+
+
+$d[] = "DROP TABLE IF EXISTS `\".DBPRE.\"polls`";
+$c[] = "CREATE TABLE `\".DBPRE.\"polls` (
 `id` int(10) unsigned NOT NULL auto_increment,
 `threadid` int(11) NOT NULL,
 `boardid` int(11) NOT NULL,
@@ -139,8 +189,8 @@ PRIMARY KEY (`id`)
 
 
 
-$d[] = "DROP TABLE IF EXISTS `".DBPRE."poll_votes`";
-$c[] = "CREATE TABLE `".DBPRE."poll_votes` (
+$d[] = "DROP TABLE IF EXISTS `\".DBPRE.\"poll_votes`";
+$c[] = "CREATE TABLE `\".DBPRE.\"poll_votes` (
 `id` int(10) unsigned NOT NULL auto_increment,
 `pollid` int(11) NOT NULL,
 `userid` int(11) NOT NULL,
@@ -153,8 +203,8 @@ PRIMARY KEY (`id`)
 
 
 
-$d[] = "DROP TABLE IF EXISTS `".DBPRE."posts`";
-$c[] = "CREATE TABLE `".DBPRE."posts` (
+$d[] = "DROP TABLE IF EXISTS `\".DBPRE.\"posts`";
+$c[] = "CREATE TABLE `\".DBPRE.\"posts` (
 `id` int(10) unsigned NOT NULL auto_increment,
 `threadid` int(11) NOT NULL,
 `userid` int(11) NOT NULL,
@@ -173,8 +223,8 @@ PRIMARY KEY (`id`)
 
 
 
-$d[] = "DROP TABLE IF EXISTS `".DBPRE."threads`";
-$c[] = "CREATE TABLE `".DBPRE."threads` (
+$d[] = "DROP TABLE IF EXISTS `\".DBPRE.\"threads`";
+$c[] = "CREATE TABLE `\".DBPRE.\"threads` (
 `id` int(10) unsigned NOT NULL auto_increment,
 `timestamp` int(11) NOT NULL,
 `title` text collate latin1_general_ci NOT NULL,
@@ -194,9 +244,8 @@ PRIMARY KEY (`id`)
 
 
 
-
-$d[] = "DROP TABLE IF EXISTS `".DBPRE."users`";
-$c[] = "CREATE TABLE `".DBPRE."users` (
+$d[] = "DROP TABLE IF EXISTS `\".DBPRE.\"users`";
+$c[] = "CREATE TABLE `\".DBPRE.\"users` (
 `id` int(10) unsigned NOT NULL auto_increment,
 `name` text collate latin1_general_ci NOT NULL,
 `display` text collate latin1_general_ci NOT NULL,
@@ -239,5 +288,6 @@ $c[] = "CREATE TABLE `".DBPRE."users` (
 `dateformat` int(11) NOT NULL,
 PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci";
+
 
 ?>

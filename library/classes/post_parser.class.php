@@ -1,4 +1,21 @@
 <?php
+/*==================================================*\
+|| ___     ___  ___     _     __  ______    ______
+|| \--\   /--/ /---\   |-|   /-/ |--___-\  |--___-\
+||  \--\_/--/ /--_--\  |-|  /-/  |-|___\-| |-|___\-|
+||   \_---_/ /--/_\--\ |--\/-/   |------<  |------<
+||     |-|   |---_---| |-----\   |--____-\ |--____-\
+||     |-|   |--/ \--| |--/\--\  |-|___/-| |-|___/-|
+||     |_|   |_|   |_| |_|  |__| |______/  |_______/
+||
+||==================================================||
+|| Program: YakBB v1.0.0
+|| Author: Chris Dessonville
+||==================================================||
+|| File: /library/classes/post_parser.class.php
+|| File Version: v0.1.0a
+|| $Id: global.php 64 2008-04-14 15:32:04Z cddude229 $
+\*==================================================*/
 
 /*	TODO
 	- Create cache functions to cache...
@@ -9,17 +26,28 @@
 */
 
 class post_parser {
+	// Define the variables
+	private $customUBBC = array();
+	private $smilies = array();
+	private $censors = array();
+
+	// Public functions
 	public function __construct(){
 		// We will pre-cache custom UBBC, smilies, and the censored words list here later.
 	}
 
-	public function parse($str, $ubbc=true, $smilies=true, $censor=true, $br=true){
+	public function censor($str){
+		// Censors all censored words
+
+		return $str;
+	}
+
+	public function parse($str, $ubbc=true, $smilies=true, $br=true){
 		// This function initiates the standard parsing used everywhere.
 		// @param	Type	Description
 		// $str	String	The data to be parsed.
 		// $ubbc	Boolean	Whether or not to parse UBBC.
 		// $smilies	Boolean	Whether or not to parse smilies.
-		// $censor	Boolean	Whether or not to censor the string.
 		// $br		Boolean	Whether or not to parse line breaks into <br>'s.
 		// Return	Return	Returns the parsed data.
 		
@@ -29,15 +57,14 @@ class post_parser {
 		if($smilies === true){
 			$str = $this->smilies($str);
 		}
-		if($censor === true){
-			$str = $this->censor($str);
-		}
 		if($br === true){
 			$str = preg_replace("/\n/", "<br />", $str);
 		}
 		return $str;
 	}
 
+
+	// Private functions
 	private function ubbc($str){
 		// Parses the UBBC code.
 
@@ -109,12 +136,6 @@ class post_parser {
 
 	private function smilies($str){
 		// Parses the smilies code.
-
-		return $str;
-	}
-
-	private function censor($str){
-		// Censors all censored words
 
 		return $str;
 	}
