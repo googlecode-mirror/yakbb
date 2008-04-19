@@ -11,7 +11,6 @@
 		- Add commas to views and replies
 	- CHECK PASSWORDS
 	- Sub-boards list
-	- Send new thread, new poll, etc. permissions for buttons
 	- Mark board as read
 	- Test viewing permissions
 */
@@ -101,6 +100,20 @@ unset($boards);
 
 $tp->addNav($tp->boardLink($boarddat["id"], $boarddat["name"]));
 $tp->setTitle($boarddat["name"], false);
+
+// Send some permissions to the forum
+$perms = unserialize($boarddat["permissions"]);
+if(isset($perms[$user["group"]])){
+	$tp->addVar("board", array(
+		"perm_newthread" => !!($perms[$user["group"]]["thread"] == true),
+		"perm_reply" => !!($perms[$user["group"]]["reply"] == true)
+	));
+} else {
+	$tp->addVar("board", array(
+		"perm_newthread" => false,
+		"perm_reply" => false
+	));
+}
 
 // Load threads
 $threads = array();

@@ -76,6 +76,10 @@ class upgrade_sql {
 		// Preliminary stuff for group colors (4/16/08)
 		$this->db->query("UPDATE `".DBPRE."groups` SET `color` = 'a:2:{s:7:\"default\";s:7:\"#FF0000\";s:9:\"template2\";s:7:\"#0000FF\";}' WHERE `".DBPRE."groups`.`id` =1 LIMIT 1 ;");
 	}
+	private function updateIt6(){
+		// Adding a sub-board for testing purposes (4/18/08)
+		$this->db->query('INSERT INTO `'.DBPRE.'boards` (`id`, `parentid`, `parenttype`, `name`, `description`, `threads`, `posts`, `order`, `sublist`, `permissions`) VALUES (\'0\', \'3\', \'b\', \'Sub-Board 1\', \'Testing... 1, 2, 3. :)\', \'0\', \'0\', \'0\', \'1\', \'a:3:{i:-1;a:5:{s:4:"view";b:1;s:5:"reply";b:0;s:4:"poll";b:0;s:6:"thread";b:0;s:6:"attach";b:0;}i:0;a:5:{s:4:"view";b:1;s:5:"reply";b:1;s:4:"poll";b:1;s:6:"thread";b:1;s:6:"attach";b:0;}i:1;a:5:{s:4:"view";b:1;s:5:"reply";b:1;s:4:"poll";b:1;s:6:"thread";b:1;s:6:"attach";b:1;}}\');');
+	}
 }
 
 ?>
