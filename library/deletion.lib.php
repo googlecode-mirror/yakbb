@@ -14,7 +14,7 @@
 ||==================================================||
 || File: /library/deletion.lib.php
 || File Version: v0.1.0a
-|| $Id: global.php 64 2008-04-14 15:32:04Z cddude229 $
+|| $Id$
 \*==================================================*/
 
 if(!defined("SNAPONE")) exit;
