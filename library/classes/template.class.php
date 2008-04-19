@@ -106,7 +106,7 @@ class template {
 		$this->loadFile("footer", "footer.tpl");
 
 		// Finish up some loading stuff before loading files... for example, the additional template calls.
-		require "template_calls/global.calls.php";
+		require LIBDIR."template_calls/global.calls.php";
 
 		$gentime = substr(((array_sum(explode(" ", microtime()))) - $starttime), 0, 6);
 		foreach($this->files as $k => $v){
