@@ -91,14 +91,14 @@ class viewthread {
 		");
 		$this->posts = array();
 		while($p = $db->fetch()){
-			$this->posts[] = array(
+			$p = array_merge($p, array(
 				"pid" => $p["postid"],
 				"ptitle" => $p["title"],
 				"time" => $p["timestamp"],
 				"date" => makeDate($p["timestamp"]),
-				"userlink" => userLink($p),
 				"message" => $parser->parse($p["message"], $p["disablesmilies"] == 0, $p["disableubbc"] == 0)
-			);
+			));
+			$this->posts[] = $p;
 		}
 		$db->free();
 	}
@@ -167,6 +167,27 @@ class viewthread {
 			$tp->addNav(boardLink($v));
 		}
 		unset($boards);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// Template functions
+	public function getThreadId(){
+		return $this->tid;
+	}
+
+	public function getPosts(){
+		return $this->posts;
 	}
 }
 
