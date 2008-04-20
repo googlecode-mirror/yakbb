@@ -26,7 +26,9 @@
 if(!defined("SNAPONE")) exit;
 
 class login {
-	function __construct(){
+	private $errors = array(); // Holds the errors that were generated
+
+	public function __construct(){
 		global $guest, $yak, $tp, $lang, $plugins;
 
 		// Make sure user can login
@@ -36,23 +38,20 @@ class login {
 
 		// Template stuff
 		$tp->setTitle("login");
-		$tp->loadFile("login", "login.tpl", array(
-			"errors" => array(),
-			"REG" => isset($_REQUEST["reg"]) // Show registration message if it's set to be shown
-		));
+		$tp->loadFile("login", "login.tpl");
 		$lang->learn("login");
 		$tp->addNav($lang->item("nav_login"));
 
 		$plugins->callhook("login_start");
 
-		if(isset($_REQUEST["submitit"]) && isset($_REQUEST["username"]) && isset($_REQUEST["password"])){
+		if(isset($_POST["submitit"]) && isset($_POST["username"]) && isset($_POST["password"])){
 			$this->formSent();
 		}
 
 		$plugins->callhook("login_end");
 	}
 
-	function formSent(){
+	public function formSent(){
 		// Form was sent
 		global $plugins, $tp, $db, $yak, $lang;
 
@@ -60,9 +59,9 @@ class login {
 		$username = $db->secure(secure($_REQUEST["username"]));
 		$password = sha256($_REQUEST["password"]);
 
-		$tp->addVar("login", array(
-			"USER" => substr($username, 0, $yak->settings["username_max_length"])
-		));
+		// $tp->addVar("login", array(
+		// 	"USER" => substr($username, 0, $yak->settings["username_max_length"])
+		// ));
 
 		$error = array();
 		libraryLoad("validation.lib");
@@ -97,15 +96,16 @@ class login {
 				$error[] = "username_doesnt_exist";
 			}
 		} else {
-			$error = "username_too_long";
+			$error[] = "username_too_long";
 		}
 
 		// Errored
-		$error = $plugins->callhook("login_error", $error);
+		$this->errors = $plugins->callhook("login_error", $error);
 		$lang->learn("errors");
-		$tp->addVar("login", array(
-			"errors" => array_map(array($lang, "item"), $error)
-		));
+	}
+
+	public function getErrors(){
+		return $this->errors;
 	}
 }
 

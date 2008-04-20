@@ -48,6 +48,7 @@ function loadThread($type="normal", $reset=false){
 
 	if($reset == true){
 		$count = 0;
+		return false;
 	}
 
 	$thread = $viewboard->getThreads();

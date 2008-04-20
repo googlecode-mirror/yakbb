@@ -1,4 +1,4 @@
-<!-- if count({ERRORS}) is not 0 -->
+<?php if(countErrors() > 0){ ?>
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title">
 	<?= lang("error_title"); ?>
@@ -6,14 +6,14 @@
 <tr><td class="cell1">
 	<?= lang("registration_error"); ?>
 	<ul>
-	<!-- repeat:ERRORS:CURRENT_ERROR -->
-		<li>{repeat:CURRENT_ERROR}
-	<!-- endrepeat -->
+	<?php while($err = loadError()){ ?>
+		<li><?= lang($err) ?></li>
+	<?php } ?>
 	</ul>
 </td></tr>
 </table>
 <br /><br />
-<!-- endif -->
+<?php } ?>
 
 
 <table class="border" cellpadding="4" cellspacing="1">
@@ -24,13 +24,13 @@
 		<fieldset>
 			<legend><?= lang("userdisplay_title"); ?></legend>
 			<span class="set1">
-				<?= lang("username_brief"); ?> <input type="text" name="username" maxlength="{username_max_length}" value="{USER}" /><br />
+				<?= lang("username_brief"); ?> <input type="text" name="username" maxlength="<?= getSetting("username_max_length"); ?>" value="<?= loadSentUsername() ?>" /><br />
 				<span class="smalltext">
 					<?= lang("username_description"); ?>
 				</span>
 			</span>
 			<span class="set2">
-				<?= lang("displayname_brief"); ?> <input type="text" name="displayname" maxlength="{displayname_max_length}" value="{DISPLAY}" /><br />
+				<?= lang("displayname_brief"); ?> <input type="text" name="displayname" maxlength="<?= getSetting("displayname_max_length"); ?>" value="<?= loadSentDisplayname() ?>" /><br />
 				<span class="smalltext">
 					<?= lang("displayname_description"); ?>
 				</span>
@@ -56,13 +56,13 @@
 		<fieldset>
 			<legend><?= lang("email_title"); ?></legend>
 			<span class="set1">
-				<?= lang("email1_brief"); ?> <input type="text" name="email1" value="{EMAIL}" /><br />
+				<?= lang("email1_brief"); ?> <input type="text" name="email1" value="<?= loadSentEmail1() ?>" /><br />
 				<span class="smalltext">
 					<?= lang("email1_description"); ?>
 				</span>
 			</span>
 			<span class="set2">
-				<?= lang("email2_brief"); ?> <input type="text" name="email2" value="{CEMAIL}" /><br />
+				<?= lang("email2_brief"); ?> <input type="text" name="email2" value="<?= loadSentEmail2() ?>" /><br />
 				<span class="smalltext">
 					<?= lang("email2_description"); ?>
 				</span>
@@ -71,8 +71,8 @@
 			<br class="clear" />
 			<span class="set1">
 				<?= lang("showemail_brief"); ?> 
-					<input type="radio" name="showemail" value="1"<!-- if {SHOWEMAIL}  --> checked="checked"<!-- endif --> /><?= lang("yes_option"); ?> 
-					<input type="radio" name="showemail" value="0"<!-- if !{SHOWEMAIL} --> checked="checked"<!-- endif --> /><?= lang("no_option"); ?>
+					<input type="radio" name="showemail" value="1"<?php if(showEmailChecked()){ ?> checked="checked"<?php } ?> /><?= lang("yes_option"); ?> 
+					<input type="radio" name="showemail" value="0"<?php if(!showEmailChecked()){ ?> checked="checked"<?php } ?> /><?= lang("no_option"); ?>
 				<br />
 				<span class="smalltext">
 					<?= lang("showemail_description"); ?>
@@ -80,8 +80,8 @@
 			</span>
 			<span class="set2">
 				<?= lang("emailoptin_brief"); ?> 
-					<input type="radio" name="emailoptin" value="1"<!-- if {EMAILOPTIN} --> checked="checked"<!-- endif --> /><?= lang("yes_option"); ?> 
-					<input type="radio" name="emailoptin" value="0"<!-- if !{EMAILOPTIN} --> checked="checked"<!-- endif --> /><?= lang("no_option"); ?>
+					<input type="radio" name="emailoptin" value="1"<?php if(emailOptinChecked()){ ?> checked="checked"<?php } ?> /><?= lang("yes_option"); ?> 
+					<input type="radio" name="emailoptin" value="0"<?php if(!emailOptinChecked()){ ?> checked="checked"<?php } ?> /><?= lang("no_option"); ?>
 				<br />
 				<span class="smalltext">
 					<?= lang("emailoptin_description"); ?>

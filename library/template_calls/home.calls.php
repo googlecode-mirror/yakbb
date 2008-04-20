@@ -56,6 +56,7 @@ function loadBoard($reset=false){
 
 	if($reset == true){
 		$count = 0;
+		return false;
 	}
 
 	$board = $home->boards();
@@ -81,6 +82,7 @@ function loadCat($reset=false){
 
 	if($reset == true){
 		$count = 0;
+		return false;
 	}
 
 	$cat = $home->cats();

@@ -59,6 +59,8 @@ if(!isset($bperms[$user["group"]]) || $bperms[$user["group"]]["thread"] == false
 	$tp->error("newthread_cant_view");
 }
 
+unset($bperms);
+
 // Load parent boards and category and see if user can reply
 $curboard = $bdat;
 $boards = array();
@@ -97,9 +99,10 @@ if($curboard["parentid"] != 0){
 	if(!isset($catperms[$user["group"]]) || $catperms[$user["group"]]["view"] == false){
 		$tp->error("viewboard_no_permissions");
 	}
+	unset($catperms);
 
 	// Add nav and cleanup
-	$tp->addNav($tp->catLink($cat["id"], $cat["name"]));
+	$tp->addNav(catLink($cat));
 	unset($cat);
 }
 unset($curboard);
@@ -116,19 +119,20 @@ foreach($boards as $k => $v){
 unset($boards);
 
 // Template stuff
-$tp->addNav($tp->boardLink($bdat["id"], $bdat["name"]));
+$tp->addNav(boardLink($bdat));
 
 $tp->addNav($lang->item("nav_newthread"));
 $tp->setTitle("newthread");
-$tp->loadFile("newthread", "post.tpl", array(
+$tp->loadFile("newthread", "post.tpl");
+/* , array(
 	"mode" => "newthread",
 	"bid" => $bid,
-	"form_action" => ($tp->seo?"./newthread.html?":"?action=newthread&amp;")."board=".$bid,
+	"form_action" => seoSwitch("./newthread.html?", "?action=newthread&amp;")."board=".$bid,
 	"errors" => array(),
 	"posttitle" => "",
 	"postdesc" => "",
 	"postmessage" => ""
-));
+)); */
 
 if(isset($_REQUEST["submitit"])){
 	// Form was sent. Let's test out the post.
@@ -206,13 +210,13 @@ if(isset($_REQUEST["submitit"])){
 	} else {
 		// We'll add the errors now
 		$lang->learn("errors");
-		var_dump(array_map(array($lang, "item"), $errors));
-		$tp->addVar("newthread", array(
-			"errors" => array_map(array($lang, "item"), $errors),
-			"posttitle" => $title,
-			"postdesc" => $desc,
-			"postmessage" => $message
-		));
+		// var_dump(array_map(array($lang, "item"), $errors));
+		// $tp->addVar("newthread", array(
+		// 	"errors" => array_map(array($lang, "item"), $errors),
+		// 	"posttitle" => $title,
+		// 	"postdesc" => $desc,
+		// 	"postmessage" => $message
+		// ));
 	}
 }
 

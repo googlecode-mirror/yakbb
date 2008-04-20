@@ -111,9 +111,7 @@ $i[] = "INSERT INTO `\".DBPRE.\"config` (`id`, `name`, `value`) VALUES
 (21, \'thread_subject_max\', \'50\'),
 (22, \'thread_message_max\', \'25000\'),
 (23, \'posts_per_page\', \'15\'),
-(24, \'threads_per_page\', \'30\'),
-(25, \'posts_per_page\', \'15\'),
-(26, \'threads_per_page\', \'30\')";
+(24, \'threads_per_page\', \'30\')";
 
 
 

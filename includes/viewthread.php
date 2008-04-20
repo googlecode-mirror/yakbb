@@ -29,131 +29,145 @@
 	- Load attachments if the post has any.
 		- This should be cached since it shouldn't be editted, unless removing, but
 		that would cause a lot of cache files... >.< We'll decide later.
+	- Add option to make views only go up if NOT the thread creator
 	- Everything else. =P
 */
 
 if(!defined("SNAPONE")) exit;
 
-$tid = intval($_REQUEST["thread"]);
-if($tid <= 0){
-	$tp->error("viewthread_invalid_id");
-}
+class viewthread {
+	private $tid = 0;
+	private $tdata = array();
+	private $posts = array();
 
-$thread = $db->query("
-	SELECT
-		t.*
-	FROM
-		".DBPRE."threads t
-	WHERE
-		t.id='".$tid."'
-	LIMIT 1
-");
-if($db->numRows() == 0){
-	$tp->error("viewthread_doesnt_exist");
-}
-$tdat = $db->fetch();
-$db->free();
-$db->query("UPDATE ".DBPRE."threads SET views=views+1 WHERE id='".$tid."'");
+	public function __construct(){
+		global $tp, $db, $parser;
 
-$curboard = array(
-	"parentid" => $tdat["boardid"],
-	"parenttype" => "b"
-);
-$boards = array();
-while(true){
-	if($curboard["parenttype"] == "c"){
-		break;
+		// Thread ID
+		$this->tid = intval($_GET["thread"]);
+		if($this->tid <= 0){
+			$tp->error("viewthread_invalid_id");
+		}
+
+		// Check thread existance
+		$thread = $db->query("
+			SELECT
+				t.*
+			FROM
+				".DBPRE."threads t
+			WHERE
+				t.id='".$this->tid."'
+			LIMIT 1
+		");
+		if($db->numRows() == 0){
+			$tp->error("viewthread_doesnt_exist");
+		}
+		$this->tdata = $db->fetch();
+		$db->free();
+
+		// Update views count
+		$db->query("UPDATE ".DBPRE."threads SET views=views+1 WHERE id='".$this->tid."'");
+
+		// Make nav tree (boards and cats only) and check permissions for parent boards
+		$this->compileNavTree();
+
+		// Template stuff
+		$tp->addNav(threadLink($this->tdata));
+		$tp->setTitle($this->tdata["title"], false);
+		$tp->loadFile("thread", "viewthread.tpl");
+
+		// Load posts
+		$pq = $db->query("
+			SELECT
+				p.*, p.id AS postid,
+				u.*
+			FROM
+				".DBPRE."posts p
+			LEFT JOIN 
+				".DBPRE."users u ON (u.id = p.userid)
+			WHERE
+				p.threadid='".$this->tid."'
+			ORDER BY postid ASC
+		");
+		$this->posts = array();
+		while($p = $db->fetch()){
+			$this->posts[] = array(
+				"pid" => $p["postid"],
+				"ptitle" => $p["title"],
+				"time" => $p["timestamp"],
+				"date" => makeDate($p["timestamp"]),
+				"userlink" => userLink($p),
+				"message" => $parser->parse($p["message"], $p["disablesmilies"] == 0, $p["disableubbc"] == 0)
+			);
+		}
+		$db->free();
 	}
-	$curboard = $db->cacheQuery("
-		SELECT
-			b.*
-		FROM
-			".DBPRE."boards b
-		WHERE
-			b.id='".$curboard["parentid"]."'
-		LIMIT 1
-	", "board_data/".$curboard["parentid"]);
-	$curboard = $curboard[0]; // We only want the first result... despite there being only one.
-	$boards[] = $curboard;
-}
 
-if($curboard["parentid"] != 0){
-	// Load the category if the ID isn't 0. (If it is zero, we don't really have a category. =P)
-	$cat = $db->cacheQuery("
-		SELECT
-			c.*
-		FROM
-			".DBPRE."categories c
-		WHERE
-			c.id='".$curboard["parentid"]."'
-		LIMIT 1
-	", "category_data/".$curboard["parentid"]);
-	$cat = $cat[0]; // Only want the first result... despite there being only one.
+	private function compileNavTree(){
+		// Compiles the nav tree (boards and cats only) and checks permissions
 
-	// Check view permissions
-	$cperms = unserialize($cat["permissions"]);
-	if(!isset($cperms[$user["group"]]) || $cperms[$user["group"]]["view"] == false){
-		$tp->error("viewboard_no_permissions");
+		global $db, $tp, $user;
+
+		$curboard = array(
+			"parentid" => $this->tdata["boardid"],
+			"parenttype" => "b"
+		);
+		$boards = array();
+		while(true){
+			if($curboard["parenttype"] == "c"){
+				break;
+			}
+			$curboard = $db->cacheQuery("
+				SELECT
+					b.*
+				FROM
+					".DBPRE."boards b
+				WHERE
+					b.id='".$curboard["parentid"]."'
+				LIMIT 1
+			", "board_data/".$curboard["parentid"]);
+			$curboard = $curboard[0]; // We only want the first result... despite there being only one.
+			$boards[] = $curboard;
+		}
+
+		if($curboard["parentid"] != 0){
+			// Load the category if the ID isn't 0. (If it is zero, we don't really have a category. =P)
+			$cat = $db->cacheQuery("
+				SELECT
+					c.*
+				FROM
+					".DBPRE."categories c
+				WHERE
+					c.id='".$curboard["parentid"]."'
+				LIMIT 1
+			", "category_data/".$curboard["parentid"]);
+			$cat = $cat[0]; // Only want the first result... despite there being only one.
+
+			// Check view permissions
+			$cperms = unserialize($cat["permissions"]);
+			if(!isset($cperms[$user["group"]]) || $cperms[$user["group"]]["view"] == false){
+				$tp->error("viewboard_no_permissions");
+			}
+			unset($cperms);
+
+			// Add nav, etc.
+			$tp->addNav(catLink($cat));
+			unset($cat);
+		}
+		unset($curboard);
+
+		// boards
+		$boards = array_reverse($boards);
+		foreach($boards as $k => $v){
+			// Check view permissions and then add nav.
+			$bperms = unserialize($v["permissions"]);
+			if(!isset($bperms[$user["group"]]) || $bperms[$user["group"]]["view"] == false){
+				$tp->error("viewboard_no_permission");
+			}
+			$tp->addNav(boardLink($v));
+		}
+		unset($boards);
 	}
-
-	// Add nav, etc.
-	$tp->addNav($tp->catLink($cat["id"], $cat["name"]));
-	unset($cat);
 }
-unset($curboard);
-
-// boards
-$boards = array_reverse($boards);
-foreach($boards as $k => $v){
-	// Check view permissions and then add nav.
-	$bperms = unserialize($v["permissions"]);
-	if(!isset($bperms[$user["group"]]) || $bperms[$user["group"]]["view"] == false){
-		$tp->error("viewboard_no_permission");
-	}
-	$tp->addNav($tp->boardLink($v["id"], $v["name"]));
-}
-unset($boards);
-
-// Template stuff
-$tp->addNav($tp->threadLink($tid, $tdat["title"]));
-$tp->setTitle($tdat["title"], false);
-$tp->loadFile("thread", "viewthread.tpl", array(
-	"tid" => $tid,
-	"can_reply" => false
-));
-
-// Check if user can post replies to thread
-if($bperms[$user["group"]]["reply"] == true){
-	$tp->addVar("thread", "can_reply", true);
-}
-
-// Load posts
-$posts = $db->query("
-	SELECT
-		p.*, p.id AS postid,
-		u.*
-	FROM
-		".DBPRE."posts p
-	LEFT JOIN 
-		".DBPRE."users u ON (u.id = p.userid)
-	WHERE
-		p.threadid='".$tid."'
-	ORDER BY postid ASC
-");
-$pholder = array();
-while($p = $db->fetch()){
-	$pholder[] = array(
-		"pid" => $p["postid"],
-		"ptitle" => $p["title"],
-		"time" => $p["timestamp"],
-		"date" => makeDate($p["timestamp"]),
-		"userlink" => $tp->userLink($p["userid"], $p["name"], $p["group"]),
-		"message" => $parser->parse($p["message"], $p["disablesmilies"] == 0, $p["disableubbc"] == 0)
-	);
-}
-$db->free();
-
-$tp->addVar("thread", "posts", $pholder);
-unset($pholder);
 
 ?>

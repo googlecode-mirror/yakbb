@@ -215,6 +215,8 @@ class cache extends flat_file {
 		// Fix $timeout if it isn't a correct number
 		if(!is_numeric($timeout) || $timeout < -1){
 			$timeout = -1;
+		} else {
+			$timeout += time();
 		}
 
 		$s = "<"."?php

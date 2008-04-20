@@ -31,6 +31,7 @@
 if(!defined("SNAPONE")) exit;
 
 class join {
+	private $errors = array();
 	public function __construct(){
 		global $tp, $lang, $guest, $yak;
 
@@ -152,15 +153,15 @@ class join {
 		}
 
 		// Check failed. Let's resend the information and we'll generate the errors
-		$tp->addVar("join", array(
-			"USER" => substr($username, 0, $yak->settings["username_max_length"]),
-			"DISPLAY" => substr($display, 0, $yak->settings["displayname_max_length"]),
-			"EMAIL" => $email1,
-			"CEMAIL" => $email2,
+		/* $tp->addVar("join", array(
 			"SHOWEMAIL" => !!$showemail,
-			"EMAILOPTIN" => !!$emailoptin,
-			"ERRORS" => array_map(array($lang, "item"), $errors)
-		));
+			"EMAILOPTIN" => !!$emailoptin
+		)); */
+		$this->errors = $errors;
+	}
+
+	public function getErrors(){
+		return $this->errors;
 	}
 }
 ?>

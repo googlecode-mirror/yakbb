@@ -86,11 +86,11 @@ function threadLink($tdata){
 	// Generates a link to viewing a thread
 
 	if(YAK_SEO == true){
-		$url = "thread".$tdata["id"]."/".urlSafe($tdata["name"], 20)."/";
+		$url = "thread".$tdata["id"]."/".urlSafe($tdata["title"], 20)."/";
 	} else {
 		$url = "?thread=".$tdata["id"];
 	}
-	return "<a href=\"".$url."\">".$tdata["name"]."</a>";
+	return "<a href=\"".$url."\">".$tdata["title"]."</a>";
 }
 
 
@@ -99,12 +99,20 @@ function threadLink($tdata){
 
 /*====================================*\
 || INFORMATION FUNCTIONS
+||		getPageTitle()
 ||		getPermission()
 ||		getSetting()
 ||		isGuest()
 ||		lang()
 ||		viewingPage()
 \*====================================*/
+function getPageTitle(){
+	// Returns the current title for the page
+
+	global $tp;
+	return $tp->getTitle();
+}
+
 function getPermission($perm){
 	// Looks up a specified permission
 }
@@ -138,6 +146,29 @@ function viewingPage(){
 
 	global $yak;
 	return $yak->curPage;
+}
+
+
+
+
+
+/*====================================*\
+|| STATISTIC FUNCTIONS
+||		getGenTime()
+||		getQueries()
+\*====================================*/
+function getGenTime(){
+	// Returns the time it took to run the script
+
+	global $starttime;
+	return substr(((array_sum(explode(" ", microtime()))) - $starttime), 0, 6);
+}
+
+function getQueries(){
+	// Returns the number of queries that were ran
+
+	global $db;
+	return $db->queries;
 }
 
 

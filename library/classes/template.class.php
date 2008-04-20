@@ -21,14 +21,9 @@ if(!defined("SNAPONE")) exit;
 
 /*	NOTES
 	- The templating system for YakBB was inspired by viewing the template system 
-	of many templating systems and got most of the inspiration for our system from
-	WordPress. (WordPress.org) The system is coded uniquely and from scratch however.
-
-	TODO
-	userLink()
-		- Needs to add the group color
-		- Prefixes??
-	- Nav tree dividers should be template specific
+	of many templating systems and I got most of the inspiration for our system from
+	WordPress (WordPress.org). The system is coded uniquely and from scratch however,
+	thus any similarities in the actual coding are completely accidental.
 */
 
 class template {
@@ -102,7 +97,7 @@ class template {
 	public function display(){
 		// Displays the pages.
 
-		global $user, $yak, $db, $starttime, $lang;
+		global $user, $yak, $db, $lang;
 
 		array_unshift($this->navs, '<a href="./">'.$yak->settings["board_title"].'</a>');
 		$lang->templateLearn($this->dir."lang_override");
@@ -113,9 +108,6 @@ class template {
 		if(file_exists(LIBDIR."template_calls/".$yak->curPage.".calls.php")){
 			require LIBDIR."template_calls/".$yak->curPage.".calls.php";
 		}
-
-		// Finish generation time calculations
-		$gentime = substr(((array_sum(explode(" ", microtime()))) - $starttime), 0, 6);
 
 		// Load the files in the list
 		foreach($this->files as $k => $v){
@@ -194,6 +186,12 @@ class template {
 		} else {
 			$this->title = $tit;
 		}
+	}
+
+	public function getTitle(){
+		// Returns the current page title
+
+		return $this->title;
 	}
 
 	public function addNav($nav){

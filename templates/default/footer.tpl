@@ -1,10 +1,12 @@
 <br /><br />
 <div style="border: 1px #000000 solid; padding: 4px">
-	YakBB copyright Chris Dessonville - YakBB v<?php echo YAKVERSION; ?><br /><br />
-	Generation Time: {GENTIME} seconds - 
-	Queries: {QUERIES}<br />
-	TPL Files: ({TPLFILES} total - {TPLCACHED} cached)<br />
-	Memory Usage: {MEMUSE} bytes<!-- if strlen({MEMPEAK}) > 0 --> - Peak: {MEMPEAK} bytes <!-- endif -->
+	YakBB copyright Chris Dessonville - YakBB<?php if(getSetting("show_version") == true){ ?> v<?php echo YAKVERSION; ?><?php } ?><br /><br />
+	Generation Time: <?= getGenTime() ?> seconds - 
+	Queries: <?= getQueries() ?><br />
+	Memory Usage: <?= number_format(memory_get_usage()) ?> bytes
+	<?php if(function_exists("memory_get_peak_usage")){ ?>
+		- Peak: <?= number_format(memory_get_peak_usage()) ?> bytes
+	<?php } ?>
 </div>
 
 </div></div>

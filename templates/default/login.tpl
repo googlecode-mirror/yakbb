@@ -1,4 +1,4 @@
-<!-- if {REG} -->
+<?php if(registrationRedirect()){ ?>
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title">
 	<?= lang("regsuccess_title"); ?>
@@ -6,26 +6,26 @@
 	<?= lang("regsuccess_message"); ?>
 </td></tr>
 </table><br /><br />
-<!-- endif -->
+<?php } ?>
 
-<!-- if count({errors}) is not 0 -->
+<?php if(countErrors() > 0){ ?>
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title">
 	<?= lang("error_title"); ?>
 </td></tr><tr><td class="cell1">
-	<!-- if count({errors}) is 1 -->
+	<?php if(countErrors() == 1){ ?>
 		<?= lang("error_occured"); ?>
-	<!-- else -->
+	<?php } else { ?>
 		<?= lang("errors_occured"); ?>
-	<!-- endif -->
+	<?php } ?>
 	<ul>
-		<!-- repeat:errors:err -->
-		<li>{repeat:err}</li>
-		<!-- endrepeat -->
+		<?php while($err = loadError()){ ?>
+		<li><?= lang($err) ?></li>
+		<?php } ?>
 	</ul>
 </td></tr>
 </table><br /><br />
-<!-- endif -->
+<?php } ?>
 
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title">
@@ -35,7 +35,7 @@
 		<fieldset>
 			<legend><?= lang("accountdetails_title"); ?></legend>
 			<span class="set1">
-				<?= lang("username_brief"); ?> <input type="text" name="username" maxlength="<?= getSetting("username_max_length"); ?>" value="{USER}" /><br />
+				<?= lang("username_brief"); ?> <input type="text" name="username" maxlength="<?= getSetting("username_max_length"); ?>" value="<?= loadSentUsername() ?>" /><br />
 				<span class="smalltext">
 					<?= lang("username_description"); ?>
 				</span>

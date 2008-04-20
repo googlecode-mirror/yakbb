@@ -30,6 +30,42 @@ class upgrade_sql {
 
 	private function upgradeIt0(){} // Prevent possible errors
 	private function upgradeIt1(){} // Prevent possible errors
+	private function upgradeIt2(){
+		// Add support for showing/hiding the current version (4/19/08)
+		$this->db->query("INSERT INTO `".DBPRE."config` (`id` ,`name` ,`value`) VALUES ('9', 'show_version', 'true')");
+
+		// Nav divider is done via template files now (4/19/08)
+		$this->db->query("DELETE FROM ".DBPRE."config WHERE id='17' LIMIT 1");
+
+		// Delete the strip tab spacing setting since it won't be used anymore (4/20/08)
+		$this->db->query("DELETE FROM `".DBPRE."config` WHERE `id` = 3 LIMIT 1");
+
+		// Create moderators relations table (4/20/08)
+		$this->db->query("
+			CREATE TABLE `".DBPRE."moderators_relations` (
+				`id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+				`boardid` INT NOT NULL ,
+				`userid` INT NOT NULL ,
+				PRIMARY KEY ( `id` )
+			) ENGINE = MYISAM
+		");
+
+		// Changes to the messages table and relations to get the new system beginning. (4/20/08)
+		$this->db->query("ALTER TABLE `".DBPRE."messages_relations` DROP `status`");
+		$this->db->query("ALTER TABLE `".DBPRE."messages_relations` ADD `lastread` INT NOT NULL");
+		$this->db->query("ALTER TABLE `".DBPRE."messages_relations` ADD `deleted` ENUM( '0', '1' ) NOT NULL");
+		$this->db->query("
+			CREATE TABLE `".DBPRE."messages_threads` (
+				`id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+				`title` TEXT NOT NULL ,
+				`lastupdated` INT NOT NULL ,
+				`initialsend` INT NOT NULL ,
+				PRIMARY KEY ( `id` )
+			) ENGINE = MYISAM
+		");
+		$this->db->query("ALTER TABLE `".DBPRE."messages` DROP `title`");
+		$this->db->query("ALTER TABLE `".DBPRE."messages` ADD `threadid` INT NOT NULL AFTER `senderid` ");
+	}
 }
 
 ?>

@@ -12,9 +12,9 @@
 || Program: YakBB v1.0.0
 || Author: Chris Dessonville
 ||==================================================||
-|| File: /library/template_calls/error.calls.php
+|| File: /library/template_calls/login.calls.php
 || File Version: v0.1.0a
-|| $Id: global.calls.php 74 2008-04-19 22:15:28Z cddude229 $
+|| $Id$
 \*==================================================*/
 
 if(!defined("SNAPONE")) exit;
@@ -24,16 +24,32 @@ if(!defined("SNAPONE")) exit;
 
 
 /*====================================*\
-|| GENERAL FUNCTIONS
-||		errorCount()
+|| FORM FUNCTIONS
+||		loadSentUsername()
+\*====================================*/
+function loadSentUsername(){
+	// Returns the username that was sent via the form or present in the URL bar.
+	if(isset($_REQUEST["username"])){
+		return secure($_REQUEST["username"]);
+	}
+	return "";
+}
+
+
+
+
+
+/*====================================*\
+|| ERROR FUNCTIONS
+||		countErrors()
 ||		loadError()
 ||		loadErrorReset()
 \*====================================*/
-function errorCount(){
-	// Returns a count of the number of errors
+function countErrors(){
+	// Tells whether or not the login generated any errors
 
-	global $tp;
-	return count($tp->getErrors());
+	global $login;
+	return count($login->getErrors());
 }
 
 function loadError($reset=false){
@@ -41,7 +57,7 @@ function loadError($reset=false){
 	// @param	Type	Description
 	// $reset	Boolean	If this is true, $count is reset to zero.
 
-	global $tp;
+	global $login;
 	static $count = 0;
 
 	if($reset == true){
@@ -49,7 +65,7 @@ function loadError($reset=false){
 		return false;
 	}
 
-	$err = $tp->getErrors();
+	$err = $login->getErrors();
 	if(isset($err[$count])){
 		$err = $err[$count];
 		$count++;
@@ -62,6 +78,20 @@ function loadErrorReset(){
 	// Resets the loadError() loop
 
 	loadError(true);
+}
+
+
+
+
+
+/*====================================*\
+|| MISC FUNCTIONS
+||		registrationRedirect()
+\*====================================*/
+function registrationRedirect(){
+	// Tells whether or not the page is a redirect after registration.
+
+	return isset($_GET["reg"]);
 }
 
 

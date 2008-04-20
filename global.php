@@ -27,6 +27,8 @@
 			- Enable wild cards for the IPs
 			- Needs a cache time or to not be cached??
 			- Test e-mail and username
+		OTHER
+			- Update the "Upgrade" table to use language variables.
 */
 
 if(!defined("SNAPONE")) exit;
