@@ -34,9 +34,10 @@ NOTES
 */
 
 abstract class db {
-	public $queries=0;
+	public $queries = 0;
+	public $queriesList = array();
 	protected $dbc;
-	public $last;
+	public $last = false;
 
 	abstract public function connect($data);
 	public function queryCache($query, $timeout=-1, $name=false){

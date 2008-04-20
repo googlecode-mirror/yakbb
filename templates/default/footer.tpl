@@ -7,6 +7,13 @@
 	<?php if(function_exists("memory_get_peak_usage")){ ?>
 		- Peak: <?= number_format(memory_get_peak_usage()) ?> bytes
 	<?php } ?>
+	<br /><br />
+	Queries List:<br />
+	<?php global $db;
+	foreach($db->queriesList as $k => $v){
+		echo $v."<br />";
+	}
+	?>
 </div>
 
 </div></div>

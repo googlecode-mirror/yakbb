@@ -96,6 +96,12 @@ class home {
 				`order` ASC
 		", -1, "categories_main".$extra2);
 
+		// Make sure the category exists.
+		if(count($this->cats) == 0 && $this->singleCat === true){
+			$db->clearCacheQuery("categories_main".$extra2);
+			$tp->error("cat_no_exist");
+		}
+
 		// Set the category IDs array and take care of the single cat stuff
 		if($this->singleCat === true){
 			$this->catids = array();

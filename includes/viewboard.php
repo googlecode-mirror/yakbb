@@ -59,8 +59,8 @@ class viewboard {
 				".DBPRE."boards b
 			WHERE
 				b.id='".$this->bid."'
-			LIMIT 1",
-		"board_data/".$this->bid);
+			LIMIT 1
+		", -1, "board_data/".$this->bid);
 		if(count($boarddat) == 0){
 			$db->clearCacheQuery("board_data/".$this->bid);
 			$tp->error("viewboard_doesnt_exist");
@@ -94,7 +94,7 @@ class viewboard {
 				WHERE
 					b.id='".$curboard["parentid"]."'
 				LIMIT 1
-			", "board_data/".$curboard["parentid"]);
+			", -1, "board_data/".$curboard["parentid"]);
 			$curboard = $curboard[0]; // We only want the first result... despite there being only one.
 			$boards[] = $curboard;
 		}
@@ -109,7 +109,7 @@ class viewboard {
 				WHERE
 					c.id='".$curboard["parentid"]."'
 				LIMIT 1
-			", "category_data/".$curboard["parentid"]);
+			", -1, "category_data/".$curboard["parentid"]);
 			$cat = $cat[0]; // Only want the first result... despite there being only one.
 
 			// Check view perms

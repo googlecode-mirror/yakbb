@@ -30,9 +30,10 @@ if(!defined("SNAPONE")) exit;
 */
 
 class mysql extends db {
-	public $queries=0;
+	public $queries = 0;
+	public $queriesList = array();
 	protected $dbc;
-	public $last=false;
+	public $last = false;
 
 	public function connect($c){
 		$this->dbc = mysql_connect($c["host"], $c["username"], $c["password"]) or die("Unable to connect to MySQL.");
@@ -76,6 +77,7 @@ class mysql extends db {
 	}
 	public function query($query){
 		$this->queries++;
+		$this->queriesList[] = $query;
 		$this->last = mysql_query($query);
 		if(mysql_error()){
 			die(mysql_error());
