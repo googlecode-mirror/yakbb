@@ -273,6 +273,7 @@ if(!isset($act)){
 if(in_array($act, array_keys($va)) && !empty($va[$act]) && file_exists(INCLUDESDIR.$va[$act].".php")){
 	// May have passed the action check, but the file may not exist because of a mistake or something.
 	$n = $va[$act];
+	$yak->curPage = $n;
 	unset($va);
 	require_once INCLUDESDIR.$n.".php";
 	if(class_exists($n)){

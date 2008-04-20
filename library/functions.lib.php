@@ -59,4 +59,18 @@ function sha256($data){
 	// Add the random salt for security and then return the sha256 hash
 	return hash("sha256", $data.DBSALT);
 }
+
+function urlSafe($str, $len=-1){
+	// Makes a string safe to be used in clean URLs
+	// @param	Type		Description
+	// $str		String		The string to be cleaned up
+	// $len		Number		The length the string should be trimmed to. -1 means no trim
+
+	$str = html_entity_decode($str, ENT_QUOTES); // They all get stripped anyway
+	$str = preg_replace("/[^A-Z0-9_-]/i", "_", $str);
+	if($len != -1 && strlen($str) > $len){
+		$str = substr($str, 0, $len);
+	}
+	return $str;
+}
 ?>

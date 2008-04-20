@@ -1,10 +1,10 @@
 <!-- if count({ERRORS}) is not 0 -->
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title">
-	{LANG}error_title{/LANG}
+	<?= lang("error_title"); ?>
 </td></tr>
 <tr><td class="cell1">
-	{LANG}registration_error{/LANG}
+	<?= lang("registration_error"); ?>
 	<ul>
 	<!-- repeat:ERRORS:CURRENT_ERROR -->
 		<li>{repeat:CURRENT_ERROR}
@@ -18,79 +18,79 @@
 
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title">
-	{LANG}register_title{/LANG}
+	<?= lang("register_title"); ?>
 </td></tr><tr><td class="cell1">
 	<form name="registerForm" method="post" action="?action=register">
 		<fieldset>
-			<legend>{LANG}userdisplay_title{/LANG}</legend>
+			<legend><?= lang("userdisplay_title"); ?></legend>
 			<span class="set1">
-				{LANG}username_brief{/LANG} <input type="text" name="username" maxlength="{username_max_length}" value="{USER}" /><br />
+				<?= lang("username_brief"); ?> <input type="text" name="username" maxlength="{username_max_length}" value="{USER}" /><br />
 				<span class="smalltext">
-					{LANG}username_description{/LANG}
+					<?= lang("username_description"); ?>
 				</span>
 			</span>
 			<span class="set2">
-				{LANG}displayname_brief{/LANG} <input type="text" name="displayname" maxlength="{displayname_max_length}" value="{DISPLAY}" /><br />
+				<?= lang("displayname_brief"); ?> <input type="text" name="displayname" maxlength="{displayname_max_length}" value="{DISPLAY}" /><br />
 				<span class="smalltext">
-					{LANG}displayname_description{/LANG}
+					<?= lang("displayname_description"); ?>
 				</span>
 			</span>
 			<br class="clear" />
 		</fieldset>
 		<fieldset>
-			<legend>{LANG}password_title{/LANG}</legend>
+			<legend><?= lang("password_title"); ?></legend>
 			<span class="set1">
-				{LANG}password1_brief{/LANG} <input type="password" name="password1" /><br />
+				<?= lang("password1_brief"); ?> <input type="password" name="password1" /><br />
 				<span class="smalltext">
-					{LANG}password1_description{/LANG}
+					<?= lang("password1_description"); ?>
 				</span>
 			</span>
 			<span class="set2">
-				{LANG}password2_brief{/LANG} <input type="password" name="password2" /><br />
+				<?= lang("password2_brief"); ?> <input type="password" name="password2" /><br />
 				<span class="smalltext">
-					{LANG}password2_description{/LANG}
+					<?= lang("password2_description"); ?>
 				</span>
 			</span>
 			<br class="clear" />
 		</fieldset>
 		<fieldset>
-			<legend>{LANG}email_title{/LANG}</legend>
+			<legend><?= lang("email_title"); ?></legend>
 			<span class="set1">
-				{LANG}email1_brief{/LANG} <input type="text" name="email1" value="{EMAIL}" /><br />
+				<?= lang("email1_brief"); ?> <input type="text" name="email1" value="{EMAIL}" /><br />
 				<span class="smalltext">
-					{LANG}email1_description{/LANG}
+					<?= lang("email1_description"); ?>
 				</span>
 			</span>
 			<span class="set2">
-				{LANG}email2_brief{/LANG} <input type="text" name="email2" value="{CEMAIL}" /><br />
+				<?= lang("email2_brief"); ?> <input type="text" name="email2" value="{CEMAIL}" /><br />
 				<span class="smalltext">
-					{LANG}email2_description{/LANG}
+					<?= lang("email2_description"); ?>
 				</span>
 			</span>
 			<br class="clear" />
 			<br class="clear" />
 			<span class="set1">
-				{LANG}showemail_brief{/LANG} 
-					<input type="radio" name="showemail" value="1"<!-- if {SHOWEMAIL}  --> checked="checked"<!-- endif --> />{LANG}yes_option{/LANG} 
-					<input type="radio" name="showemail" value="0"<!-- if !{SHOWEMAIL} --> checked="checked"<!-- endif --> />{LANG}no_option{/LANG}
+				<?= lang("showemail_brief"); ?> 
+					<input type="radio" name="showemail" value="1"<!-- if {SHOWEMAIL}  --> checked="checked"<!-- endif --> /><?= lang("yes_option"); ?> 
+					<input type="radio" name="showemail" value="0"<!-- if !{SHOWEMAIL} --> checked="checked"<!-- endif --> /><?= lang("no_option"); ?>
 				<br />
 				<span class="smalltext">
-					{LANG}showemail_description{/LANG}
+					<?= lang("showemail_description"); ?>
 				</span>
 			</span>
 			<span class="set2">
-				{LANG}emailoptin_brief{/LANG} 
-					<input type="radio" name="emailoptin" value="1"<!-- if {EMAILOPTIN} --> checked="checked"<!-- endif --> />{LANG}yes_option{/LANG} 
-					<input type="radio" name="emailoptin" value="0"<!-- if !{EMAILOPTIN} --> checked="checked"<!-- endif --> />{LANG}no_option{/LANG}
+				<?= lang("emailoptin_brief"); ?> 
+					<input type="radio" name="emailoptin" value="1"<!-- if {EMAILOPTIN} --> checked="checked"<!-- endif --> /><?= lang("yes_option"); ?> 
+					<input type="radio" name="emailoptin" value="0"<!-- if !{EMAILOPTIN} --> checked="checked"<!-- endif --> /><?= lang("no_option"); ?>
 				<br />
 				<span class="smalltext">
-					{LANG}emailoptin_description{/LANG}
+					<?= lang("emailoptin_description"); ?>
 				</span>
 			</span>
 			<br class="clear" />
 		</fieldset><br />
-		<input type="submit" name="submitit" value="{LANG}register_button{/LANG}" /> 
-		<input type="reset" name="resetit" value="{LANG}reset_button{/LANG}" onclick="return confirm('{LANG}reset_confirmation{/LANG}');" />
+		<input type="submit" name="submitit" value="<?= lang("register_button"); ?>" /> 
+		<input type="reset" name="resetit" value="<?= lang("reset_button"); ?>" onclick="return confirm('<?= lang("reset_confirmation"); ?>');" />
 	</form>
 </td></tr>
 </table>

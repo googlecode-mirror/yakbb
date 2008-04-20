@@ -1,16 +1,16 @@
 <table class="border" cellpadding="4" cellspacing="1">
 	<tr><td class="cell1">
-		{LANG}error_title{/LANG}
+		<?= lang("error_title"); ?>
 	</td></tr><tr><td class="cell1">
-		<!-- if count({errors}) is 1 -->
-			{LANG}error_occured{/LANG}
-		<!-- else -->
-			{LANG}errors_occurred{/LANG}
-		<!-- endif --><br />
+		<?php if(errorCount() == 1){ ?>
+			<?= lang("error_occured"); ?>
+		<?php } else { ?>
+			<?= lang("errors_occured"); ?>
+		<?php } ?><br />
 		<ul>
-			<!-- repeat:errors:err -->
-			<li>{repeat:err}</li>
-			<!-- endrepeat -->
+			<?php while($error = loadError()){ ?>
+			<li><?= lang($error) ?></li>
+			<?php } ?>
 		</ul>
 	</td></tr>
 </table>

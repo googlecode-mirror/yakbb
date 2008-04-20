@@ -1,9 +1,9 @@
 <!-- if {REG} -->
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title">
-	{LANG}regsuccess_title{/LANG}
+	<?= lang("regsuccess_title"); ?>
 </td></tr><tr><td class="cell1">
-	{LANG}regsuccess_message{/LANG}
+	<?= lang("regsuccess_message"); ?>
 </td></tr>
 </table><br /><br />
 <!-- endif -->
@@ -11,12 +11,12 @@
 <!-- if count({errors}) is not 0 -->
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title">
-	{LANG}error_title{/LANG}
+	<?= lang("error_title"); ?>
 </td></tr><tr><td class="cell1">
 	<!-- if count({errors}) is 1 -->
-		{LANG}error_occured{/LANG}
+		<?= lang("error_occured"); ?>
 	<!-- else -->
-		{LANG}errors_occured{/LANG}
+		<?= lang("errors_occured"); ?>
 	<!-- endif -->
 	<ul>
 		<!-- repeat:errors:err -->
@@ -29,28 +29,28 @@
 
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title">
-	{LANG}login_title{/LANG}
+	<?= lang("login_title"); ?>
 </td></tr><tr><td class="cell1">
 	<form name="loginForm" method="post" action="?action=login">
 		<fieldset>
-			<legend>{LANG}accountdetails_title{/LANG}</legend>
+			<legend><?= lang("accountdetails_title"); ?></legend>
 			<span class="set1">
-				{LANG}username_brief{/LANG} <input type="text" name="username" maxlength="{username_max_length}" value="{USER}" /><br />
+				<?= lang("username_brief"); ?> <input type="text" name="username" maxlength="<?= getSetting("username_max_length"); ?>" value="{USER}" /><br />
 				<span class="smalltext">
-					{LANG}username_description{/LANG}
+					<?= lang("username_description"); ?>
 				</span>
 			</span>
 			<span class="set2">
-				{LANG}password_brief{/LANG} <input type="password" name="password" /><br />
+				<?= lang("password_brief"); ?> <input type="password" name="password" /><br />
 				<span class="smalltext">
-					{LANG}password_description{/LANG}
+					<?= lang("password_description"); ?>
 				</span>
 			</span>
 			<br class="clear" />
 		</fieldset>
 		<br />
-		<input type="submit" name="submitit" value="{LANG}login_button{/LANG}" /> 
-		<input type="reset" name="resetit" value="{LANG}reset_button{/LANG}" onclick="return confirm('{LANG}reset_confirmation{/LANG}');" />
+		<input type="submit" name="submitit" value="<?= lang("login_button"); ?>" /> 
+		<input type="reset" name="resetit" value="<?= lang("reset_button"); ?>" onclick="return confirm('<?= lang("reset_confirmation"); ?>');" />
 	</form>
 </td></tr>
 </table>

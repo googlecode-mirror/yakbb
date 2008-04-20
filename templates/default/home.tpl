@@ -1,57 +1,60 @@
-<!-- if count({boards}) > 0 || count({cats}) > 0 -->
-	<!-- repeat:cats:cat -->
+<?php if(hasBoards() || hasCats()){ ?>
+	<?php while($cat = loadCat()){ ?>
 		<table class="border" cellpadding="4" cellspacing="1">
-		<!-- if {repeat:cat->id} is not 0 -->
+		<?php if($cat["id"] != 0){ ?>
 		<tr><td class="title" colspan="5">
-			{repeat:cat->link}
+			<?= catLink($cat); ?>
 		</td></tr>
-		<!-- endif -->
+		<?php } ?>
 		<tr><td class="title" width="15">
 		</td><td class="title" width="583">
-			{LANG}forum_data{/LANG}
+			<?= lang("forum_data"); ?>
 		</td><td class="title" width="1" align="center">
-			{LANG}threads{/LANG}
+			<?= lang("threads"); ?>
 		</td><td class="title" width="1" align="center">
-			{LANG}posts{/LANG}
+			<?= lang("posts"); ?>
 		</td><td class="title" width="150">
-			{LANG}last_post{/LANG}
+			<?= lang("last_post"); ?>
 		</td></tr>
-		<!-- repeat:boards:board --> <!-- if {repeat:board->parentid} == {repeat:cat->id} -->
+		<?php while($board = loadBoard()){ ?>
+		<?php if($board["parentid"] == $cat["id"]){ ?>
 		<tr><td class="cell1" align="center">
-			<!-- if {repeat:board->new_posts} -->
-			<img src="{TPATH}images/on.gif" alt="*" title="{LANG}new_posts{/LANG}" />
-			<!-- else -->
-			<img src="{TPATH}images/off.gif" alt="-" title="{LANG}no_new_posts{/LANG}" />
-			<!-- endif -->
+			<?php if($board["new_posts"]){ ?>
+				<img src="<?= templatePath() ?>images/on.gif" alt="*" title="<?= lang("new_posts"); ?>" />
+			<?php } else { ?>
+				<img src="<?= templatePath() ?>images/off.gif" alt="-" title="<?= lang("no_new_posts"); ?>" />
+			<?php } ?>
 		</td><td class="cell1" onmouseover="this.style.backgroundColor='#DDDDDD'" onmouseout="this.style.backgroundColor='#FFFFFF'" onclick="if(linkBubble) location.href = this.getElementsByTagName('a')[0].href">
-			{repeat:board->link}<br />
-			{repeat:board->description}
+			<?= boardLink($board); ?><br />
+			<?= $board["description"]; ?>
 		</td><td class="cell1" align="center">
-			{repeat:board->threads}
+			<?= $board["threads"]; ?>
 		</td><td class="cell1" align="center">
-			{repeat:board->posts}
+			<?= $board["posts"]; ?>
 		</td><td class="cell1">
 			LAST POST INFO
 		</td></tr>
-		<!-- endif --> <!-- endrepeat -->
+		<?php } ?>
+		<?php } ?>
+		<?php loadBoardReset(); ?>
 		</table>
-		<!-- if !{single} -->
+		<?php if(!singleCatView()){ ?>
 		<br /><br />
-		<!-- endif -->
-	<!-- endrepeat -->
-<!-- else -->
+		<?php } ?>
+	<?php } ?>
+<?php } else { ?>
 	<table class="border" cellpadding="4" cellspacing="1">
 	<tr><td class="title">
-		{LANG}nocats_title{/LANG}
+		<?php lang("nocats_title"); ?>
 	</td></tr>
 	<tr><td class="cell1">
-		{LANG}nocats_message{/LANG}
+		<?= lang("nocats_message"); ?>
 	</td></tr>
 	</table>
-<!-- endif -->
+<?php } ?>
 
 
 
-<!-- if !{single} -->
+<?php if(!singleCatView()){ ?>
 <!-- include: infocenter.tpl -->
-<!-- endif -->
+<?php } ?>

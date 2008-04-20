@@ -42,6 +42,10 @@ class template {
 	private $seo = false; // Whether or not to use SEO. Set via the coding below.
 
 	// CREATION, CORE, AND MISC FUNCTIONS
+	public function __construct(){
+		// Loads the global calls here... some are actually used in the coding.
+		require LIBDIR."template_calls/global.calls.php";
+	}
 	public function loadTemplate($dir, $kill=false){
 		// Changes the directory
 		// @param	Type	Description
@@ -105,13 +109,20 @@ class template {
 
 		$this->loadFile("footer", "footer.tpl");
 
-		// Finish up some loading stuff before loading files... for example, the additional template calls.
-		require LIBDIR."template_calls/global.calls.php";
+		// Finish up some loading stuff before loading files... for example, the template calls.
+		if(file_exists(LIBDIR."template_calls/".$yak->curPage.".calls.php")){
+			require LIBDIR."template_calls/".$yak->curPage.".calls.php";
+		}
 
+		// Finish generation time calculations
 		$gentime = substr(((array_sum(explode(" ", microtime()))) - $starttime), 0, 6);
+
+		// Load the files in the list
 		foreach($this->files as $k => $v){
 			require $this->dir.$v;
 		}
+
+		// And.... we're done!
 		exit; // Incase extra scripting is trying to execute for some reason
 	}
 
@@ -126,6 +137,11 @@ class template {
 			$err = array($err);
 		}
 
+		$this->errors = $err;
+
+		// Load the error functions
+		require LIBDIR."template_calls/error.calls.php";
+
 		// Fix the glitch of errors not overriding previous templates
 		$this->files = array("header" => $this->files["header"]);
 
@@ -133,6 +149,12 @@ class template {
 		$this->addNav($lang->item("nav_error"));
 		$this->setTitle("error");
 		$this->display();
+	}
+
+	public function getErrors(){
+		// Returns a list of all the errors
+
+		return $this->errors;
 	}
 
 
@@ -182,54 +204,24 @@ class template {
 		$this->navs[] = $nav;
 	}
 
+	public function getNav(){
+		// Returns the nav tree array
+
+		return $this->navs;
+	}
+
 	public function setSEO($check=true){
 		// Enables SEO links
 		// @param	Type	Description
 		// $check	Boolean	Whether or not to have SEO enabled.
 
-		$this->seo = !!$check;
+		define("YAK_SEO", $check);
 	}
 
+	public function getTemplatePath(){
+		// Returns a path to the template
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Link management functions (board, thread, profile, etc.)
-	public function boardLink($bid, $bname){
-		if($this->seo){
-			return '<a href="./board-'.$bid.'.html" onclick="linkBubble=false">'.$bname.'</a>';
-		}
-		return '<a href="?board='.$bid.'" onclick="linkBubble=false">'.$bname.'</a>';
-	}
-	public function threadLink($tid, $tname){
-		if($this->seo){
-			return '<a href="./thread-'.$tid.'.html" onclick="linkBubble=false">'.$tname.'</a>';
-		}
-		return '<a href="?thread='.$tid.'" onclick="linkBubble=false">'.$tname.'</a>';
-	}
-	public function userLink($uid, $uname, $ugroup){
-		if($this->seo){
-			return '<a href="./user-'.$uid.'.html">'.$uname.'</a>';
-		}
-		return '<a href="?user='.$uid.'">'.$uname.'</a>';
-	}
-	public function catLink($cid, $cname){
-		if($this->seo){
-			return '<a href="./cat-'.$cid.'.html">'.$cname.'</a>';
-		}
-		return '<a href="?cat='.$cid.'">'.$cname.'</a>';
+		return $this->dir;
 	}
 }
 

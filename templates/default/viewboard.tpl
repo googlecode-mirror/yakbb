@@ -1,36 +1,36 @@
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title" colspan="4">
 	<!-- if {perm_newthread} -->
-	[ <a href="?action=newthread&amp;board={bid}">New Thread</a> ]
+	[ <a href="?action=newthread&amp;board=<?= boardId() ?>">New Thread</a> ]
 	<!-- endif -->
 </td></tr>
-<!-- if count({threads}) is not 0 -->
+<?php if(threadCount() > 0){ ?>
 	<tr><td class="title">
-		{LANG}list_subject{/LANG}
+		<?= lang("list_subject"); ?>
 	</td><td class="title" align="center" width="1">
-		{LANG}list_replies{/LANG}
+		<?= lang("list_replies"); ?>
 	</td><td class="title" align="center" width="1">
-		{LANG}list_views{/LANG}
+		<?= lang("list_views"); ?>
 	</td><td class="title" align="center">
-		{LANG}list_lastpost{/LANG}
+		<?= lang("list_lastpost"); ?>
 	</td></tr>
-	<!-- repeat:threads:thread -->
+	<?php while($thread = loadThread()){ ?>
 	<tr><td class="cell1" onmouseover="this.style.backgroundColor='#DDDDDD'" onmouseout="this.style.backgroundColor='#FFFFFF'" onclick="if(linkBubble) location.href = this.getElementsByTagName('a')[0].href">
-		{repeat:thread->link} - {repeat:thread->description}<br />
-		{repeat:thread->pages}
+		<?= threadLink($thread) ?> - <?= $thread["description"] ?><br />
+		<?= $thread["pages"] ?>
 	</td><td class="cell1" align="center">
-		{repeat:thread->replies}
+		<?= $thread["replies"] ?>
 	</td><td class="cell1" align="center">
-		{repeat:thread->views}
+		<?= $thread["views"] ?>
 	</td><td class="cell1">
 		LP INFO
 	</td></tr>
-	<!-- endrepeat -->
-<!-- else -->
+	<?php } ?>
+<?php } else { ?>
 	<tr><td class="cell1">
-		{LANG}no_threads{/LANG}
+		<?= lang("no_threads"); ?>
 	</td></tr>
-<!-- endif -->
+<?php } ?>
 <tr><td class="title" colspan="4">
 	(BUTTONS)
 </td></tr>

@@ -30,6 +30,7 @@ class yakbb {
 	public $groups = array(); // List of groups
 	public $bans = array(); // Holds a list of bans
 	public $ip; // The user's secured IP
+	public $curPage; // The current page being viewed
 
 	// Functions
 	public function __construct(){

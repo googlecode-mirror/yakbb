@@ -3,7 +3,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-	<title>{board_title} - {title}</title>
+	<title><?= getSetting("board_title"); ?> - {title}</title>
 	<style type="text/CSS">
 	div#holder div {
 		text-align: left;
@@ -44,40 +44,41 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	<script type="text/Javascript">
 	var linkBubble = true;
 	</script>
+	<base href="<?= baseUrl() ?>" />
 </head>
 <body>
 <div align="center" id="holder">
 <div style="width: 750px">
 <table cellpadding="4" cellspacing="1" class="border">
 <tr><td class="cell1" style="text-align: center">
-	{board_title}
+	<?= getSetting("board_title"); ?>
 </td></tr><tr><td class="cell1">
 	<font size="2">
-		<a href="?action=home">{LANG}menu_home{/LANG}</a> - 
-		<a href="?action=help">{LANG}menu_help{/LANG}</a> - 
-		<a href="?action=search">{LANG}menu_search{/LANG}</a> - 
-		<!-- if {guest} -->
-			<a href="?action=login">{LANG}menu_login{/LANG}</a>
-			<!-- if {registration_enabled} -->
-				 - <a href="?action=register">{LANG}menu_register{/LANG}</a>
-			<!-- endif -->
-		<!-- else -->
-			<a href="?action=usercp">{LANG}menu_usercp{/LANG}</a> - 
-			<a href="?action=members">{LANG}menu_members{/LANG}</a> - 
-			<a href="?action=logout">{LANG}menu_logout{/LANG}</a>
-		<!-- endif -->
+		<a href="<?= seoSwitch("home/", "?action=home") ?>"><?= lang("menu_home"); ?></a> - 
+		<a href="<?= seoSwitch("help/", "?action=help") ?>"><?= lang("menu_help"); ?></a> - 
+		<a href="<?= seoSwitch("search/", "?action=search") ?>"><?= lang("menu_search"); ?></a> - 
+		<?php if(isGuest()){ ?>
+			<a href="<?= seoSwitch("login/", "?action=login") ?>"><?= lang("menu_login"); ?></a>
+			<?php if(getSetting("registration_enabled")){ ?>
+				 - <a href="<?= seoSwitch("register/", "?action=register") ?>"><?= lang("menu_register"); ?></a>
+			<?php } ?>
+		<?php } else { ?>
+			<a href="<?= seoSwitch("usercp/", "?action=usercp") ?>"><?= lang("menu_usercp"); ?></a> - 
+			<a href="<?= seoSwitch("members/", "?action=members") ?>"><?= lang("menu_members"); ?></a> - 
+			<a href="<?= seoSwitch("logout/", "?action=logout") ?>"><?= lang("menu_logout"); ?></a>
+		<?php } ?>
 		
 	</font>
 </td></tr>
 </table>
 <br /><br />
 
-<!-- if (CURRENTDBVERSION > DBVERSION or version_compare(CURRENTYAKVERSION, YAKVERSION) == 1) and !isset({upgrade_check}) -->
+<?php if(upgradeAvailable() && !viewingPage() == "upgrade"){ ?>
 	<table class="border" cellpadding="4" cellspacing="1">
 	<tr><td class="cell1">
-		There are currently updates available. Click <a href="?action=upgrade">here</a> to upgrade your forum.
+		There are currently updates available. Click <a href="<?= seoSwitch("upgrade/", "?action=upgrade") ?>">here</a> to upgrade your forum.
 	</td></tr>
 	</table>
 	<br /><br />
-<!-- endif -->
-<div id="nav" style="text-align: left">{navtree}</div>
+<?php } ?>
+<div id="nav" style="text-align: left"><?= compileNavTree(" :: "); ?></div>

@@ -4,10 +4,12 @@
 	RewriteEngine On
 
 	# General declarations for the SEO.
-	RewriteRule ^board-(\d+).html$ index.php?board=$1 [L,QSA]
-	RewriteRule ^thread-(\d+).html$ index.php?thread=$1 [L,QSA]
-	RewriteRule ^user-(\d+).html$ index.php?user=$1 [L,QSA]
-	RewriteRule ^cat-(\d+).html$ index.php?cat=$1 [L,QSA]
-	RewriteRule ^(reply|print|newthread).html?(.+?)$ index.php?action=$1&$2 [L,QSA]
-	RewriteRule ^(home|help|search|usercp|members|logout|login|signin|register|join|signup|upgrade).html$ index.php?action=$1 [L,QSA]
+	RewriteRule ^board([0-9]+)/.*?/?$ index.php?board=$1 [L,QSA]
+	RewriteRule ^cat([0-9]+)/.*?/?$ index.php?cat=$1 [L,QSA]
+	RewriteRule ^thread([0-9]+)/.*?/?$ index.php?thread=$1 [L,QSA]
+	RewriteRule ^viewprofile/.*?/?$ index.php?user=$1 [L,QSA]
+	RewriteRule ^(home|help|search|usercp|members|logout|login|signin|register|join|signup|upgrade)/?$ index.php?action=$1 [L,QSA]
+	
+	# OLD RULES THAT NEED TO BE UPDATED
+	# RewriteRule ^(reply|print|newthread).html?(.+?)$ index.php?action=$1&$2 [L,QSA]
 </IfModule>

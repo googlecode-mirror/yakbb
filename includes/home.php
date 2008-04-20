@@ -57,13 +57,6 @@ class home {
 		// Boards
 		$this->loadBoards();
 
-		// Add to the template
-		//$tp->addVar("home", array(
-		//	"cats" => $this->cats,
-		//	"boards" => $this->boards,
-		//	"single" => $this->singleCat
-		//));
-
 		// Load the IC stats
 		if($this->singleCat != true){
 			$yak->loadIC();
@@ -80,8 +73,8 @@ class home {
 
 		// Extra info for single category stuff
 		$extra = $extra2 = "";
-		if(isset($_REQUEST["cat"])){
-			$c = intval($_REQUEST["cat"]);
+		if(isset($_GET["cat"])){
+			$c = intval($_GET["cat"]);
 			if($c > 0){
 				$extra = " AND id='".$c."'";
 				$extra2 = "_".$c;
@@ -118,7 +111,6 @@ class home {
 				unset($this->cats[$k]);
 			} else {
 				$this->catids[] = $v["id"];
-				$this->cats[$k]["link"] = $tp->catLink($v["id"], $v["name"]);
 			}
 		}
 
@@ -127,7 +119,7 @@ class home {
 			array_unshift($this->cats, array("id" => 0));
 			$tp->addNav($lang->item("home_nav"));
 		} else {
-			$tp->addNav($tp->catLink($this->cats[0]["id"], $this->cats[0]["name"]));
+			$tp->addNav(catLink($this->cats[0]));
 		}
 
 		$this->cats = $plugins->callhook("home_categories_checked", $this->cats);
@@ -160,13 +152,34 @@ class home {
 			// Add the data to the listing
 			$b["description"] = $parser->parse($b["description"]);
 			$b["new_posts"] = false;
-			$b["link"] = $tp->boardLink($b["id"], $b["name"]);
 			$this->boards[] = $b;
 		}
 
 		// Run through hook and clean up
 		$this->boards = $plugins->callhook("home_boards_checked", $this->boards);
 		$db->free();
+	}
+
+
+
+
+
+
+	// TEMPLATE FUNCTIONS
+	public function boards(){
+		// Returns the current boards data
+
+		return $this->boards;
+	}
+	public function cats(){
+		// Returns the current categories data
+
+		return $this->cats;
+	}
+	public function getSingle(){
+		// Returns the current single category status
+
+		return $this->singleCat;
 	}
 }
 ?>
