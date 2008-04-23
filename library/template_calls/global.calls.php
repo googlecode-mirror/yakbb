@@ -40,7 +40,7 @@ if(!defined("SNAPONE")) exit;
 ||		seoSwitch()
 ||		threadLink()
 \*====================================*/
-function boardLink($bdata){
+function boardLink($bdata, $urlonly=false){
 	// Generates a link to viewing a board
 
 	if(YAK_SEO == true){
@@ -48,10 +48,13 @@ function boardLink($bdata){
 	} else {
 		$url = "?board=".$bdata["id"];
 	}
+	if($urlonly){
+		return $url;
+	}
 	return "<a href=\"".$url."\">".$bdata["name"]."</a>";
 }
 
-function catLink($cdata){
+function catLink($cdata, $urlonly=false){
 	// Generates a link to viewing a category
 
 	if(YAK_SEO == true){
@@ -59,16 +62,22 @@ function catLink($cdata){
 	} else {
 		$url = "?cat=".$cdata["id"];
 	}
+	if($urlonly){
+		return $url;
+	}
 	return "<a href=\"".$url."\">".$cdata["name"]."</a>";
 }
 
-function userLink($udata){
+function userLink($udata, $urlonly=false){
 	// Generates a link to a user's profile
 
 	if(YAK_SEO == true){
 		$url = "viewprofile/".$udata["name"];
 	} else {
 		$url = "?user=".$udata["name"];
+	}
+	if($urlonly){
+		return $url;
 	}
 	return "<a href=\"".$url."\">".$udata["display"]."</a>";
 }
@@ -82,13 +91,16 @@ function seoSwitch($urlseo, $urlnormal){
 	return $urlnormal;
 }
 
-function threadLink($tdata){
+function threadLink($tdata, $urlonly=false){
 	// Generates a link to viewing a thread
 
 	if(YAK_SEO == true){
 		$url = "thread".$tdata["id"]."/".urlSafe($tdata["title"], 20)."/";
 	} else {
 		$url = "?thread=".$tdata["id"];
+	}
+	if($urlonly){
+		return $url;
 	}
 	return "<a href=\"".$url."\">".$tdata["title"]."</a>";
 }
@@ -114,7 +126,9 @@ function getPageTitle(){
 }
 
 function getPermission($perm){
-	// Looks up a specified permission
+	// Looks up a specified permission. Only returns true or false
+
+	return false; // Permission wasn't found. Default to false.
 }
 
 function getSetting($settings){

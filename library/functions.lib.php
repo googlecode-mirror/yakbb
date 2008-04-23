@@ -26,6 +26,20 @@
 
 if(!defined("SNAPONE")) exit;
 
+function getUserGroup(){
+	global $yak, $user;
+	if($user["group"] > 0 && isset($yak->groups[$user["group"]])){
+	} else if($user["id"] > 0){
+		$group = array(
+			"id" => 0,
+			"name" => "Member",
+			"color" => "a:0:{}",
+			"replytolocked" => 0
+		);
+	} else {
+	}
+}
+
 function libraryLoad($n){
 	// Loads a library section that is not loaded by default (deletion, validation, etc.)
 

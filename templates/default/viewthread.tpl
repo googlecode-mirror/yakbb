@@ -2,7 +2,7 @@
 <tr><td class="title">
 	[ 
 	<!-- if {can_reply} is true -->
-		<a href="?action=reply&amp;id=<?= threadId() ?>">Reply</a> | 
+		<a href="?action=reply&amp;tid=<?= threadId() ?>">Reply</a> | 
 	<!-- endif -->
 	Print
 	]
@@ -14,7 +14,7 @@
 <tr><td class="cell1" width="20%">
 	<?= userLink($post) ?>
 </td><td class="cell1" width="80%">
-	<?= $post["title"] ?> - Posted on <?= $post["date"] ?> - [ <a href="?action=reply&amp;id=<?= threadId() ?>">Reply</a> | <a href="?action=reply&amp;id=<?= threadId() ?>&amp;quote=<?= $post["id"] ?>">Quote</a> | Modify | Delete ]
+	<?= $post["title"] ?> - Posted on <?= $post["date"] ?> - [ <a href="?action=reply&amp;tid=<?= threadId() ?>">Reply</a> | <a href="?action=reply&amp;tid=<?= threadId() ?>&amp;quote=<?= $post["id"] ?>">Quote</a> | Modify | Delete ]
 	<hr size="1" />
 	<?= $post["message"] ?>
 </td></tr>
@@ -26,7 +26,7 @@
 <tr><td class="title">
 	[ 
 	<!-- if {can_reply} is true -->
-		<a href="?action=reply&amp;id={tid}">Reply</a> | 
+		<a href="?action=reply&amp;tid={tid}">Reply</a> | 
 	<!-- endif -->
 	Print
 	]

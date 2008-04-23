@@ -11,14 +11,17 @@ $items = array(
 	"desc_too_long" => "Your thread description is too long. It may only be ".$yak->settings["thread_desc_max"]." characters.",
 
 	// Page title and text sections
+	"nav_reply" => "Replying to Thread",
 	"nav_newthread" => "Creating a Thread",
 	"text_title" => "Title: ",
 	"text_desc" => "Description: ",
 	"text_message" => "Message: ",
-	"post_title2" => "Create a Thread",
+	"post_title_reply" => "Reply to Thread",
+	"post_title_newthread" => "Create a Thread",
 
 	// Misc
-	"submit_button" => "Create Thread",
+	"submit_button_reply" => "Post Reply!",
+	"submit_button_newthread" => "Create Thread",
 );
 
 ?>

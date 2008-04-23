@@ -241,10 +241,10 @@ $va = array( // Valid Actions
 
 	// Standard viewing pages
 	"board" => "viewboard",
-		"newthread" => "newthread",
+		"newthread" => "post",
 	"thread" => "viewthread",
-		"reply" => "postreply",
-	"user" => "viewprofile",
+		"reply" => "post",
+	"user" => "", // "viewprofile",
 
 	// Development tools only.
 	"upgrade" => "upgrade",

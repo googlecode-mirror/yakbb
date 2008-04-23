@@ -65,6 +65,29 @@ class upgrade_sql {
 		");
 		$this->db->query("ALTER TABLE `".DBPRE."messages` DROP `title`");
 		$this->db->query("ALTER TABLE `".DBPRE."messages` ADD `threadid` INT NOT NULL AFTER `senderid` ");
+
+		// Changes some tinyint's to enum's for thread data (4/21/08)
+		$this->db->query("
+			ALTER TABLE `".DBPRE."threads`
+				CHANGE `announcement` `announcement` ENUM( '0', '1' ) NOT NULL DEFAULT '0',
+				CHANGE `sticky` `sticky` ENUM( '0', '1' ) NOT NULL DEFAULT '0',
+				CHANGE `locked` `locked` ENUM( '0', '1' ) NOT NULL DEFAULT '0'
+		");
+
+		// First permission in the groups table!! (4/21/08)
+		$this->db->query("ALTER TABLE `".DBPRE."groups` ADD `replytolocked` ENUM( '0', '1' ) NOT NULL DEFAULT '0'");
+		$this->db->query("UPDATE `".DBPRE."groups` SET `replytolocked` = '1' WHERE `id` =1 LIMIT 1 ;");
+
+		// Fix board order being 0. It should be 1+ (4/22/08)
+		$this->db->query("UPDATE `".DBPRE."boards` SET `order` = '1' WHERE `id` =3 LIMIT 1");
+		$this->db->query("UPDATE `".DBPRE."boards` SET `order` = '1' WHERE `id` =4 LIMIT 1");
+
+		// Add a second board to a main category for testing (4/22/08)
+		$this->db->query('
+			INSERT INTO `'.DBPRE.'boards`
+				   (`id`, `parentid`, `parenttype`, `name`, `description`, `threads`, `posts`, `order`, `sublist`, `permissions`)
+			VALUES (\'0\', \'1\', \'c\', \'Board 5... What?\', \'[b]Te[/b]st.\', \'0\', \'0\', \'2\', \'1\', \'a:3:{i:-1;a:5:{s:4:"view";b:1;s:5:"reply";b:0;s:4:"poll";b:0;s:6:"thread";b:0;s:6:"attach";b:0;}i:0;a:5:{s:4:"view";b:1;s:5:"reply";b:1;s:4:"poll";b:1;s:6:"thread";b:1;s:6:"attach";b:0;}i:1;a:5:{s:4:"view";b:1;s:5:"reply";b:1;s:4:"poll";b:1;s:6:"thread";b:1;s:6:"attach";b:1;}}\')
+		');
 	}
 }
 

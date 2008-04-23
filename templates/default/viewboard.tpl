@@ -1,7 +1,7 @@
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title" colspan="4">
 	<!-- if {perm_newthread} -->
-	[ <a href="?action=newthread&amp;board=<?= boardId() ?>">New Thread</a> ]
+	[ <a href="?action=newthread&amp;bid=<?= boardId() ?>">New Thread</a> ]
 	<!-- endif -->
 </td></tr>
 <?php if(threadCount() > 0){ ?>
