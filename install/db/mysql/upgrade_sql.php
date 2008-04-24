@@ -30,5 +30,5 @@ class upgrade_sql {
 
 	private function upgradeIt0(){} // Prevent possible errors
 	private function upgradeIt1(){} // Prevent possible errors
-
+}
 ?>
