@@ -46,6 +46,7 @@ if(!defined("SNAPONE")) exit;
 class post {
 	private $mode = ""; // The current mode we're in
 	private $id = 0; // ID of the current board (newthread), thread (reply), or post (modify)
+	private $bdat = array(); // Holds the current board data in newthread mode
 	private $tdat = array(); // Holds the current thread data in reply mode
 	private $pdat = array(); // Holds the current post data in modify mode
 	private $quote = ""; // The quote data if a quote is set
@@ -147,9 +148,72 @@ class post {
 		$tp->addNav(threadLink($this->tdat));
 		$tp->addNav($lang->item("nav_reply"));
 		$tp->setTitle("reply");
+
+		// Quote stuff if the form wasn't sent because we won't add the quote if it wasn't loaded
+		if(!isset($_REQUEST["submitit"]) && isset($_GET["quote"])){
+			$quote = intval($_GET["quote"]);
+			if($quote > 0){
+				$check = $db->query("
+					SELECT
+						p.*
+					FROM
+						".DBPRE."posts p
+					WHERE
+						p.id='".$quote."'
+					LIMIT 1
+				");
+				if($db->numRows() == 1){
+					$x = $db->fetch();
+					$this->quote = "[quote]".$x["message"]."[/quote]";
+				}
+				$db->free();
+			}
+		}
 	}
 
 	private function newThreadSetup(){
+		// This sets up the rest of the code to handle newthread mode correctly
+
+		global $tp, $db, $user, $lang;
+
+		// Establish the board ID
+		$this->id = intval($_REQUEST["bid"]);
+		if($this->id < 0){
+			$tp->error("newthread_invalid_id");
+		} else if($user["id"] == 0){
+			$tp->error("newthread_guest");
+		}
+
+		// Make sure the thread exists
+		$board = $db->query("
+			SELECT
+				b.*
+			FROM
+				".DBPRE."boards b
+			WHERE
+				b.id='".$this->id."'
+			LIMIT 1
+		");
+		if($db->numRows() == 0){
+			$tp->error("newthread_board_doesnt_exist");
+		}
+		$this->bdat = $db->fetch();
+		$db->free(); 
+
+		// Check if they can view the board.
+		$bperms = unserialize($this->bdat["permissions"]);
+		if(!isset($bperms[$user["group"]]) || $bperms[$user["group"]]["thread"] == false){
+			$tp->error("newthread_cant_view");
+		}
+		unset($bperms);
+
+		// Set up the nav tree
+		$this->setupNavTree($this->bdat);
+
+		// Template stuff
+		$tp->addNav(boardLink($this->bdat));
+		$tp->addNav($lang->item("nav_newthread"));
+		$tp->setTitle("newthread");
 	}
 
 	private function setupNavTree($curboard){
@@ -261,12 +325,10 @@ class post {
 						"id" => 0,
 						"timestamp" => time(),
 						"title" => $title,
-						"description" => $descripton,
+						"description" => $description,
 						"creatorid" => $user["id"],
 						"boardid" => $this->id,
-						"replies" => 0,
-						"views" => 0,
-						"icon" => 0,
+						"icon" => 1,
 						"announcement" => 0,
 						"sticky" => 0,
 						"locked" => 0,
@@ -311,7 +373,7 @@ class post {
 			}
 
 			// Redirect to the thread for all modes
-			redirect("/".threadLink($this->tdat, true));
+			redirect("/".ampToNormal(threadLink($this->tdat, true)));
 		} else {
 			// We'll add the errors now
 			$this->errors = $errors;
@@ -362,7 +424,7 @@ class post {
 				}
 				if($this->mode == "reply"){
 					return $lang->item("reply_string").$this->tdat["title"];
-				} else if($this-mode == "modify"){
+				} else if($this->mode == "modify"){
 					// Will load modify data later
 				}
 				return "";
@@ -397,107 +459,5 @@ class post {
 		return $this->id;
 	}
 }
-
-// Check for specific scenarios.
-/* if(!isset($bperms[$user["group"]]) || $bperms[$user["group"]]["view"] == false){
-	$tp->error("postreply_no_permission");
-} else if($tdat["locked"] == 1 && !$perms->checkPerm("replylocked", array("bid" => $tdat["boardid"]))){
-	// Thread is locked and the user can't reply to locked threads.
-	$tp->error("postreply_thread_locked");
-}
-
-$tp->addNav($lang->item("nav_postreply"));
-$tp->setTitle("reply");
-$tp->loadFile("reply", "post.tpl"); /*, array(
-	"mode" => "reply",
-	"tid" => $tid,
-	"form_action" => ($tp->seo?"./reply.html?":"?action=reply&amp;")."id=".$tid,
-	"errors" => array(),
-	"posttitle" => "Re: ".$tdat["title"],
-	"postmessage" => ""
-));
-
-// Load quote stuff
-if(isset($_REQUEST["quote"])){
-	$quote = intval($_REQUEST["quote"]);
-	if($quote > 0){
-		$check = $db->query("
-			SELECT
-				p.*
-			FROM
-				".DBPRE."posts p
-			WHERE
-				p.id='".$quote."'
-			LIMIT 1
-		");
-		if($db->numRows() == 1){
-			$x = $db->fetch();
-			$data = "[quote]".$x["message"]."[/quote]";
-			// $tp->addVar("reply", "postmessage", $data);
-		}
-		$db->free();
-	}
-}
-
-if(isset($_REQUEST["submitit"])){
-	// Form was sent. Let's test out the post.
-	libraryLoad("validation.lib");
-
-	$title = secure(trim($_REQUEST["posttitle"]));
-	$message = secure(trim($_REQUEST["postmessage"]));
-
-	$errors = array();
-
-	// Title
-	$tCheck = validTitle($title);
-	if($tCheck !== true){
-		$errors = array_merge($errors, $tCheck);
-	}
-
-	// Message
-	$mCheck = validMessage($message);
-	if($mCheck !== true){
-		$errors = array_merge($errors, $mCheck);
-	}
-
-	if(count($errors) == 0){
-		// Passes checks. Good to go.
-		$db->insert("posts", array(
-			"id" => 0,
-			"threadid" => $tid,
-			"userid" => $user["id"],
-			"timestamp" => time(),
-			"message" => $message,
-			"title" => $title,
-			"disableubbc" => 0,
-			"disablesmilies" => 0,
-			"attachments" => 0
-		));
-
-		// Update board, thread, and user counts
-		$db->query("UPDATE ".DBPRE."boards SET posts=posts+1 WHERE id='".$tdat["boardid"]."' LIMIT 1");
-		$db->query("UPDATE ".DBPRE."threads SET replies=replies+1 WHERE id='".$tid."' LIMIT 1");
-		if($guest === false){
-			$db->query("UPDATE ".DBPRE."users SET posts=posts+1 WHERE id='".$user["id"]."' LIMIT 1");
-		}
-
-		// Clear the cached data
-		$db->clearCacheQuery("stats/posts_count");
-
-		if($tp->seo){
-			redirect("/thread-".$tid.".html");
-		} else {
-			redirect("?thread=".$tid);
-		}
-	} else {
-		// We'll add the errors now
-		$lang->learn("errors");
-		$tp->addVar("reply", array(
-			"errors" => array_map(array($lang, "item"), $errors),
-			"posttitle" => $title,
-			"postmessage" => $message
-		));
-	}
-} */
 
 ?>

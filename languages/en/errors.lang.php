@@ -19,6 +19,7 @@ $items = array(
 
 	// includes/post.php errors
 	"invalid_post_type" => "You are trying to use a post type that is not supported.",
+	"newthread_board_doesnt_exist" => "The board you are trying to create a new topic in does not exist.",
 	"newthread_guest" => "Guests are not allowed to create threads in this board.",
 	"newthread_invalid_id" => "The specified thread ID is invalid.",
 	"newthread_cant_view" => "You are not allowed to view this board.",

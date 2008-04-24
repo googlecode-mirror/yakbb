@@ -8,7 +8,7 @@
 	RewriteRule ^cat([0-9]+)/.*?/?$ index.php?cat=$1 [L,QSA]
 	RewriteRule ^thread([0-9]+)/.*?/?$ index.php?thread=$1 [L,QSA]
 	RewriteRule ^newthread([0-9]+)/?$ index.php?action=newthread&bid=$1 [L,QSA]
-	RewriteRule ^reply([0-9]+)/?$ index.php?action=reply&tid=$1 [L,QSA]
+	RewriteRule ^reply([0-9]+)(/?quote([0-9]+))?/?$ index.php?action=reply&tid=$1&quote=$3 [L,QSA]
 	RewriteRule ^viewprofile/.*?/?$ index.php?user=$1 [L,QSA]
 	RewriteRule ^(home|help|search|usercp|members|logout|login|signin|register|join|signup|upgrade)/?$ index.php?action=$1 [L,QSA]
 	

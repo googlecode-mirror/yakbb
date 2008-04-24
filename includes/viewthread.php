@@ -41,7 +41,9 @@ class viewthread {
 	private $posts = array();
 
 	public function __construct(){
-		global $tp, $db, $parser;
+		global $tp, $db, $parser, $lang;
+
+		$lang->learn("viewthread");
 
 		// Thread ID
 		$this->tid = intval($_GET["thread"]);

@@ -74,9 +74,9 @@ function getFormAction(){
 	global $post;
 	switch($post->getMode()){
 		case "reply":
-			return seoSwitch("reply".$post->getId()."/", "?action=reply&amp;tid=".$post->getId());
+			return replyLink($post->getId(), true);
 		case "newthread":
-			return seoSwitch("newthread".$post->getId()."/", "?action=newthread&amp;tid=".$post->getId());
+			return newThreadLink($post->getId(), true);
 		case "modify":
 			return "";
 		default:

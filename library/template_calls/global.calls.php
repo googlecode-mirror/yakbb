@@ -36,9 +36,11 @@ if(!defined("SNAPONE")) exit;
 || LINK FUNCTIONS
 ||		boardLink()
 ||		catLink()
-||		userLink()
+||		newThreadLink()
+||		replyLink()
 ||		seoSwitch()
 ||		threadLink()
+||		userLink()
 \*====================================*/
 function boardLink($bdata, $urlonly=false){
 	// Generates a link to viewing a board
@@ -68,18 +70,22 @@ function catLink($cdata, $urlonly=false){
 	return "<a href=\"".$url."\">".$cdata["name"]."</a>";
 }
 
-function userLink($udata, $urlonly=false){
-	// Generates a link to a user's profile
+function newThreadLink($bdata, $urlonly=false){
+	// Generates a link to posting a thread
+
+	if(is_array($bdata)){
+		$bdata = $bdata["id"];
+	}
 
 	if(YAK_SEO == true){
-		$url = "viewprofile/".$udata["name"];
+		$url = "newthread".$bdata."/";
 	} else {
-		$url = "?user=".$udata["name"];
+		$url = "?action=newthread&amp;bid=".$tdata["id"];
 	}
 	if($urlonly){
 		return $url;
 	}
-	return "<a href=\"".$url."\">".$udata["display"]."</a>";
+	return "<a href=\"".$url."\">".$tdata["title"]."</a>";
 }
 
 function seoSwitch($urlseo, $urlnormal){
@@ -89,6 +95,32 @@ function seoSwitch($urlseo, $urlnormal){
 		return $urlseo;
 	}
 	return $urlnormal;
+}
+
+function replyLink($tdata, $urlonly=false, $quote=0){
+	// Generates a link to reply to a thread
+
+	// We only want an ID. Some may just send the thread data out of habit
+	if(is_array($tdata)){
+		$tdata = $tdata["id"];
+	}
+
+	if(YAK_SEO == true){
+		$url = "reply".$tdata."/";
+		if($quote != 0){
+			$url .= "quote".$quote."/";
+		}
+	} else {
+		$url = "?action=reply&amp;tid=".$tdata;
+		if($quote != 0){
+			$url .= "&amp;quote=".$quote;
+		}
+	}
+	if($urlonly){
+		return $url;
+	}
+	global $lang;
+	return "<a href=\"".$url."\">".$lang->item("reply_to_thread")."</a>";
 }
 
 function threadLink($tdata, $urlonly=false){
@@ -103,6 +135,20 @@ function threadLink($tdata, $urlonly=false){
 		return $url;
 	}
 	return "<a href=\"".$url."\">".$tdata["title"]."</a>";
+}
+
+function userLink($udata, $urlonly=false){
+	// Generates a link to a user's profile
+
+	if(YAK_SEO == true){
+		$url = "viewprofile/".$udata["name"];
+	} else {
+		$url = "?user=".$udata["name"];
+	}
+	if($urlonly){
+		return $url;
+	}
+	return "<a href=\"".$url."\">".$udata["display"]."</a>";
 }
 
 

@@ -26,6 +26,10 @@
 
 if(!defined("SNAPONE")) exit;
 
+function ampToNormal($str){
+	return preg_replace("/&amp;/", "&", $str);
+}
+
 function getUserGroup(){
 	global $yak, $user;
 	if($user["group"] > 0 && isset($yak->groups[$user["group"]])){
