@@ -179,17 +179,25 @@ if($step == 0){
 	);
 	$dat = preg_replace($searches, $replaces, $dat);
 	$ff->updateFile("../config.inc.php", $dat);
-	require "./db/".$dbtype."/install_sql.php";
+
+	// Load the queries for structure
+	$data = $ff->loadFile("./db/".$dbtype."/install_structure.sql");
+	$data = preg_replace("/yakbb_/", $dbpre, $data);
+	$queries = explode("-- --------------------------------------------------------", $data);
+	foreach($queries as $k -> $v){
+		$db->query($v);
+	}
+
+	// Load the queries for data
+	$data = $ff->loadFile("./db/".$dbtype."/install_data.sql");
+	$data = preg_replace("/yakbb_/", $dbpre, $data);
+	$queries = explode("-- --------------------------------------------------------", $data);
+	foreach($queries as $k -> $v){
+		$db->query($v);
+	}
+
+	// Apply upgrades
 	require "./db/".$dbtype."/upgrade_sql.php";
-	foreach($d as $k => $v){
-		$db->query($v);
-	}
-	foreach($c as $k => $v){
-		$db->query($v);
-	}
-	foreach($i as $k => $v){
-		$db->query($v);
-	}
 	$upgrade = new upgrade_sql();
 	$upgrade->upgrade(1);
 	$ff->updateFile("./install.lock", "");
