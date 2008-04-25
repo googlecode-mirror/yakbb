@@ -166,7 +166,7 @@ if($step == 0){
 		"/{DBNAME}/"
 	);
 	$replaces = array(
-		"0.0.1a",
+		"0.1.0a",
 		1,
 		'#@C$#$%&^#$B%#$G%#%saFDSADFSA@',
 		$dbtype,
