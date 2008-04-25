@@ -185,6 +185,7 @@ if($step == 0){
 	$data = preg_replace("/yakbb_/", $dbpre, $data);
 	$queries = explode("--------------------------------------", $data);
 	foreach($queries as $k => $v){
+		$v = preg_replace("/--*?\s(Table structure.*)?/m", "", $v);
 		$db->query($v);
 	}
 
@@ -193,6 +194,8 @@ if($step == 0){
 	$data = preg_replace("/yakbb_/", $dbpre, $data);
 	$queries = explode("--------------------", $data);
 	foreach($queries as $k => $v){
+		if(strlen($v) < 10) continue;
+		$v = preg_replace("/--*?\s(Dumping data.*)?/m", "", $v);
 		$db->query($v);
 	}
 
