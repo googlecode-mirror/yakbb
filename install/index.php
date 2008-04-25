@@ -183,16 +183,16 @@ if($step == 0){
 	// Load the queries for structure
 	$data = $ff->loadFile("./db/".$dbtype."/install_structure.sql");
 	$data = preg_replace("/yakbb_/", $dbpre, $data);
-	$queries = explode("-- --------------------------------------------------------", $data);
-	foreach($queries as $k -> $v){
+	$queries = explode("--------------------------------------", $data);
+	foreach($queries as $k => $v){
 		$db->query($v);
 	}
 
 	// Load the queries for data
 	$data = $ff->loadFile("./db/".$dbtype."/install_data.sql");
 	$data = preg_replace("/yakbb_/", $dbpre, $data);
-	$queries = explode("-- --------------------------------------------------------", $data);
-	foreach($queries as $k -> $v){
+	$queries = explode("--------------------", $data);
+	foreach($queries as $k => $v){
 		$db->query($v);
 	}
 
