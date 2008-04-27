@@ -1,0 +1,7 @@
+Stores group data
+
+FIELD			DESCRIPTION
+id				ID of the group. auto_increment
+name			Name of the group.
+color			serialze()'d array of the colors corresponding with templates.
+replytolocked	ENUM permission of whether they can reply to locked threads (1) or not (0)

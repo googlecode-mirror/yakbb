@@ -1,0 +1,16 @@
+Stores thread data
+
+FIELD			DESCRIPTION
+id				ID of the thread. auto_increment
+timestamp		UNIX timestamp of when the thread was created
+title			Title of the thread
+description		Thread description
+creatorid		ID of the thread creator
+boardid			ID of the board the thread is in
+replies			Number of replies the thread has
+views			Number of views the thread has
+icon			The ID of the icon which is used
+announcement	Whether the thread is an announcement (1) or not (0)
+sticky			Whether the thread is a sticky (1) or not (0)
+locked			Whether the thread is locked (1) or not (0)
+redirecturl		URL the thread should redirect to when accessed.

@@ -1,0 +1,62 @@
+	Stores user data. This file may not be up to date since during YakBB development, the users table may constantly
+change. There's a few notes at the bottom for whenever a number in an ENUM is used.
+
+FIELD			DESCRIPTION
+id				ID of the user. auto_increment
+name			The user's username. Is used to login and in URLs
+display			The user's displayname. This is what is shown to other users
+group			The group the user belongs to. 0 is member. This is used for permission linking, etc.
+password		An encryption of the user's password
+activated		Account is activated (1) or not (0)
+activationcode	Randomly generated activation key for the user's account.
+email			The user's e-mail.
+emailshow		Show the e-mail to all users (1) or not (0). Is never shown to guests
+emailoptin		Whether or not to opt into mass e-mails. See below for more details.
+language		The string key of the language the user is using.
+template		The string key of the template the user is using.
+posts			The number of posts the user has.
+reputation		The amount of reputation points the user has.
+aim				The user's AIM account name
+msn				The user's MSN account e-mail
+icq				The user's ICQ number
+yim				The user's YIM account name
+skype			The user's Skype account name
+xfire			The user's XFire account name
+website			URL of the user's website
+websitename		Name of the user's website. Only required if website is filled out.
+avatar			URL of the user's avatar. It can be a local URL
+avatarheight	Height of the user's avatar.
+avatarwidth		Width of the user's avatar.
+personaltext	The user's personal text
+registered		UNIX timestamp of when the user registered
+lastlogin		UNIX timestamp of when the user last was online, logged in and not invisible
+lastlogininvis	UNIX timestamp of when the user last was online, logged in, and invisible
+lastip			The user's last known IP
+location		The user's location
+gender			The user's gender. 0 = not given, 1 = male, 2 = female
+birthday		UNIX timestamp of the day of the user's birthday
+signature		The user's signature
+newpmnotify		Whether the user wishes to be notified of PM. See below for more
+invisible		Whether the user is invisible (1) or not (0)
+pmenabled		Whether or not the PM system is enabled for the user. See below for more.
+timezone		The corresponding number of the user's timezone.
+dst				Whether daylights saving time/summer time is enabled (1) or disabled (0)
+dateformat		The format in which the user should be able to have dates displayed unless specified otherwise.
+
+
+
+EMAILOPTIN CODES
+0 = never receive any e-mails from the forum EXCEPT forgotten password requests, PM notifications (if enabled),
+		or bookmark notifications (if enabled). A few other exceptions may pop up, but this is unknown as of now.
+1 = receive mass e-mails from admistrators along with e-mails covered in 0.
+2 = other users can send you e-mails through an e-mail form. Also has stuff from 1 and 0.
+
+NEWPMNOTIFY CODES
+0 = do not be notified
+1 = notified via PM
+2 = notified via e-mail
+
+PMENABLED CODES
+0 = pm system completely disabled OTHER than notifications and mass PMs
+1 = only friends can send user PMs. Also includes 1's settings
+2 = everyone can PM the user. Default.

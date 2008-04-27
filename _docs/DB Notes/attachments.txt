@@ -1,0 +1,10 @@
+	Stores attachments data and their relationships to posts.
+
+FIELD			DESCRIPTION
+id				ID of the attachment. auto_increment
+postid			ID of the post the attachment belongs to.
+originalname	Original file name for the file that the attachment belongs to.
+newname			New name of the file that is stored. This is a security thing, though it could be decryptable.
+preview			URL of the preview of the file download. Only applicable for images.
+filetype		Mimetype for the file. This is a security thing, again.
+downloads		Number of downloads the item has received.

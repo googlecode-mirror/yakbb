@@ -1,4 +1,4 @@
-Stores pm relationships
+Stores user to message thread relationships
 
 FIELD		DESCRIPTION
 id			ID of the relation. Unique.

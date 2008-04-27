@@ -1,0 +1,7 @@
+Stores message threads which contain the actual messages
+
+FIELD		DESCRIPTION
+id			ID of the thread. auto_increment
+title		Title of the message thread. All replies don't actually have a title.
+lastupdated	UNIX timestamp of the last message to be posted to the message thread.
+initialsend	UNIT timestamp of when the thread was initially created.

@@ -1,0 +1,10 @@
+Stores actual messages in the messages system.
+
+FIELD			DESCRIPTION
+id				ID of the message. auto_increment
+message			The body of text of the message.
+senderid		ID of the user who posted the message
+threadid		ID of the message thread which the message belongs to
+time			UNIX timestamp of when the message was posted. This is used to sort the order of the messages
+disableubbc		ENUM of whether to enable (0) or disable (1) UBBC in the message
+disablesmilies	ENUM of whether to enable (0) or disable (1) smilies in the message

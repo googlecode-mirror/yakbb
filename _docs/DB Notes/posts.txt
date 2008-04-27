@@ -1,0 +1,14 @@
+Stores post data
+
+FIELD			DESCRIPTION
+id				ID of the post. auto_increment
+threadid		ID of the thread the post belongs to
+userid			ID of the user that posted
+timestamp		UNIX timestamp of when the post was made
+message			Actual body of the post
+title			Title of the post. It doesn't have to be the title of the thread, but it defaults to "Re: "+threadname
+disableubbc		Whether to enable (0) or disable (1) UBBC in the post
+disablesmilies	Whether to enable (0) or disable (1) smilies in the post
+letime			UNIX timestamp of the last edit
+leuser			ID of the user who made the last edit.
+attachments		Number of attachments the post has.

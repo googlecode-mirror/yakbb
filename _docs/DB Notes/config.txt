@@ -1,0 +1,7 @@
+Stores configuration for the forum.
+
+FIELD		DESCRIPTION
+id			ID of the config item. Must be unique.
+name		Key name of the item. Used in reference in the code.
+value		Value of the item. The code converts appearing booleans to boolean types, appearing integers to integers,
+			etc. This is just so === and !== actually work correctly

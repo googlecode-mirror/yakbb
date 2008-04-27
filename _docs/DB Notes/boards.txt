@@ -1,0 +1,25 @@
+Stores the board data.
+
+FIELD		DESCRIPTION
+id			ID of the board. auto_increment
+parentid	ID of the parent of the board. Can be a board or category ID. 0 means no parent
+parenttype	ENUM type of the parent. Either b for board or c for category
+name		Name of the board.
+description	Description of the board.
+threads		Number of threads the board has.
+posts		Number of posts that are in the board.
+order		The order of the board in relationship to its parent. 1 is 1st
+sublist		Whether to show the sub-boards listing (1) or not (0)
+permissions	serialize()'d array of the group permissions for the board
+
+PERMISSIONS AND MEANINGS
+	Permissions are stored based on their group number. It's a two-deep array. First array has keys of the group ID
+that is then used to access to the second array. The second array keys are the permissions which are either a boolean
+false or true. Below are the permissions and explanations. Some items pass to sub-boards. If no mention of sub-boards
+is made, then they do NOT pass to sub-boards.
+
+"view" - Whether or not a user can view the board. This passes to sub-boards too.
+"reply" - Whether or not a user can reply to threads in this board.
+"poll" - Whether or not a user can add a poll to their threads in this board.
+"thread" - Whether or not a user can post a new thread in this board.
+"attach" - Whether or not a user can upload attachments in this board.

@@ -1,0 +1,17 @@
+Stores category data
+
+FIELD		DESCRIPTION
+id			ID of the category. auto_increment
+name		Name of the category.
+hideshow	Whether a user can hide/show a category (1) or not (0)
+showmain	Whether to show the category on the main page (1) or not (0).
+order		Order of the category on the main page. 1 is 1st. Boards without a parent category come before this.
+permissions	serialize()'d array of the group permissions of the category
+
+PERMISSIONS AND MEANING
+	Permissions are stored based on their group number. It's a two-deep array. First array has keys of the group ID
+that is then used to access to the second array. The second array keys are the permissions which are either a boolean
+false or true. Below are the permissions and explanations. Some items pass to boards. If no mention of boards is made,
+then they do NOT pass to the boards.
+
+"view" - Whether or not a user can view the category. This passes to child boards too.

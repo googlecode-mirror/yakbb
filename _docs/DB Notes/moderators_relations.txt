@@ -1,0 +1,6 @@
+Stores moderator-board relationships. This has nothing about permissions, it just stores the user-board relationship.
+
+FIELD		DESCRIPTION
+id			ID of the moderator-board relation. Must be unique. auto_increment
+boardid		ID of the board
+userid		ID of the user

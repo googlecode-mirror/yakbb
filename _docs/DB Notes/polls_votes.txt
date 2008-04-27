@@ -1,0 +1,8 @@
+Stores votes to users to polls relations
+
+FIELD		DESCRIPTION
+id			ID of the vote. auto_increment
+pollid		ID of the poll the user voted in
+userid		ID of the user that voted.
+timestamp	UNIX timestamp of when the vote was cast.
+votefor		The number answer that the user voted for. (1-16 are valid)
