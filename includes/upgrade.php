@@ -20,6 +20,8 @@
 if(!defined("SNAPONE")) exit;
 
 class upgrade {
+	private $db_upgrade = false;
+	private $core_upgrade = false;
 	public function __construct(){
 		global $lang, $tp;
 
@@ -27,12 +29,7 @@ class upgrade {
 		$lang->learn("upgrade");
 		$tp->setTitle("upgrade");
 		$tp->addNav($lang->item("nav_upgrade"));
-		$tp->loadFile("upgrade", "upgrade.tpl", array(
-			"page1" => false,
-			"page2" => false,
-			"page3" => true
-		));
-		$tp->addGlobal("upgrade_check", true);
+		$tp->loadFile("upgrade", "upgrade.tpl");
 
 		// DB Upgrades
 		if(CURRENTDBVERSION > DBVERSION){
@@ -54,22 +51,33 @@ class upgrade {
 		require "./install/db/".DBTYPE."/upgrade_sql.php";
 		$up = new upgrade_sql();
 		$up->upgrade();
-		$tp->addVar("upgrade", array(
-			"page1" => true,
-			"page3" => false
-		));
+		$this->db_upgrade = true;
 	}
 
 
 
 	private function upgrade_yak(){
 		// Used when there's an upgrade to the actual YakBB source that needs patching
-		global $tp;
 
-		$tp->addVar("upgrade", array(
-			"page2" => true,
-			"page3" => false
-		));
+		$this->core_upgrade = true;
+	}
+
+
+
+
+
+
+
+
+
+
+
+	// TEMPLATE FUNCTIONS
+	public function dbUpgrade(){
+		return !!$this->db_upgrade;
+	}
+	public function coreUpgrade(){
+		return !!$this->core_upgrade;
 	}
 }
 
