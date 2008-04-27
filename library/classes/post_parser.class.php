@@ -23,13 +23,14 @@
 		- Smilies
 		- Censored words list
 	- Finish coding UBBC, smilies, and censored words list functions.
+	- Change quote, php, and code UBBCs to use a template file. This may be a little tricky.
 */
 
 class post_parser {
 	// Define the variables
-	private $customUBBC = array();
-	private $smilies = array();
-	private $censors = array();
+	private $customUBBC = array(); // Holds all the custom UBBC
+	private $smilies = array(); // Holds all the smilies
+	private $censors = array(); // Holds all the censors
 
 	// Public functions
 	public function __construct(){
@@ -44,12 +45,12 @@ class post_parser {
 
 	public function parse($str, $ubbc=true, $smilies=true, $br=true){
 		// This function initiates the standard parsing used everywhere.
-		// @param	Type	Description
-		// $str	String	The data to be parsed.
-		// $ubbc	Boolean	Whether or not to parse UBBC.
-		// $smilies	Boolean	Whether or not to parse smilies.
-		// $br		Boolean	Whether or not to parse line breaks into <br>'s.
-		// Return	Return	Returns the parsed data.
+		// @param	Type		Description
+		// $str		String		The data to be parsed.
+		// $ubbc	Boolean		Whether or not to parse UBBC.
+		// $smilies	Boolean		Whether or not to parse smilies.
+		// $br		Boolean		Whether or not to parse line breaks into <br>'s.
+		// Return	Return		Returns the parsed data.
 		
 		if($ubbc === true){
 			$str = $this->ubbc($str);
@@ -58,7 +59,7 @@ class post_parser {
 			$str = $this->smilies($str);
 		}
 		if($br === true){
-			$str = preg_replace("/\n/", "<br />", $str);
+			$str = nl2br($str); // Used to use a preg_replace... but this should be just as efficient
 		}
 		return $str;
 	}
@@ -131,7 +132,8 @@ class post_parser {
 	private function ubbc_quote($m){
 		// Parses the quote UBBC tag
 
-		return "<b>Quote:</b><br /><table cellpadding=\"3\" cellspacing=\"1\" class=\"border quote\"><tr><td class=\"cell1\">".$m[1]."</td></tr></table>";
+		$message = $m[1];
+		return "<b>Quote:</b><br /><table cellpadding=\"3\" cellspacing=\"1\" class=\"border quote\"><tr><td class=\"cell1\">".$message."</td></tr></table>";
 	}
 
 	private function smilies($str){
