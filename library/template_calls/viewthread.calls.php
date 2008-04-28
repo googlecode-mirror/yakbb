@@ -14,7 +14,7 @@
 ||==================================================||
 || File: /library/template_calls/viewthread.calls.php
 || File Version: v0.1.0a
-|| $Id: global.calls.php 74 2008-04-19 22:15:28Z cddude229 $
+|| $Id$
 \*==================================================*/
 
 if(!defined("SNAPONE")) exit;
@@ -25,18 +25,11 @@ if(!defined("SNAPONE")) exit;
 
 /*====================================*\
 || BOARD FUNCTIONS
-||		threadId()
 ||		loadPost()
 ||		loadPostReset()
 ||		postCount()
+||		threadId()
 \*====================================*/
-function threadId(){
-	// Returns the ID of the current board
-
-	global $viewthread;
-	return $viewthread->getThreadId();
-}
-
 function loadPost($reset=false){
 	// Loads the next thread
 	// @param	Type	Description
@@ -70,6 +63,14 @@ function postCount(){
 	global $viewthread;
 	return count($viewthread->getPosts());
 }
+
+function threadId(){
+	// Returns the ID of the current board
+
+	global $viewthread;
+	return $viewthread->getThreadId();
+}
+
 
 
 

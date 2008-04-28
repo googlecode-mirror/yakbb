@@ -14,7 +14,7 @@
 ||==================================================||
 || File: /library/template_calls/upgrade.calls.php
 || File Version: v0.1.0a
-|| $Id: global.calls.php 74 2008-04-19 22:15:28Z cddude229 $
+|| $Id$
 \*==================================================*/
 
 if(!defined("SNAPONE")) exit;

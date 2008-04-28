@@ -14,7 +14,7 @@
 ||==================================================||
 || File: /library/template_calls/post.calls.php
 || File Version: v0.1.0a
-|| $Id: login.calls.php 77 2008-04-20 06:16:07Z cddude229 $
+|| $Id$
 \*==================================================*/
 
 if(!defined("SNAPONE")) exit;
@@ -23,6 +23,8 @@ if(!defined("SNAPONE")) exit;
 /*	TODO
 	showDescription()
 		- Needs to have support for modify mode and check if it's the first post. Returns false for now
+	getFormAction()
+		- Does not return an action when in modify mode
 */
 
 
