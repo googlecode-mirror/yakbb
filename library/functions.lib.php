@@ -18,6 +18,8 @@
 \*==================================================*/
 
 /*	TODO
+	getUserGroup()
+		- Needs more testing
 	makeDate()
 		- Make it load the user's default format if $format is null.
 	redirect()
@@ -27,12 +29,17 @@
 if(!defined("SNAPONE")) exit;
 
 function ampToNormal($str){
+	// Converts &amp; to &. Typically used in URL stuff
+
 	return preg_replace("/&amp;/", "&", $str);
 }
 
 function getUserGroup(){
+	// Returns the user's group data
+
 	global $yak, $user;
 	if($user["group"] > 0 && isset($yak->groups[$user["group"]])){
+		$group = $yak->groups[$user["group"]];
 	} else if($user["id"] > 0){
 		$group = array(
 			"id" => 0,
@@ -41,7 +48,15 @@ function getUserGroup(){
 			"replytolocked" => 0
 		);
 	} else {
+		$group = array(
+			"id" => -1,
+			"name" => "Guest",
+			"color" => "a:0:{}",
+			"replytolocked" => 0
+		);
 	}
+
+	return $group;
 }
 
 function libraryLoad($n){
@@ -67,7 +82,17 @@ function secure($data){
 	return htmlentities($data, ENT_QUOTES);
 }
 
-function makeDate($time, $format="D M d, Y g:i a"){
+function makeDate($time=false, $format="D M d, Y g:i a"){
+	// Creates a date format based off the given time.
+	// @param	Type	Description
+	// $time	Mixed	Integer of time or boolean false telling you to create a new time()
+	// $format	String	The format the string should take. If not given, defaults to the user's specified format.
+	// Return	Return	Returns the date string.
+
+	if($time === false){
+		$time = time();
+	}
+
 	return date($format, $time);
 }
 
@@ -83,6 +108,7 @@ function urlSafe($str, $len=-1){
 	// @param	Type		Description
 	// $str		String		The string to be cleaned up
 	// $len		Number		The length the string should be trimmed to. -1 means no trim
+	// return	Return		Returns the URL safe string
 
 	$str = html_entity_decode($str, ENT_QUOTES); // They all get stripped anyway
 	$str = preg_replace("/[^A-Z0-9_-]/i", "_", $str);

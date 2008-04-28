@@ -19,26 +19,39 @@
 
 /*	TODO
 	__construct()
-		- Make it load all the plugins into the system.
+		- Make it load all the plugins into the system. Make sure to note those that are disabled.
+	loadPlugin()
+		- Load the actual plugin
+	removeHook()
+		- Needs to be coded
 */
 
 if(!defined("SNAPONE")) exit;
 
 class plugin {
 	private $hooks = array(); // Holds the hooks to be executed
-	public $loadedPlugins = array(); // List of loaded plugins. Publicly accessable
+	private $loadedPlugins = array(); // List of loaded plugins
 
-	function __construct(){
+	public function __construct(){
 		$this->callhook("global_start");
 	}
 
-	function loadPlugin($name){
+	public function loadPlugin($name){
+		// Loads the specified plugin.
 		// @param	Type	Description
 		// $name	String	The plugin ID/name to be loaded. ($name.plugin.php)
+		// return	Return	Returns true if the plugin was loaded. False on failure.
 
 	}
 
-	function addHook($name, $func_call){
+	public function getLoadedPlugins(){
+		// Returns the loaded plugins array
+
+		return $this->loadedPlugins;
+	}
+	
+
+	public function addHook($name, $func_call){
 		// This approach may be dropped later for an auto lookup. Classes are the only thing. Both maybe?
 		// @param		Type	Description
 		// $name		String	The hook id/name.
@@ -47,7 +60,7 @@ class plugin {
 		$this->hooks[$name][] = $func_call;
 	}
 
-	function callHook($name, $params=array()){
+	public function callHook($name, $params=array()){
 		// @param	Type	Description
 		// $name	String	The name or ID of the hook to call.
 		// $params	Array	An array of the parameters for the function.
@@ -67,7 +80,15 @@ class plugin {
 		}
 
 		return $params;
-	}	
+	}
+
+	public function removeHook($name){
+		// Removes a hook that was added earlier
+	}
+
+	public function deleteHook($name){
+		return $this->removeHook($name);
+	}
 }
 
 $plugins = new plugin();	

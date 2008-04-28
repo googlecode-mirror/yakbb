@@ -30,7 +30,6 @@ if(!defined("SNAPONE")) exit;
 class cache extends flat_file {
 	private $dir = false; // Cache folder
 	private $sql = false; // SQL cache folder = sql
-	private $cache = array(); // Holds loaded cache data.
 
 	// Construct
 	public function __construct($dir){
@@ -55,12 +54,13 @@ class cache extends flat_file {
 	public function clearCache($file=false){
 		// Clears the cache of EVERYTHING unless specified
 		// @param	Type	Description
-		// $file	Mixed	Either the name of the file or false to clear all.
+		// $file	Mixed	Either the name of the file to delete or boolean false to clear all cached items
+		// return	Return	Returns true on success or false on failure
 
 		if($file === false){
-			$this->clearDir($this->dir, array(), true);
+			return $this->clearDir($this->dir, array(), true);
 		} else {
-			$this->deleteFile($this->dir.$file.".php");
+			return $this->deleteFile($this->dir.$file.".php");
 		}
 	}
 

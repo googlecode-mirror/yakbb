@@ -22,7 +22,7 @@ if(!defined("SNAPONE")) exit;
 $languages = array();
 
 class language {
-	public $curlang = "en"; // Current language. Only public incase current ID is needed
+	private $curlang = "en"; // Current language.
 	private $lang = array(); // Array to hold all the items.
 	private $langDir = LANGUAGEDIR; // Directory of all items
 	private $dir = ""; // Directory reference.
@@ -44,6 +44,14 @@ class language {
 
 		global $yak;
 		$this->setLanguage($yak->settings["default_language"], true);
+	}
+
+	public function getLanguage(){
+		// Returns the current language ID
+		// @param	Type	Description
+		// return	Return	Returns the current language.
+
+		return $this->curlang;
 	}
 
 	public function setLanguage($lang="en", $kill=false){

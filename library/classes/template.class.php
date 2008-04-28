@@ -42,6 +42,7 @@ class template {
 		// Loads the global calls here... some are actually used in the coding.
 		require LIBDIR."template_calls/global.calls.php";
 	}
+
 	public function loadTemplate($dir, $kill=false){
 		// Changes the directory
 		// @param	Type	Description

@@ -21,7 +21,7 @@ if(!defined("SNAPONE")) exit;
 
 /*	NOTE
 	- This is not FTP, just standard flat file.
-	- This has not been fully converted to YakBB form yet.
+	- This may not have been fully converted to YakBB form yet. It should work fine however.
 */
 
 class flat_file {
@@ -244,14 +244,14 @@ class flat_file {
 	}
 
 	public function renameFile($path, $old, $name){
-		// Renames the specified file.
+		// Renames the specified file. Uses $this->moveFile() actually.
 		// @param	Type	Description
 		// $path	String	The path and file name of the current file.
 		// $old		String	The current name of the file.
 		// $name	String	The new name of the file.
 		// Return	Return	Returns true on success or false on failure.
 
-		$this->moveFile($path, $path, $old, $name);
+		return $this->moveFile($path, $path, $old, $name);
 	}
 
 	public function loadFile($path, $type=false){

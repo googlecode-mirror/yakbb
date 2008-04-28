@@ -19,7 +19,7 @@
 
 /*	TODO
 	validEmail()
-		- Needs to be finished to actually check e-mail
+		- Needs to be finished to actually check e-mail with RegExp
 	validUsername()
 		- Make sure isn't censored word
 	validDisplayname()
@@ -36,8 +36,6 @@ function validEmail($email1, $email2){
 
 	if(empty($email1)){
 		$errors[] = "email_empty";
-	// } else if(!validEmail($email1)){
-	// 	$errors[] = "email_invalid";
 	} else if($email1 !== $email2){
 		$errors[] = "email_no_match";
 	} else if($yak->settings["unique_email"] == 1){
@@ -115,10 +113,12 @@ function validPassword($pass1, $pass2, $username=false){
 		$errors[] = "password_too_short";
 	}
 
-	if($pass1 == $username){
-		$errors[] = "password_username";
-	} else if($pass1 == strrev($username)){
-		$errors[] = "password_username_reversed";
+	if($username !== false){
+		if($pass1 == $username){
+			$errors[] = "password_username";
+		} else if($pass1 == strrev($username)){
+			$errors[] = "password_username_reversed";
+		}
 	}
 
 	return (count($errors) == 0?true:$errors);
