@@ -10,7 +10,7 @@
 		<?= lang("core_upgrade"); ?>
 		<br /><br />
 	<?php } ?>
-	<?php if(!coreUpgrade() || !dbUpgrade()){ ?>
+	<?php if(!coreUpgrade() && !dbUpgrade()){ ?>
 		<?= lang("no_upgrade"); ?>
 		<br /><br />
 	<?php } ?>
