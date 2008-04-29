@@ -69,7 +69,7 @@ class mysql extends db {
 	public function clearCacheQuery($name, $query=false){
 		// Clears a cached query
 		global $cache;
-		if($query){
+		if($query !== false){
 			// Used it the file wasn't given a specific name
 			$name = md5($name);
 		}
@@ -81,7 +81,7 @@ class mysql extends db {
 		$this->queriesList[] = $query;
 		$this->last = mysql_query($query);
 		if(mysql_error()){
-			die(mysql_error());
+			die(mysql_error()."<br /><br /><a href='?action=upgrade'>Are you sure your installation is up to date?</a>");
 		}
 		return $this->last;
 	}
