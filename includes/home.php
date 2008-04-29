@@ -22,7 +22,7 @@
 	- Moderators list (if enabled)
 	- Sub-boards list (if enabled)
 	- On/off data
-	- Sub-board data affects parents (if enabled)
+	- Sub-board data affects parents' data (if enabled)
 	- Hide/show for categories
 	- Add support for viewing category 0 on the main page
 	- Checking the viewing permissions for categories
@@ -89,7 +89,7 @@ class home {
 			SELECT
 				c.*
 			FROM
-				".DBPRE."categories c
+				yakbb_categories c
 			WHERE
 				c.showmain='1'".$extra."
 			ORDER BY
@@ -141,9 +141,11 @@ class home {
 			SELECT
 				b.*
 			FROM
-				".DBPRE."boards b
+				yakbb_boards b
 			WHERE
-				b.parenttype='c' AND b.parentid IN (".implode(",", $this->catids).")
+				b.parenttype = 'c'
+				AND b.parentid IN (".implode(",", $this->catids).")
+				AND b.hidden = '0'
 			ORDER BY
 				`order` ASC
 		");

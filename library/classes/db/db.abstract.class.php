@@ -20,13 +20,17 @@
 if(!defined("SNAPONE")) exit;
 
 /*
-We define this as an abstract class so that we can make 100% sure that all classes have the same REQUIRED functions. They can add
-their own additional functions if they wish, but they should only be designed to be called internally from within the class and not
-externally from the script. Meaning, they should not be public functions.
+We define this as an abstract class so that we can make 100% sure that all classes have the same REQUIRED
+functions. They can add their own additional functions if they wish, but they should only be designed to be
+called internally from within the class and not externally from the script. Meaning, they should not be public
+functions.
 
 NOTES
-- All query() functions must raise the $queries value by one to tally queries used.
-- insert() is designed to create an insert statement when provided with a table name and an array containing elements to be inserted. Keys are the column names and values are the new values. The insert is also responsible for securing against SQL injection.
+- All query() functions must raise the $queries value by one to tally queries used. It must also replaced 
+	"yakbb_" with DBPRE, the constant of the database prefix
+- insert() is designed to create an insert statement when provided with a table name and an array containing
+	elements to be inserted. Keys are the column names and values are the new values. The insert is also
+	responsible for securing against SQL injection.
 - connect() also selects the database in question.
 - cacheQuery() loads data from the cache and only queries the DB if the data isn't present.
 - secure() is only designed to protect against SQL injection.

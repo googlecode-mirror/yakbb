@@ -119,7 +119,7 @@ class cache extends flat_file {
 			SELECT
 				name, value
 			FROM
-				".DBPRE."config
+				yakbb_config
 			ORDER BY
 				name ASC
 		");
@@ -160,7 +160,7 @@ class cache extends flat_file {
 			SELECT
 				*
 			FROM
-				".DBPRE."groups
+				yakbb_groups
 			ORDER BY
 				id ASC
 		");

@@ -40,7 +40,7 @@ function validEmail($email1, $email2){
 		$errors[] = "email_no_match";
 	} else if($yak->settings["unique_email"] == 1){
 		// Gotta check for a unique e-mail if the setting is enabled. 
-		$db->query("SELECT id FROM ".DBPRE."users WHERE email='".$db->secure($email1)."' LIMIT 1");
+		$db->query("SELECT id FROM yakbb_users WHERE email='".$db->secure($email1)."' LIMIT 1");
 		if($db->numRows() == 1){
 			$errors[] = "email_taken";
 		}
@@ -77,7 +77,7 @@ function validUsername($username, $reg=false){
 			SELECT
 				u.id
 			FROM
-				".DBPRE."users u
+				yakbb_users u
 			WHERE
 				u.name='".$db->secure($username)."'
 			LIMIT 1

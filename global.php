@@ -120,7 +120,7 @@ if(isset($_COOKIE[DBPRE."user"]) && isset($_COOKIE[DBPRE."pass"])){
 		SELECT
 			u.*
 		FROM
-			".DBPRE."users u
+			yakbb_users u
 		WHERE
 			u.name='".$username."'
 		LIMIT 1
@@ -182,7 +182,7 @@ if($guest === true){
 		}
 
 		// Update last login time and ip
-		$db->query("UPDATE ".DBPRE."users SET lastlogin".$invis."='".time()."', lastip='".$yak->ip."' WHERE id='".$user["id"]."'");
+		$db->query("UPDATE yakbb_users SET lastlogin".$invis."='".time()."', lastip='".$yak->ip."' WHERE id='".$user["id"]."'");
 		$_SESSION["last_login"] = time();
 	}
 }
@@ -193,7 +193,7 @@ $yak->bans = $db->cacheQuery("
 	SELECT
 		id, type, value, expires
 	FROM
-		".DBPRE."bans
+		yakbb_bans
 ", 10, "bans");
 foreach($yak->bans as $k => $v){
 	if($v["expires"] <= time()){ // Make sure the ban hasn't expired

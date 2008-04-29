@@ -56,7 +56,7 @@ class viewthread {
 			SELECT
 				t.*
 			FROM
-				".DBPRE."threads t
+				yakbb_threads t
 			WHERE
 				t.id='".$this->tid."'
 			LIMIT 1
@@ -68,7 +68,7 @@ class viewthread {
 		$db->free();
 
 		// Update views count
-		$db->query("UPDATE ".DBPRE."threads SET views=views+1 WHERE id='".$this->tid."'");
+		$db->query("UPDATE yakbb_threads SET views=views+1 WHERE id='".$this->tid."'");
 
 		// Make nav tree (boards and cats only) and check permissions for parent boards
 		$this->compileNavTree();
@@ -84,9 +84,9 @@ class viewthread {
 				p.*, p.id AS postid,
 				u.*
 			FROM
-				".DBPRE."posts p
+				yakbb_posts p
 			LEFT JOIN 
-				".DBPRE."users u ON (u.id = p.userid)
+				yakbb_users u ON (u.id = p.userid)
 			WHERE
 				p.threadid='".$this->tid."'
 			ORDER BY postid ASC
@@ -123,7 +123,7 @@ class viewthread {
 				SELECT
 					b.*
 				FROM
-					".DBPRE."boards b
+					yakbb_boards b
 				WHERE
 					b.id='".$curboard["parentid"]."'
 				LIMIT 1
@@ -138,7 +138,7 @@ class viewthread {
 				SELECT
 					c.*
 				FROM
-					".DBPRE."categories c
+					yakbb_categories c
 				WHERE
 					c.id='".$curboard["parentid"]."'
 				LIMIT 1

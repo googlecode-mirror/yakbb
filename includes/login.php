@@ -72,7 +72,7 @@ class login {
 				SELECT
 					password
 				FROM
-					".DBPRE."users
+					yakbb_users
 				WHERE
 					name='".$username."'
 				LIMIT 1

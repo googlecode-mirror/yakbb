@@ -56,7 +56,7 @@ class viewboard {
 			SELECT
 				b.*
 			FROM
-				".DBPRE."boards b
+				yakbb_boards b
 			WHERE
 				b.id='".$this->bid."'
 			LIMIT 1
@@ -90,7 +90,7 @@ class viewboard {
 				SELECT
 					b.*
 				FROM
-					".DBPRE."boards b
+					yakbb_boards b
 				WHERE
 					b.id='".$curboard["parentid"]."'
 				LIMIT 1
@@ -105,7 +105,7 @@ class viewboard {
 				SELECT
 					c.*
 				FROM
-					".DBPRE."categories c
+					yakbb_categories c
 				WHERE
 					c.id='".$curboard["parentid"]."'
 				LIMIT 1
@@ -144,7 +144,7 @@ class viewboard {
 			SELECT
 				t.*
 			FROM
-				".DBPRE."threads t
+				yakbb_threads t
 			WHERE
 				t.boardid='".$this->bid."'
 			ORDER BY

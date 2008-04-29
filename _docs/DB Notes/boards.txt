@@ -9,6 +9,7 @@ description	Description of the board.
 threads		Number of threads the board has.
 posts		Number of posts that are in the board.
 order		The order of the board in relationship to its parent. 1 is 1st
+hidden		Whether the board is hidden (1) or not (0) when viewing main page/listings
 sublist		Whether to show the sub-boards listing (1) or not (0)
 permissions	serialize()'d array of the group permissions for the board
 

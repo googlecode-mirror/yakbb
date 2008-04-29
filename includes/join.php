@@ -121,7 +121,7 @@ class join {
 				SELECT
 					count(id) AS totmem
 				FROM
-					".DBPRE."users
+					yakbb_users
 			"));
 			if($m["totmem"] == 0){
 				$adminLoadIt = true;

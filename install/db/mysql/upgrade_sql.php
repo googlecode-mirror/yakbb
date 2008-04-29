@@ -100,5 +100,12 @@ class upgrade_sql {
 				ADD `canretract` ENUM( '0', '1' ) NOT NULL AFTER `canchoose`
 		");
 	}
+	private function upgradeIt3(){
+		// Add hidden board option (4/28/08)
+		$this->db->query("
+			ALTER TABLE `yakbb_boards`
+				ADD `hidden` ENUM( '0', '1' ) NOT NULL AFTER `order`
+		");
+	}
 }
 ?>

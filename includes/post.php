@@ -108,7 +108,7 @@ class post {
 			SELECT
 				t.*
 			FROM
-				".DBPRE."threads t
+				yakbb_threads t
 			WHERE
 				t.id='".$this->id."'
 			LIMIT 1
@@ -133,7 +133,7 @@ class post {
 			SELECT
 				b.*
 			FROM
-				".DBPRE."boards b
+				yakbb_boards b
 			WHERE
 				b.id='".$this->tdat["boardid"]."'
 			LIMIT 1
@@ -157,7 +157,7 @@ class post {
 					SELECT
 						p.*
 					FROM
-						".DBPRE."posts p
+						yakbb_posts p
 					WHERE
 						p.id='".$quote."'
 					LIMIT 1
@@ -189,7 +189,7 @@ class post {
 			SELECT
 				b.*
 			FROM
-				".DBPRE."boards b
+				yakbb_boards b
 			WHERE
 				b.id='".$this->id."'
 			LIMIT 1
@@ -231,7 +231,7 @@ class post {
 				SELECT
 					b.*
 				FROM
-					".DBPRE."boards b
+					yakbb_boards b
 				WHERE
 					b.id='".$curboard["parentid"]."'
 				LIMIT 1
@@ -246,7 +246,7 @@ class post {
 				SELECT
 					c.*
 				FROM
-					".DBPRE."categories c
+					yakbb_categories c
 				WHERE
 					c.id='".$curboard["parentid"]."'
 				LIMIT 1
@@ -355,16 +355,16 @@ class post {
 				));
 
 				// Update board, thread, and user counts
-				$sql = "UPDATE ".DBPRE."boards SET posts=posts+1";
+				$sql = "UPDATE yakbb_boards SET posts=posts+1";
 				if($this->mode == "newthread"){
 					$sql .= ", threads=threads+1 WHERE id='".$this->id."' LIMIT 1";
 				} else { // Reply
 					$sql .= " WHERE id='".$this->tdat["boardid"]."' LIMIT 1";
-					$db->query("UPDATE ".DBPRE."threads SET replies=replies+1 WHERE id='".$tid."' LIMIT 1");
+					$db->query("UPDATE yakbb_threads SET replies=replies+1 WHERE id='".$tid."' LIMIT 1");
 				}
 				$db->query($sql);
 				if($user["id"] != 0){
-					$db->query("UPDATE ".DBPRE."users SET posts=posts+1 WHERE id='".$user["id"]."' LIMIT 1");
+					$db->query("UPDATE yakbb_users SET posts=posts+1 WHERE id='".$user["id"]."' LIMIT 1");
 				}
 
 				// Clear the cached data

@@ -61,7 +61,7 @@ function deleteBoards($boardids){
 	}
 
 	// Delete the boards
-	$db->query("DELETE FROM ".DBPRE."boards WHERE id IN (".$boards.")");
+	$db->query("DELETE FROM yakbb_boards WHERE id IN (".$boards.")");
 }
 
 function deleteCategories($catids){
@@ -77,14 +77,14 @@ function deleteCategories($catids){
 	}
 
 	// Delete the categories
-	$db->query("DELETE FROM ".DBPRE."categories WHERE id IN (".$cats.")");
+	$db->query("DELETE FROM yakbb_categories WHERE id IN (".$cats.")");
 
 	// Let's clean up the boards also.
 	$x = $db->query("
 		SELECT
 			b.id
 		FROM
-			".DBPRE."boards b
+			yakbb_boards b
 		WHERE
 			b.catid IN (".$cats.")
 	");

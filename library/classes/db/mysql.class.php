@@ -77,6 +77,7 @@ class mysql extends db {
 	}
 	public function query($query){
 		$this->queries++;
+		$query = preg_replace("/yakbb_/", DBPRE, $query);
 		$this->queriesList[] = $query;
 		$this->last = mysql_query($query);
 		if(mysql_error()){
@@ -87,7 +88,7 @@ class mysql extends db {
 	public function insert($table, array $ins){
 		// We use the query function because we could change it up for some reason and forget to change here, plus it saves coding then too if there are changes.
 		$ins = array_map(array($this, "secure"), $ins);
-		return $this->query("INSERT INTO `".DBPRE.$table."` (`".implode("`,`", array_keys($ins))."`) VALUES(\"".implode("\",\"", $ins)."\")");
+		return $this->query("INSERT INTO `yakbb_".$table."` (`".implode("`,`", array_keys($ins))."`) VALUES(\"".implode("\",\"", $ins)."\")");
 	}
 	public function insertId(){
 		if($this->dbc){

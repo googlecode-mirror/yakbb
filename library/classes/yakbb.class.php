@@ -50,7 +50,7 @@ class yakbb {
 			SELECT
 				count(id) AS mems
 			FROM
-				".DBPRE."users
+				yakbb_users
 		", -1, "stats/member_count");
 		$stats["total_mems"] = $mems["mems"];
 
@@ -58,7 +58,7 @@ class yakbb {
 			SELECT
 				count(id) AS threads
 			FROM
-				".DBPRE."threads
+				yakbb_threads
 		", -1, "stats/threads_count");
 		$stats["total_threads"] = $threads["threads"];
 
@@ -66,7 +66,7 @@ class yakbb {
 			SELECT
 				count(id) AS posts
 			FROM
-				".DBPRE."posts
+				yakbb_posts
 		", -1, "stats/posts_count");
 		$stats["total_posts"] = $posts["posts"];
 
