@@ -103,6 +103,11 @@ session_start();
 require_once "./constants.inc.php";
 require_once "./config.inc.php";
 
+// Make sure they aren't using an out-of-date alpha. This will be removed at beta release
+if(YAKVERSION == "0.0.1a"){
+	die("Please reinstall YakBB. You're using an out-of-date alpha version. (".YAKVERSION.")");
+}
+
 // Let's load the library stuff. Start with common.php since it loads most of what we need. We'll load any additional classes we need once we're inside the INCLUDESDIR files.
 require_once LIBDIR."common.php";
 
