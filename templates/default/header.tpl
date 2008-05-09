@@ -73,7 +73,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 </table>
 <br /><br />
 
-<?php if(upgradeAvailable() && !viewingPage() == "upgrade"){ ?>
+<?php if(upgradeAvailable() && viewingPage() != "upgrade"){ ?>
 	<table class="border" cellpadding="4" cellspacing="1">
 	<tr><td class="cell1">
 		There are currently updates available. Click <a href="<?= seoSwitch("upgrade/", "?action=upgrade") ?>">here</a> to upgrade your forum.
