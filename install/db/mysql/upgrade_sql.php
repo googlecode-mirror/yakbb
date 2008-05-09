@@ -107,5 +107,11 @@ class upgrade_sql {
 				ADD `hidden` ENUM( '0', '1' ) NOT NULL AFTER `order`
 		");
 	}
+	private function upgradeIt4(){
+		// Add two attachment settings. Nothing special, yet (5/9/08)
+		$this->db->query("INSERT INTO `yakbb_config` (`id` , `name` , `value`)
+			VALUES ('0', 'max_attachments_per_post', '5'),
+				   ('0', 'max_attachment_size', '3145728')
+		");
 }
 ?>

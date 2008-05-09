@@ -1,9 +1,9 @@
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title">
 	[ 
-	<!-- if {can_reply} is true -->
+	<?php if(canReply()){ ?>
 		<a href="<?= replyLink(threadId(), true) ?>">Reply</a> | 
-	<!-- endif -->
+	<?php } ?>
 	Print
 	]
 </td></tr>
@@ -14,7 +14,12 @@
 <tr><td class="cell1" width="20%">
 	<?= userLink($post) ?>
 </td><td class="cell1" width="80%">
-	<?= $post["title"] ?> - Posted on <?= $post["date"] ?> - [ <a href="<?= replyLink(threadId(), true) ?>">Reply</a> | <a href="<?= replyLink(threadId(), true, $post["postid"]) ?>">Quote</a> | Modify | Delete ]
+	<?= $post["title"] ?> - Posted on <?= $post["date"] ?> - 
+		<?php if(canReply()){ ?>
+			<a href="<?= replyLink(threadId(), true) ?>">Reply</a> - <a href="<?= replyLink(threadId(), true, $post["postid"]) ?>">Quote</a>
+		<?php } ?>
+		<?php if(canModify($post["postid"])){ ?> - Modify<?php } ?>
+		<?php if(canDelete($post["postid"])){ ?> - Delete<?php } ?>
 	<hr size="1" />
 	<?= $post["message"] ?>
 </td></tr>
@@ -25,9 +30,9 @@
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title">
 	[ 
-	<!-- if {can_reply} is true -->
+	<?php if(canReply()){ ?>
 		<a href="<?= replyLink(threadId(), true) ?>">Reply</a> | 
-	<!-- endif -->
+	<?php } ?>
 	Print
 	]
 </td></tr>

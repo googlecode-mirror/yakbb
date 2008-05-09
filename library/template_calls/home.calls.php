@@ -105,12 +105,33 @@ function loadCatReset(){
 /*====================================*\
 || MISC FUNCTIONS
 ||		singleCatView()
+||		subBoardListing()
 \*====================================*/
 function singleCatView(){
 	// Returns a boolean of whether or not we're viewing a single category
 
 	global $home;
 	return !!$home->getSingle();
+}
+
+function subBoardListing($bdat, $del=", "){
+	// Returns a listing of the board's sub-boards.
+
+	if($bdat["sublist"] == 0){
+		return "";
+	}
+
+	global $home, $lang;
+	$dat = $home->subListing($bdat["id"], $del);
+	if(strlen($dat) == 0){
+		return "";
+	} else {
+		$n = $lang->item("sub_prefix");
+		if(substr_count($dat, "<a") > 1){
+			$n = $lang->item("subs_prefix");
+		}
+		return $n.$dat;
+	}
 }
 
 

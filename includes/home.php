@@ -170,6 +170,46 @@ class home {
 
 
 
+	private function getSubListing($bid, $del){
+		// Returns a sub-board listing for the specified $bid. The boards are separated
+		// by $del.
+		// Pre-condition: $bid is a valid board ID; not necessarily a secure one
+
+		global $db, $user;
+
+		$bid = intval($bid);
+		if($bid <= 0){
+			// Not secure
+			return "";
+		}
+
+		$subs = array();
+
+		$subq = $db->queryCache("
+			SELECT
+				b.*
+			FROM
+				yakbb_boards b
+			WHERE
+				b.parentid = '".$bid."'
+				AND b.parenttype = 'b'
+				AND b.hidden = '0'
+			ORDER BY
+				`order` ASC
+		", -1, "subboardlisting_".$bid);
+		foreach($subq as $k => $subdat){
+			$subperm = unserialize($subdat["permissions"]);
+			if(isset($subperm[$user["group"]]) && $subperm[$user["group"]]["view"] == true){
+				$subs[] = boardLink($subdat);
+			}
+		}
+
+		return implode($subs, $del);
+		
+	}
+
+
+
 
 
 
@@ -188,6 +228,11 @@ class home {
 		// Returns the current single category status
 
 		return $this->singleCat;
+	}
+	public function subListing($bid, $del){
+		// Returns a sub-board listing for the specified board id.
+
+		return $this->getSubListing($bid, $del);
 	}
 }
 ?>

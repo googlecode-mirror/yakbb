@@ -19,6 +19,11 @@
 
 if(!defined("SNAPONE")) exit;
 
+/*	TODO
+		canDelete(), canModify(), canReply()
+			- Needs to be fully coded
+*/
+
 
 
 
@@ -69,6 +74,34 @@ function threadId(){
 
 	global $viewthread;
 	return $viewthread->getThreadId();
+}
+
+
+
+
+
+/*====================================*\
+|| PERMISSIONS FUNCTIONS
+||		canDelete()
+||		canModify()
+||		canReply()
+\*====================================*/
+function canDelete($postid){
+	// True for now
+
+	return true;
+}
+
+function canModify($postid){
+	// True for now
+
+	return true;
+}
+
+function canReply(){
+	// True for now
+
+	return true;
 }
 
 

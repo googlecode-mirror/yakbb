@@ -26,7 +26,8 @@
 			<?php } ?>
 		</td><td class="cell1" onmouseover="this.style.backgroundColor='#DDDDDD'" onmouseout="this.style.backgroundColor='#FFFFFF'" onclick="if(linkBubble) location.href = this.getElementsByTagName('a')[0].href">
 			<?= boardLink($board); ?><br />
-			<?= $board["description"]; ?>
+			<?= $board["description"]; ?><br />
+			<?= subBoardListing($board, ", "); ?>
 		</td><td class="cell1" align="center">
 			<?= $board["threads"]; ?>
 		</td><td class="cell1" align="center">

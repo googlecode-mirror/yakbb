@@ -15,6 +15,8 @@ $items = array(
 	// General data
 	"no_new_posts" => "No New Posts",
 	"new_posts" => "New Posts",
+	"sub_prefix" => "Sub-Board: ",
+	"subs_prefix" => "Sub-Boards: ",
 
 	// Errors
 	"nocats_title" => "An Error Has Occurred",
