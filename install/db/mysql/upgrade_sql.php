@@ -113,5 +113,6 @@ class upgrade_sql {
 			VALUES ('0', 'max_attachments_per_post', '5'),
 				   ('0', 'max_attachment_size', '3145728')
 		");
+	}
 }
 ?>
