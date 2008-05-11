@@ -11,7 +11,7 @@
 
 <?php while($post = loadPost()){ ?>
 <table class="border" cellpadding="4" cellspacing="1">
-<tr><td class="cell1" width="20%">
+<tr><td class="cell1" width="20%" valign="top">
 	<?= userLink($post) ?>
 </td><td class="cell1" width="80%">
 	<?= $post["title"] ?> - Posted on <?= $post["date"] ?> - 

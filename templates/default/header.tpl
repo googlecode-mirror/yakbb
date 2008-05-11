@@ -5,6 +5,9 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 <head>
 	<title><?= getSetting("board_title"); ?> - <?= getPageTitle() ?></title>
 	<style type="text/CSS">
+	body {
+		background-color: #FFFFFF;
+	}
 	div#holder div {
 		text-align: left;
 	}
@@ -16,9 +19,13 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	table.php, table.quote {
 		width: 550px;
 	}
-	td.cell1, tr.cell1 td, td.title, tr.title td {
-		background-color: #FFFFFF;
+	td.cell1, tr.cell1 td {
+		background-color: #F6F6F6;
 		color: #000000;
+	}
+	td.title, tr.title td {
+		color: #000000;
+		background-color: #E6E6E6;
 	}
 	span.smalltext {
 		font-size: 8pt;

@@ -24,7 +24,7 @@
 			<?php } else { ?>
 				<img src="<?= templatePath() ?>images/off.gif" alt="-" title="<?= lang("no_new_posts"); ?>" />
 			<?php } ?>
-		</td><td class="cell1" onmouseover="this.style.backgroundColor='#DDDDDD'" onmouseout="this.style.backgroundColor='#FFFFFF'" onclick="if(linkBubble) location.href = this.getElementsByTagName('a')[0].href">
+		</td><td class="cell1" onmouseover="this.style.backgroundColor='#DDDDDD'" onmouseout="this.style.backgroundColor=''" onclick="if(linkBubble) location.href = this.getElementsByTagName('a')[0].href">
 			<?= boardLink($board); ?><br />
 			<?= $board["description"]; ?><br />
 			<?= subBoardListing($board, ", "); ?>
