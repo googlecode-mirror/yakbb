@@ -3,6 +3,9 @@
 if(!defined("SNAPONE")) exit;
 
 $items = array(
+	// Buttons
+	"new_thread" => "New Thread",
+
 	// Messages
 	"no_threads" => "There are currently no threads in this board.",
 

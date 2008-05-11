@@ -1,7 +1,7 @@
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title" colspan="4">
 	<!-- if {perm_newthread} -->
-	[ <a href="?action=newthread&amp;bid=<?= boardId() ?>">New Thread</a> ]
+	[ <a href="?action=newthread&amp;bid=<?= boardId() ?>"><?= lang("new_thread") ?></a> ]
 	<!-- endif -->
 </td></tr>
 <?php if(threadCount() > 0){ ?>
@@ -32,6 +32,8 @@
 	</td></tr>
 <?php } ?>
 <tr><td class="title" colspan="4">
-	(BUTTONS)
+	<!-- if {perm_newthread} -->
+	[ <a href="?action=newthread&amp;bid=<?= boardId() ?>"><?= lang("new_thread") ?></a> ]
+	<!-- endif -->
 </td></tr>
 </table>

@@ -70,6 +70,9 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 				 - <a href="<?= seoSwitch("register/", "?action=register") ?>"><?= lang("menu_register"); ?></a>
 			<?php } ?>
 		<?php } else { ?>
+			<?php if(isAdmin()){ ?>
+				<a href="<?= seoSwitch("admin/", "?action=admin") ?>"><?= lang("menu_admin"); ?></a> - 
+			<?php } ?>
 			<a href="<?= seoSwitch("usercp/", "?action=usercp") ?>"><?= lang("menu_usercp"); ?></a> - 
 			<a href="<?= seoSwitch("members/", "?action=members") ?>"><?= lang("menu_members"); ?></a> - 
 			<a href="<?= seoSwitch("logout/", "?action=logout") ?>"><?= lang("menu_logout"); ?></a>

@@ -4,14 +4,15 @@ if(!defined("SNAPONE")) exit;
 
 $items = array(
 	// Menu
-	"menu_home" => "Home",
+	"menu_admin" => "Admin",
 	"menu_help" => "Help",
-	"menu_search" => "Search",
+	"menu_home" => "Home",
 	"menu_login" => "Login",
-	"menu_register" => "Register",
-	"menu_usercp" => "User CP",
-	"menu_members" => "Members",
 	"menu_logout" => "Logout",
+	"menu_members" => "Members",
+	"menu_register" => "Register",
+	"menu_search" => "Search",
+	"menu_usercp" => "User CP",
 
 	// Page Titles
 	"error_title" => "An Error Has Occurred",

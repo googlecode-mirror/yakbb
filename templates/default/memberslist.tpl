@@ -1,18 +1,18 @@
 <table class="border" cellpadding="4" cellspacing="1">
 <tr><td class="title" colspan="6">
-Members list
+	Members' List <!-- This will change depending on the page we're on -->
 </td></tr><tr><td class="title">
-	User
+	<?= lang("user_title") ?>
 </td><td class="title">
-	E-mail
+	<?= lang("email_title") ?>
 </td><td class="title">
-	Rank
+	<?= lang("rank_title") ?>
 </td><td class="title">
-	Posts
+	<?= lang("posts_title") ?>
 </td><td class="title">
-	Location
+	<?= lang("location_title") ?>
 </td><td class="title">
-	Gender
+	<?= lang("gender_title") ?>
 </td></tr>
 <?php while($mem = loadMember()){ ?>
 <tr><td class="cell1">

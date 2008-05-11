@@ -14,6 +14,6 @@
 		<?= lang("no_upgrade"); ?>
 		<br /><br />
 	<?php } ?>
-	<a href="javascript:history.go(-1)">Back to previous page</a>
+	<a href="javascript:history.go(-1)"><?= lang("go_back") ?></a>
 </td></tr>
 </table>

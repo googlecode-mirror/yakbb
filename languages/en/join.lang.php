@@ -57,8 +57,8 @@ $items = array(
 	"reset_button" => "Reset",
 
 	// Options text
-	"yes_option" => "Yes",
 	"no_option" => "No",
+	"yes_option" => "Yes",
 );
 
 ?>

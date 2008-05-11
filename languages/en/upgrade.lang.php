@@ -11,6 +11,7 @@ $items = array(
 	"db_upgrade" => "Your database has been successfully upgraded.",
 	"core_upgrade" => "Your core files have been successfully upgraded.",
 	"no_upgrade" => "There were no upgrades available.",
+	"go_back" => "Back to previous page",
 );
 
 ?>

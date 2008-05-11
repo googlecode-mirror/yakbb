@@ -2,9 +2,9 @@
 <tr><td class="title">
 	[ 
 	<?php if(canReply()){ ?>
-		<a href="<?= replyLink(threadId(), true) ?>">Reply</a> | 
+		<a href="<?= replyLink(threadId(), true) ?>"><?= lang("reply_to_thread") ?></a> | 
 	<?php } ?>
-	Print
+	<?= lang("print_thread") ?>
 	]
 </td></tr>
 </table><br /><br />
@@ -16,10 +16,11 @@
 </td><td class="cell1" width="80%">
 	<?= $post["title"] ?> - Posted on <?= $post["date"] ?> - 
 		<?php if(canReply()){ ?>
-			<a href="<?= replyLink(threadId(), true) ?>">Reply</a> - <a href="<?= replyLink(threadId(), true, $post["postid"]) ?>">Quote</a>
+			<a href="<?= replyLink(threadId(), true) ?>"><?= lang("reply_to_thread") ?></a> - 
+			<a href="<?= replyLink(threadId(), true, $post["postid"]) ?>"><?= lang("quote_thread") ?></a>
 		<?php } ?>
-		<?php if(canModify($post["postid"])){ ?> - Modify<?php } ?>
-		<?php if(canDelete($post["postid"])){ ?> - Delete<?php } ?>
+		<?php if(canModify($post["postid"])){ ?> - <?= lang("delete_post") ?><?php } ?>
+		<?php if(canDelete($post["postid"])){ ?> - <?= lang("modify_post") ?><?php } ?>
 	<hr size="1" />
 	<?= $post["message"] ?>
 </td></tr>
@@ -31,9 +32,9 @@
 <tr><td class="title">
 	[ 
 	<?php if(canReply()){ ?>
-		<a href="<?= replyLink(threadId(), true) ?>">Reply</a> | 
+		<a href="<?= replyLink(threadId(), true) ?>"><?= lang("reply_to_thread") ?></a> | 
 	<?php } ?>
-	Print
+	<?= lang("print_thread") ?>
 	]
 </td></tr>
 </table>

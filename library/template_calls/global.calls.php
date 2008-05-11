@@ -22,6 +22,8 @@
 		- Prefixes (Suffixes?)
 		- Group classname
 		- Color
+	isAdmin()
+		- Needs to actually check
 	getPermission()
 		- Completely coded. kthxbai
 	botSecureEmail()
@@ -165,6 +167,7 @@ function userLink($udata, $urlonly=false){
 ||		getPageTitle()
 ||		getPermission()
 ||		getSetting()
+||		isAdmin()
 ||		isGuest()
 ||		lang()
 ||		showGender()
@@ -191,6 +194,13 @@ function getSetting($settings){
 		return $yak->settings[$settings];
 	}
 	return false;
+}
+
+function isAdmin(){
+	// Does the user have access to the admin area?
+	// THIS IS ONLY FOR USE IN TEMPLATES. BACKSIDE SHOULD NOT USE IT
+
+	return true;
 }
 
 function isGuest(){
