@@ -14,23 +14,29 @@ $items = array(
 	"menu_logout" => "Logout",
 
 	// Page Titles
-	"home_title" => "Home",
+	"error_title" => "An Error Has Occurred",
 	"help_title" => "Help",
+	"home_title" => "Home",
 	"join_title" => "Register",
 	"login_title" => "Login",
-	"search_title" => "Search Forum",
-	"error_title" => "An Error Has Occurred",
-	"reply_title" => "Replying to Thread",
+	"memberslist_title" => "Members' List",
 	"newthread_title" => "Creating a Thread",
+	"reply_title" => "Replying to Thread",
+	"search_title" => "Search Forum",
 	"upgrade_title" => "Upgrade Forum",
 
 	// Common form strings
-	"reset_confirmation" => "Are you sure you want to reset the form? (All changes since the start will be lost.)",
 	"reply_string" => "Re: ",
+	"reset_confirmation" => "Are you sure you want to reset the form? (All changes since the start will be lost.)",
 
 	// Error items that need to be global
-	"error_occured" => "The following error has occurred:", // One
-	"errors_occured" => "The following errors have occurred:", // Multiple
+	"error_occurred" => "The following error has occurred:", // One
+	"errors_occurred" => "The following errors have occurred:", // Multiple
+
+	// General things
+	"gender_male_string" => "Male",
+	"gender_female_string" => "Female",
+	"gender_none_string" => "Undisclosed",
 );
 
 ?>

@@ -2,7 +2,7 @@
 
 if(!defined("SNAPONE")) exit;
 
-// Directory listings.
+// Directory listings. You may edit these
 define("CACHEDIR",		"./cache/");
 define("INCLUDESDIR",	"./includes/");
 define("LANGUAGEDIR",	"./languages/");
@@ -12,7 +12,12 @@ define("SMILIESDIR",	"./smilies/");
 define("TEMPLATESDIR",	"./templates/");
 define("UPLOADSDIR",	"./uploads/");
 
-// Don't edit. These are used to keep YakBB up to date
+// DON'T EDIT. Gender constants
+define("GENDER_MALE", 1);
+define("GENDER_FEMALE", 2);
+define("GENDER_NONE", 0);
+
+// DON'T EDIT. These are used to keep YakBB up to date
 define("CURRENTYAKVERSION", "0.1.0a");
-define("CURRENTDBVERSION", 4);
+define("CURRENTDBVERSION", 5);
 ?>

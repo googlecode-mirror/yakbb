@@ -24,6 +24,11 @@
 		- Color
 	getPermission()
 		- Completely coded. kthxbai
+	botSecureEmail()
+		- Needs to actually secure it instead of printing out a link
+		- Needs to test to see if the user can even view e-mails
+	showGender()
+		- Needs to add icon support
 */
 
 if(!defined("SNAPONE")) exit;
@@ -162,6 +167,7 @@ function userLink($udata, $urlonly=false){
 ||		getSetting()
 ||		isGuest()
 ||		lang()
+||		showGender()
 ||		viewingPage()
 \*====================================*/
 function getPageTitle(){
@@ -201,6 +207,29 @@ function lang($item){
 	return $lang->item($item);
 }
 
+function showGender($get, $type=1){
+	// Outputs a gender name or icon.
+	// $type -> 1 = full string, 0 = icon
+
+	if($type == 0) // Not coded yet
+		return "";
+
+	switch($get){
+		case GENDER_MALE:
+			if($type == 1){
+				return lang("gender_male_string");
+			}
+		case GENDER_FEMALE:
+			if($type == 1){
+				return lang("gender_female_string");
+			}
+		case GENDER_NONE:
+			if($type == 1){
+				return lang("gender_none_string");
+			}
+	}
+}
+
 function viewingPage(){
 	// Returns the ID of the file we're currently accessing
 
@@ -238,6 +267,7 @@ function getQueries(){
 /*====================================*\
 || MISC FUNCTIONS
 ||		baseUrl()
+||		botSecureEmail()
 ||		compileNavTree()
 ||		templatePath()
 ||		upgradeAvailable()
@@ -246,6 +276,12 @@ function baseUrl(){
 	// Returns the base access URL
 
 	return "http://".$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER['PHP_SELF']), "/\\")."/";
+}
+
+function botSecureEmail($email, $inner="E-mail"){
+	// Secures an e-mail for when a bot is viewing it. This should ALWAYS be applied
+
+	return '<a href="mailto:'.$email.'">'.$inner.'</a>';
 }
 
 function compileNavTree($div){

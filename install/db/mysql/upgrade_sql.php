@@ -114,5 +114,12 @@ class upgrade_sql {
 				   ('0', 'max_attachment_size', '3145728')
 		");
 	}
+	private function upgradeIt5(){
+		// Add settings for the members list (5/11/08)
+		$this->db->query("INSERT INTO `yakbb_config` ( `id` , `name` , `value` )
+			VALUES ('0', 'guest_memberslist', 'false'),
+				   ('0', 'members_per_page', '50')
+		");
+	}
 }
 ?>

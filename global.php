@@ -241,7 +241,7 @@ $va = array( // Valid Actions
 	"help" => "help",
 	"search" => "search",
 	"usercp" => "",
-	"members" => "",
+	"members" => "memberslist",
 	"logout" => "logout",
 
 	// Standard viewing pages
@@ -283,9 +283,7 @@ if(in_array($act, array_keys($va)) && !empty($va[$act]) && file_exists(INCLUDESD
 	$yak->curPage = $n;
 	unset($va);
 	require_once INCLUDESDIR.$n.".php";
-	if(class_exists($n)){
-		${$n} = new $n();
-	}
+	${$n} = new $n(); // Create a class of the item
 } else {
 	unset($va);
 	$tp->error("invalid_include");

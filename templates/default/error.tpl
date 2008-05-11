@@ -3,9 +3,9 @@
 		<?= lang("error_title"); ?>
 	</td></tr><tr><td class="cell1">
 		<?php if(errorCount() == 1){ ?>
-			<?= lang("error_occured"); ?>
+			<?= lang("error_occurred"); ?>
 		<?php } else { ?>
-			<?= lang("errors_occured"); ?>
+			<?= lang("errors_occurred"); ?>
 		<?php } ?><br />
 		<ul>
 			<?php while($error = loadError()){ ?>
