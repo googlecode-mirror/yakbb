@@ -35,6 +35,7 @@ if(!defined("SNAPONE")) exit;
 || INFORMATION FUNCTIONS
 ||		getMode()
 ||		showDescription()
+||		showPollForm()
 \*====================================*/
 function getMode(){
 	// Returns the current mode
@@ -59,6 +60,17 @@ function showDescription(){
 	}
 }
 
+function showPollForm(){
+	// Whether or not to show the poll form
+
+	global $post;
+	if($post->getMode() == "newthread"){
+		return true;
+	} else {
+		return false;
+	}
+}
+
 
 
 
@@ -66,8 +78,13 @@ function showDescription(){
 /*====================================*\
 || FORM FUNCTIONS
 ||		getFormAction()
+||		getSentCanChoose()
+||		getSentChoice()
 ||		getSentDescription()
+||		getSentExpires()
 ||		getSentMessage()
+||		getSentQuestion()
+||		getSentRetract()
 ||		getSentTitle()
 \*====================================*/
 function getFormAction(){
@@ -86,6 +103,20 @@ function getFormAction(){
 	}
 }
 
+function getSentCanChoose(){
+	// Returns the canchoose
+
+	global $post;
+	return $post->getItem("canchoose");
+}
+
+function getSentChoice($n){
+	// Returns the selected choice
+
+	global $post;
+	return $post->getItem("choice", $n);
+}
+
 function getSentDescription(){
 	// Returns the description
 
@@ -93,11 +124,32 @@ function getSentDescription(){
 	return $post->getItem("description");
 }
 
+function getSentExpires(){
+	// Returns the expiration time
+
+	global $post;
+	return $post->getItem("expires");
+}
+
 function getSentMessage(){
 	// Returns the message
 
 	global $post;
 	return $post->getItem("message");
+}
+
+function getSentQuestion(){
+	// Returns the question
+
+	global $post;
+	return $post->getItem("question");
+}
+
+function getSentRetract(){
+	// Returns the retraction option
+
+	global $post;
+	return $post->getItem("retract");
 }
 
 function getSentTitle(){

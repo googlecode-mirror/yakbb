@@ -19,8 +19,8 @@
 			<a href="<?= replyLink(threadId(), true) ?>"><?= lang("reply_to_thread") ?></a> - 
 			<a href="<?= replyLink(threadId(), true, $post["postid"]) ?>"><?= lang("quote_thread") ?></a>
 		<?php } ?>
-		<?php if(canModify($post["postid"])){ ?> - <?= lang("delete_post") ?><?php } ?>
-		<?php if(canDelete($post["postid"])){ ?> - <?= lang("modify_post") ?><?php } ?>
+		<?php if(canModify($post["postid"])){ ?> - <?= lang("modify_post") ?><?php } ?>
+		<?php if(canDelete($post["postid"])){ ?> - <?= lang("delete_post") ?><?php } ?>
 	<hr size="1" />
 	<?= $post["message"] ?>
 </td></tr>

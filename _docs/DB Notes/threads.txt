@@ -14,3 +14,4 @@ announcement	Whether the thread is an announcement (1) or not (0)
 sticky			Whether the thread is a sticky (1) or not (0)
 locked			Whether the thread is locked (1) or not (0)
 redirecturl		URL the thread should redirect to when accessed.
+haspoll			Whether the thread has a poll (1) or not (0)

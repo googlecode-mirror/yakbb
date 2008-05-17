@@ -29,6 +29,9 @@
 			- Allow to bookmark from post page, except modify
 	newthread
 		- Need to check thread creation permissions
+		- Finish add poll stuff
+			- Check permissions
+			- View results needs to be added
 	reply
 		- Thread summary below reply
 		- Quotes
@@ -51,6 +54,7 @@ class post {
 	private $pdat = array(); // Holds the current post data in modify mode
 	private $quote = ""; // The quote data if a quote is set
 	private $errors = array(); // Holds the errors
+	private $poll = false;
 
 	public function __construct(){
 		// Basics
@@ -173,6 +177,7 @@ class post {
 
 	private function newThreadSetup(){
 		// This sets up the rest of the code to handle newthread mode correctly
+		// Also handles creating a poll, if permissions are set
 
 		global $tp, $db, $user, $lang;
 
@@ -205,7 +210,6 @@ class post {
 		if(!isset($bperms[$user["group"]]) || $bperms[$user["group"]]["thread"] == false){
 			$tp->error("newthread_cant_view");
 		}
-		unset($bperms);
 
 		// Set up the nav tree
 		$this->setupNavTree($this->bdat);
@@ -311,6 +315,46 @@ class post {
 			$errors = array_merge($errors, $mCheck);
 		}
 
+		// Poll stuff. Let's do our checks
+		if(isset($_REQUEST["pollquestion"]) && strlen($_REQUEST["pollquestion"]) > 0 && $this->mode == "newthread"){
+			$question = secure($_REQUEST["pollquestion"]);
+			$choices = array();
+			for($n=1;isset($_REQUEST["choice".$n]) && $n-1 < POLL_NUM_MAX;$n++){
+				if(strlen($_REQUEST["choice".$n]) > 0){
+					$choices[] = secure($_REQUEST["choice".$n]);
+				}
+			}
+			$retract = !!($_REQUEST["retract"] == "yes");
+			$choose = intval($_REQUEST["canchoose"]);
+			$expires = $_REQUEST["expires"];
+
+			// Fix up the expires date.
+			if(!preg_match("/^\d+(.\d+)?$/", $expires) || $expires > 10000 || $expires < 0){
+				// Incorrect, infinite basically, or zero.
+				$expires = 0;
+			} else {
+				$expires = time() + ($expires*24*60*60); // Convert to days in the future
+			}
+
+			// Check choose stuff
+			if($choose < 1){
+				$choose = 1;
+			} else if($choose > POLL_NUM_MAX || $choose > count($choices)){
+				$choose = count($choices);
+			}
+
+			// Check choices validity
+			if(count($choices) < 2){
+				$errors[] = "poll_not_enough_choices";
+			} else if(count($choices) > POLL_NUM_MAX){
+				$errors[] = "poll_too_many_choices";
+			}
+
+			if(count($errors) == 0){
+				$this->poll = true;
+			}
+		}
+
 		if(count($errors) == 0){
 			// Passes checks. Good to go.
 			global $db, $user;
@@ -332,13 +376,32 @@ class post {
 						"announcement" => 0,
 						"sticky" => 0,
 						"locked" => 0,
-						"redirecturl" => ""
+						"redirecturl" => "",
+						"haspoll" => ($this->poll == true?1:0)
 					));
 					$tid = $db->insertId();
 					$this->tdat = array(
 						"id" => $tid,
 						"title" => $title
 					);
+
+					if($this->poll == true){
+						$ar = array(
+							"id" => 0,
+							"threadid" => $tid,
+							"boardid" => $this->id,
+							"question" => $question,
+							"expires" => $expires,
+							"canchoose" => $choose,
+							"canretract" => ($retract?1:0),
+							"viewresults" => 0,
+							"closed" => 0
+						);
+						foreach($choices as $k => $v){
+							$ar["answer".($k+1)] = $v;
+						}
+						$db->insert("polls", $ar);
+					}
 				} else {
 					$tid = $this->id;
 				}
@@ -376,7 +439,7 @@ class post {
 			redirect("/".ampToNormal(threadLink($this->tdat, true)));
 		} else {
 			// We'll add the errors now
-			$this->errors = $errors;
+			$this->errors = array_merge($this->errors, $errors);
 		}
 	}
 
@@ -397,15 +460,31 @@ class post {
 		return $this->mode;
 	}
 
-	public function getItem($item=""){
+	public function getItem($item="", $n=0){
 		// Loads the title, message, or description
 
 		global $lang, $yak;
 		switch($item){
-			case "desc":
-			case "description":
+			case "canchoose": // Can choose multiple and amount
+				if(isset($_REQUEST["canchoose"])){
+					$can = intval($_REQUEST["canchoose"]);
+					if($can > 0){
+						return $can;
+					}
+				}
+				return 1;
+				break;
+			case "choice": // Used to load choice 1-16
+				if(isset($_REQUEST["choice".$n])){
+					return secure(substr($_REQUEST["choice".$n], 0, $yak->settings["poll_choice_max_length"]));
+					
+				}
+				return "";
+				break;
+			case "desc": // Thread description alternative
+			case "description": // Thread description
 				if(isset($_REQUEST["postdesc"])){
-					return secure(substr($_REQUEST["postdesc"], 0, $yak->setting["thread_desc_max"]));
+					return secure(substr($_REQUEST["postdesc"], 0, $yak->settings["thread_desc_max"]));
 				}
 				switch($this->mode){
 					case "reply":
@@ -418,18 +497,16 @@ class post {
 				}
 				return "";
 				break;
-			case "title":
-				if(isset($_REQUEST["posttitle"])){
-					return secure(substr($_REQUEST["posttitle"], 0, $yak->settings["thread_subject_max"]));
+			case "expires": // Expiration date
+				if(isset($_REQUEST["expires"])){
+					$exp = intval($_REQUEST["expires"]);
+					if($exp > 0){
+						return $exp;
+					}
 				}
-				if($this->mode == "reply"){
-					return $lang->item("reply_string").$this->tdat["title"];
-				} else if($this->mode == "modify"){
-					// Will load modify data later
-				}
-				return "";
+				return 0;
 				break;
-			case "message":
+			case "message": // Actual message body
 				if(isset($_REQUEST["postmessage"])){
 					return secure($_REQUEST["postmessage"]);
 				}
@@ -445,6 +522,29 @@ class post {
 					case "newthread":
 						return ""; // Nothing to add if we're creating a new thread.
 				}
+				break;
+			case "question": // Poll question
+				if(isset($_REQUEST["pollquestion"])){
+					return secure(substr($_REQUEST["pollquestion"], 0, $yak->settings["poll_question_max_length"]));
+				}
+				return "";
+				break;
+			case "title": // Post/thread title
+				if(isset($_REQUEST["posttitle"])){
+					return secure(substr($_REQUEST["posttitle"], 0, $yak->settings["thread_subject_max"]));
+				}
+				if($this->mode == "reply"){
+					return $lang->item("reply_string").$this->tdat["title"];
+				} else if($this->mode == "modify"){
+					// Will load modify data later
+				}
+				return "";
+				break;
+			case "retract": // Retraction of vote
+				if(isset($_REQUEST["retract"]) && $_REQUEST["retract"] == "yes"){
+					return true;
+				}
+				return false;
 				break;
 			default:
 				return "";

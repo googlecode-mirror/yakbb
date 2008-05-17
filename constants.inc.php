@@ -17,7 +17,10 @@ define("GENDER_MALE", 1);
 define("GENDER_FEMALE", 2);
 define("GENDER_NONE", 0);
 
+// DON'T EDIT. Poll constants
+define("POLL_NUM_MAX", 16); // Maximum number of poll options
+
 // DON'T EDIT. These are used to keep YakBB up to date
 define("CURRENTYAKVERSION", "0.1.0a");
-define("CURRENTDBVERSION", 5);
+define("CURRENTDBVERSION", 6);
 ?>

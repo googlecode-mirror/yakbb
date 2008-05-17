@@ -121,5 +121,17 @@ class upgrade_sql {
 				   ('0', 'members_per_page', '50')
 		");
 	}
+	private function upgradeIt6(){
+		// Add settings for polls (5/16/08)
+		$this->db->query("INSERT INTO `yakbb_config` (`id` , `name` , `value`)
+			VALUES ('0', 'poll_choice_max_length', '50'),
+				   ('0', 'poll_question_max_length', '100')
+		");
+
+		// Overloading to save queries (5/16/08)
+		$this->db->query("ALTER TABLE `yakbb_threads`
+			ADD `haspoll` ENUM( '0', '1' ) NOT NULL DEFAULT '0'
+		");
+	}
 }
 ?>
