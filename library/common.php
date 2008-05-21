@@ -43,6 +43,8 @@ unset($connection); // Security reasons
 // Load settings.
 $cache->loadSettings(); // Load our settings from the database or cache
 $cache->loadGroups(); // Load our groups from the database or cache
+
+// Do SEO stuff briefly.
 if($yak->settings["seo_engine"] === true){
 	$tp->setSEO();
 }
