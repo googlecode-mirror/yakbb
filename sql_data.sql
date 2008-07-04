@@ -1,0 +1,3 @@
+-- Until I get the installer up and running, this will be how we deal with SQL updates.
+-- Initial SQL data is located in this file.
+-- Please make sure you've inserted sql_base.sql data first.

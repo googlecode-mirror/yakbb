@@ -1,0 +1,6 @@
+	This table contains the information about the moderators for forums.
+
+FIELD				DESCRIPTION
+id					The auto-assigned ID of the relationship.
+boardid				The ID of the board.
+userid				The ID of the user.

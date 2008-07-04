@@ -1,0 +1,12 @@
+	This table holds information related to uploaded attachments, etc. This is used to keep them separate from the
+posts table and prevent it from getting clogged up.
+
+FIELD				DESCRIPTION
+id					The auto-assigned ID of the attachment.
+postid				The ID of the post that this attachment was uploaded with/to.
+originalname		The original file name. This is used when we make a user download the attachment.
+newname				This is the new name of the file that is stored on our server.
+preview				This is the URL to the preview file (if it is an image. We use template images otherwise.)
+filetype			This is the extension for the file; its "file type"
+filesize			This is the size of the file itself in bytes.
+downloads			The number of downloads this attachment has received.

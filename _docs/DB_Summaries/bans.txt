@@ -1,0 +1,14 @@
+	This table contains information relating to banned users and temporarily banned users.
+
+FIELD				DESCRIPTION
+id					The auto-assigned ID of the specific ban.
+type				This is the type of the ban. See below for more information.
+value				This is the value of the banned user, etc. It is used to match the information.
+started				This is the timestamp of when the ban was started.
+expires				This is the timestamp of when the ban expires. 0 or less means it does NOT expire
+reason				This is the given reason for the ban. It'll be shown to a banned user.
+
+TYPE INFORMATION
+0 - Username ban.
+1 - E-mail ban.
+2 - IP ban.

@@ -1,0 +1,10 @@
+	This table contains the information about the forum's messages/PMs. This is the specific post in a PM thread.
+
+FIELD				DESCRIPTION
+id					The auto-assigned ID of the specific post.
+message				The body of the PM.
+senderid			ID of the user who posted it.
+threadid			ID of the thread it was posted in.
+timestamp			Timestamp of when it was posted.
+disableubbc			Whether (1) or not (0) UBBC is disabled.
+disablesmilies		Whether (1) or not (0) smilies are disabled.

@@ -1,0 +1,9 @@
+	This table contains the information about the votes in the polls on the forum. Multiple votes will create
+multiple entries into the database.
+
+FIELD				DESCRIPTION
+id					The auto-assigned ID of the poll vote.
+pollid				ID of the poll.
+userid				ID of the user who voted.
+timestamp			Timestamp at which the user voted.
+votefor				Which the user voted for.

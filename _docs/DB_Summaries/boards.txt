@@ -1,0 +1,21 @@
+	This table contains the information about the boards.
+
+FIELD				DESCRIPTION
+id					The auto-assigned ID of the board.
+name				This is the name of the board.
+description			This is the description for the board.
+parenttype			This is the type of the parent. b = board, c = category
+parentid			This is the ID of the parent.
+parentorder			This is the order for the board under its parent.
+permissions			This is the serialized array of the permissions. This is commonly accessed via function instead.
+password			This is the unencrypted password for the board. It is unencrypted so a staff member can find it 
+					out if needed.
+redirecturl			This is the URL the board will redirect to. Does not redirect if blank.
+redirects			This is the number of redirects the board has.
+threads				The number of threads contained in the board.
+posts				The number of posts contained in the board.
+sublist				Whether (1) or not (0) to show the sub-boards listing on the main page.
+hidden				This decides whether the forum is hidden or not from the default view.
+lastposttime		The timestamp of the last post.
+lastpostuserid		The id of the user who made the last post.
+lastpostthreadid	The id of the thread which has the last post.

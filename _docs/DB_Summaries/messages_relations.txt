@@ -1,0 +1,9 @@
+	This table contains the information about the forum's messages/PMs. This is the relationship between a thread and
+a specific user.
+
+FIELD				DESCRIPTION
+id					The auto-assigned ID of the specific relationship.
+threadid			This is the PM thread ID.
+userid				The user's ID.
+lastread			When the user last read the PM. Used to track updates.
+deleted				Whether (1) or not (0) the user has deleted the PM already.

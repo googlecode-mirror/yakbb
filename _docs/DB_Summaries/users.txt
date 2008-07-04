@@ -1,0 +1,62 @@
+	This table contains the information about the users of the forum.
+
+FIELD				DESCRIPTION
+id					The auto-assigned ID of the user.
+username			The user's unique username used to login, etc.
+displayname			The display name shown with their posts.
+password			Their encrypted password.
+group				The group the user is a member of. 0 = members
+email				The user's e-mail.
+emailshow			Whether (1) or not (0) the e-mail is shown to members. (E-mails are hidden from guests at all 
+					times, but are always visible to staff with permissions to view.)
+emailoptin			Whether (1) or not (0) the user is opted in to receive mass e-mails from the forum.
+activated			Whether (1) or not (0) the e-mail was activated with the account.
+activationcode		The activation code sent in the e-mail.
+pending				Whether (1) or not (0) the account is pending admin approval.
+registeredtime		The timestamp for when the account was registered.
+gender				The int value representing the gender. (0 = none, 1 = male, 2 = female)
+lastip				The last IP the user used when logging in. If they haven't logged in, it's the IP used at
+					registration.
+lastlogin			The timestamp of the user's last login. It is 0 if they haven't logged in.
+lastlogininvis		The timestamp of when the user last logged in as invisible. This is used so upper-staff (with
+					permissions) are able to see their true last login time.
+invisible			Whether (1) or not (0) the user is logged in as invisible.
+template			The ID of the template the user is using. If invalid, it defaults to the forum default template.
+language			The ID of the language the user is using. If invalid, it defaults to the forum default language.
+posts				The number of posts the user has.
+reputation			The number of reputation points the user has.
+aim					The user's AIM address.
+msn					The user's MSN address.
+icq					The user's ICQ pin. (Always a number.)
+yim					The user's YIM address.
+skype				The user's Skype address.
+xfire				The user's XFire address.
+website				The URL of the user's website.
+websitename			The name of the user's website.
+avatar				The URL of the user's avatar or the ID of a local uploaded avatar.
+avatarheight		The height of the user's avatar. Maximum is set by a setting.
+avatarwidth			The width of the user's avatar. Maxmimum is set by a setting.
+personaltext		The user's personaltext shown below their avatar.
+location			The user's location.
+birthday			Timestamp of the user's birthday.
+birthdayhide		Whether (1) or not (0) the user's birthday is hidden from members. (Always hidden from guests. 
+					Staff with correct permissions may always view.)
+signature			The user's signature.
+newpmnotify			The user's setting for what to do on a new PM. See below for more information.
+pmenabled			The user's setting for having PMs enabled. See below for more information
+timezone			The user's timezone offset from GMT.
+dst					Whether (1) or not (0) Daylights Savings Time/Summer Time is currently going on.
+dateformat			The ID of the dateformat the user is using.
+
+
+NEWPMNOTIFY INFORMATION
+0 = No notification
+1 = Popup notification
+2 = E-mail notification
+3 = Popup and e-mail notification
+
+
+PMENABLED INFORMATION
+0 = PMs from staff or announcements only
+1 = PMs from friends, staff, and announcements only
+2 = Anyone may PM

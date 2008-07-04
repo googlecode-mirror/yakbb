@@ -1,0 +1,9 @@
+	This table contains the information about settings/configuration of the forum.
+
+FIELD				DESCRIPTION
+id					The auto-assigned ID of the config item.
+name				The unique name for the setting.
+value				The value for the setting. Booleans and integers get converted to their specific type
+					automatically.
+groupid				The config group ID. Used to keep them separated into groups.
+grouporder			The order in its parent group.

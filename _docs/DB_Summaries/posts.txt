@@ -1,0 +1,15 @@
+	This table contains the information about the posts of the forum.
+
+FIELD				DESCRIPTION
+id					The auto-assigned ID of the post.
+threadid			The ID of the thread the post is in.
+userid				The ID of the user who posted the post.
+timestamp			The timestamp from when the post was made.
+message				The body of the post.
+title				The title of the post.
+disableubbc			Whether (1) or not (0) UBBC is disabled.
+disablesmilies		Whether (1) or not (0) smilies are disabled.
+lastedittime		The timestamp of the last edit for the post.
+lastedituser		The id of the user who made the last edit.
+attachments			The number of attachments uploaded to the post. Should always be kept accurate since it does track
+					whether or not a post has attachments and can cause extra queries.

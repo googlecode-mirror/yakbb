@@ -1,0 +1,7 @@
+	This table contains the information about the forum's member groups
+
+FIELD				DESCRIPTION
+id					The auto-assigned ID of the group.
+name				The name of the group.
+color				The color for the group. Is a serialize'd array for template usage.
+stars				The stars for the group. Is a serialize'd array for template usage.

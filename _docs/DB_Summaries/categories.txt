@@ -1,0 +1,11 @@
+	This table contains the information about the categories.
+
+FIELD				DESCRIPTION
+id					The auto-assigned ID of the category.
+name				This is the name of the category.
+description			This is the category's description. Some templates may not support it.
+hideshow			Whether (1) or not (0) users can hide/show this category on the main page. Some templates may not
+					support it.
+showmain			Whether (1) or not (0) to show on the main page. Equivalent of "hidden" for boards.
+order				The order of this category in relation to all the other categories.
+permissions			Serialize'd array of the permissions. Should be accessed via a function instead.

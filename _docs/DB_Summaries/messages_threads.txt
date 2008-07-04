@@ -1,0 +1,7 @@
+	This table contains the information about the forum's messages/PMs. This is the thread data.
+
+FIELD				DESCRIPTION
+id					The auto-assigned ID of the thread.
+title				Title of the PM
+lastupdated			When the PM last had a message posted.
+initialsend			When the PM was initially sent. Mostly used as an ordering option.

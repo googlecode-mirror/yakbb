@@ -1,0 +1,21 @@
+	This table contains the information about the polls on the forum.
+
+FIELD				DESCRIPTION
+id					The auto-assigned ID of the poll.
+threadid			The ID of the thread the poll belongs to.
+boardid				The ID of the board the thread is in.
+question			The question of the poll.
+closed				Whether (1) or not (0) the poll is closed
+expires				When the poll expires and auto-closes. 0 or less means it doesn't auto-close.
+canchoose			The maximum number of options the user can vote for in the poll.
+viewresults			Varies on how the results are shown. See below for more information.
+canretract			Whether (1) or not (0) the user can retract their vote(s).
+answer1-20			The answers 1-20 are the options the users can choose from
+
+VIEWRESULTS INFORMATION
+Results are always shown to staff with correct permissions.
+0 = Results are not shown even when the poll closes.
+1 = Results are only shown after the poll closes.
+2 = Results are shown only after the user votes or the poll closes.
+3 = Results are shown to all logged in users. No guests until after the poll closes.
+4 = Results are visible to anyone at anytime regardless of the poll's status.

@@ -1,0 +1,20 @@
+	This table contains the information about the threads of the forum.
+
+FIELD				DESCRIPTION
+id					The auto-assigned ID of the thread.
+name				The name of the thread.
+description			The description given to the thread. If not given, it takes content from the first post.
+creatorid			ID of the thread creator
+parentid			ID of the parent board.
+views				Number of views the thread has had.
+replies				Number of replies the thread has had.
+lastposttime		Timestamp of the last post in the thread.
+lastpostuser		ID of the user who made the last post.
+created				Timestamp of when the thread was created.
+icon				ID of the icon to be used/
+haspoll				Whether (1) or not (0) the thread has a poll. This is more used for templates who want to specify.
+announcement		Whether (1) or not (0) the thread is an announcement.
+sticky				Whether (1) or not (0) the thread is a sticky.
+locked				Whether (1) or not (0) the thread is locked.
+redirecturl			The URL to redirect the thread to. Does not redirect if left blank.
+redirects			The number of redirects from the thread.
