@@ -18,10 +18,16 @@
 \*==================================================*/
 
 
+ob_start(); // Catch white output and smarty output
+
+// Begin loading necessary data
 require "./constants.inc.php";
 require YAKBB_CORE."classes/YakBB.class.php";
 
 $yakbb = new YakBB();
 $yakbb->initiate();
+
+// Output the final content
+ob_end_flush();
 
 ?>
