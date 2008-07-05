@@ -20,9 +20,14 @@
 defined("YAKBB") or die("Security breach.");
 
 class YakBB {
-	private $smarty = false;
-	private $db = false;
+	// Object holders
+	public $smarty = false;
+	public $db = false;
+
+	// Other variables
 	private $config = false;
+	private $module = false;
+
 
 	public function __construct(){
 	}
@@ -34,11 +39,13 @@ class YakBB {
 			$this->config = $config; // Will be unset after we create the DB object.
 			unset($config);
 		} else if(!defined("YAKBB_INSTALL")){
-			define("YAKBB_INSTALL", 1); // Currently in install mode
+			header("Location: ./install.php");
+			exit;
 		}
 
 		// Gotta load our application's library next
 		$this->loadLibrary();
+		$this->selectModule();
 	}
 
 	private function loadSmarty(){
@@ -66,6 +73,27 @@ class YakBB {
 			$this->db = new $str($this->config);
 			unset($this->config);
 		}
+	}
+
+	private function selectModule(){
+		// Decide the correct module
+		$this->module = "";
+		if(defined("YAKBB_INSTALL")){
+			$this->module = "install";
+			$this->smarty->template_dir .= "__install/";
+		} else {
+			// Load other modules here
+		}
+		if(!file_exists(YAKBB_MODULES.$this->module.".php")){
+			$this->module = "home";
+		}
+		$this->runSelectedModule();
+	}
+
+	private function runSelectedModule(){
+		require YAKBB_MODULES.$this->module.".php";
+		$mod = new $this->module();
+		$mod->init();
 	}
 }
 
