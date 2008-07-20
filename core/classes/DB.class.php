@@ -23,14 +23,14 @@ abstract class DB {
 	private $lastQuery;
 	private $queries = array();
 	private $dbc = false;
-	abstract function __construct();
+	abstract function __construct($config);
 	public function __deconstruct(){
 		$this->disconnect();
 	}
 	public function connected(){
 		return !!$this->dbc;
 	}
-	abstract function connect();
+	abstract function connect($c);
 	abstract function disconnect();
 	abstract function query($query);
 	abstract function cacheQuery($query, $name=false);

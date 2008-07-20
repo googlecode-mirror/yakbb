@@ -12,35 +12,11 @@
 || Program: YakBB v1.0.0
 || Author: Chris Dessonville
 ||==================================================||
-|| File: /core/modules/install.php
+|| File: /core/includes/links_seo.lib.php
 || File Version: v0.2.0a
 || $Id$
 \*==================================================*/
 
-class install {
-	public function init(){
-		global $yakbb;
-
-		$yakbb->loadLanguageFile("installer");
-		if(file_exists("./install.lock")){
-			die($yakbb->getLang("installer_locked"));
-		}
-
-		$part = intval($_GET["part"]);
-		if($part == 0) $part = 1;
-		$yakbb->smarty->assign("part", $part);
-
-		switch($part){
-			case 1:  $this->part1(); break;
-		}
-		$yakbb->smarty->display("index.tpl");
-	}
-
-	private function part1(){
-		global $yakbb;
-
-		
-	}
-}
+defined("YAKBB") or die("Security breach.");
 
 ?>

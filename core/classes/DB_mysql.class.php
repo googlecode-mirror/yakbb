@@ -19,7 +19,7 @@
 
 defined("YAKBB") or die("Security breach.");
 
-class DB_mysql implements DB {
+class DB_mysql extends DB {
 	private $lastQuery;
 	private $queries = array();
 	private $dbc = false;
