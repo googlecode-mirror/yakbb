@@ -30,7 +30,7 @@ class YakBB {
 
 	// Other variables
 	private $config = false;
-	private $groups
+	private $groups = array();
 	private $module = false;
 
 
