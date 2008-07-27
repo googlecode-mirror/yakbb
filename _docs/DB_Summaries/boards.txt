@@ -15,6 +15,7 @@ redirects			This is the number of redirects the board has.
 threads				The number of threads contained in the board.
 posts				The number of posts contained in the board.
 sublist				Whether (1) or not (0) to show the sub-boards listing on the main page.
+modslist			Whether (1) or not (0) to show the moderators listing on the main page.
 hidden				This decides whether the forum is hidden or not from the default view.
 lastposttime		The timestamp of the last post.
 lastpostuserid		The id of the user who made the last post.

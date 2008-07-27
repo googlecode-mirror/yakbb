@@ -67,4 +67,20 @@ function getPermission($perm, $groupid=false){
 }
 
 
+
+
+
+// Cookie functions
+function setYakCookie($name, $value, $time=0){
+	setcookie(DBPRE.$name, $value, $time);
+}
+
+function getYakCookie($name){
+	if(isset($_COOKIE[DBPRE.$name])){
+		return $_COOKIE[DBPRE.$name];
+	}
+	return "";
+}
+
+
 ?>

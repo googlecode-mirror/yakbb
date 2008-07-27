@@ -1,0 +1,50 @@
+	This is a list of all config keys and what their values do. It is mainly used as a quick reference.
+
+
+
+sef_urls
+	This enables Search Engine Friendly URLs if true.
+
+subs_count_towards_parent
+	If this is true, sub-boards post count, thread count, last post time, and unread status will effect
+	the parent board's respective fields.
+
+default_template
+	The default template ID
+
+default_language
+	The default language ID
+
+dst_default
+	Whether daylights savings time is enabled by default or not
+
+board_title
+	A serialized array of board titles for each language.
+
+registration_enabled
+	Whether or not registration is enabled.
+
+session_login
+	Whether or not a person can login for only their current session.
+
+activation_required
+	Whether or not e-mail activation is required.
+
+unique_email
+	Requires a user to have a unique e-mail when registering for the forum. (Does not effect modification of
+	e-mail at a later date.)
+
+switch_users
+	Whether the switch users feature is enabled or not.
+
+show_version
+	Whether or not to show the full version string on pages.
+
+timezone_default
+	The timezone offset used for default and guests.
+
+admin_approval
+	Whether or not to require an admin to approve an account before it can be used.
+
+pm_enabled
+	Whether or not the PM system is enabled.

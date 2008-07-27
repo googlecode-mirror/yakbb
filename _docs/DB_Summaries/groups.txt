@@ -5,3 +5,33 @@ id					The auto-assigned ID of the group.
 name				The name of the group.
 color				The color for the group. Is a serialize'd array for template usage.
 stars				The stars for the group. Is a serialize'd array for template usage.
+admin_access
+sticky_threads
+lock_threads
+announce_threads
+lock_polls
+delete_attachments
+delete_threads
+delete_posts
+delete_polls
+modify_posts
+modify_polls
+create_boards
+modify_boards
+reorder_boards
+create_categories
+delete_categories
+modify_categories
+reorder_categories
+move_boards
+create_events
+modify_events
+delete_events
+modify_settings
+delete_users
+modify_groups
+move_threads
+split_threads
+merge_threads
+view_log
+approve_accounts

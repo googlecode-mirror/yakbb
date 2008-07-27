@@ -1,0 +1,4 @@
+	This table contains the information about friends on the forum.
+
+FIELD				DESCRIPTION
+id					The auto-assigned ID of the relationship.user1id				The ID of the first user in the relationship.user2id				The ID of the second user in the relationship.user1accept			Has user one accepted the relationship?user2accept			Has user two accepted the relationship?acceptedtime		The time both users accepted the relationship.

@@ -2,13 +2,13 @@
 -- Initial SQL structure is located in this file.
 
 -- phpMyAdmin SQL Dump
--- version 2.11.4
+-- version 2.11.7
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 04, 2008 at 02:11 PM
+-- Generation Time: Jul 27, 2008 at 02:56 AM
 -- Server version: 5.0.51
--- PHP Version: 5.2.5
+-- PHP Version: 5.2.6
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -22,6 +22,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `yakbb_attachments`
 --
 
+DROP TABLE IF EXISTS `yakbb_attachments`;
 CREATE TABLE `yakbb_attachments` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `postid` int(11) NOT NULL,
@@ -30,9 +31,9 @@ CREATE TABLE `yakbb_attachments` (
   `preview` text NOT NULL,
   `filetype` text NOT NULL,
   `filesize` int(11) NOT NULL,
-  `downloads` int(11) NOT NULL,
+  `downloads` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -40,6 +41,7 @@ CREATE TABLE `yakbb_attachments` (
 -- Table structure for table `yakbb_bans`
 --
 
+DROP TABLE IF EXISTS `yakbb_bans`;
 CREATE TABLE `yakbb_bans` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `type` enum('0','1','2') NOT NULL,
@@ -48,7 +50,7 @@ CREATE TABLE `yakbb_bans` (
   `expires` int(11) NOT NULL,
   `reason` text NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -56,6 +58,7 @@ CREATE TABLE `yakbb_bans` (
 -- Table structure for table `yakbb_boards`
 --
 
+DROP TABLE IF EXISTS `yakbb_boards`;
 CREATE TABLE `yakbb_boards` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `name` text NOT NULL,
@@ -66,16 +69,17 @@ CREATE TABLE `yakbb_boards` (
   `permissions` text NOT NULL,
   `password` text NOT NULL,
   `redirecturl` text NOT NULL,
-  `redirects` int(11) NOT NULL,
-  `threads` int(11) NOT NULL,
-  `posts` int(11) NOT NULL,
+  `redirects` int(11) NOT NULL default '0',
+  `threads` int(11) NOT NULL default '0',
+  `posts` int(11) NOT NULL default '0',
   `sublist` enum('0','1') NOT NULL default '1',
+  `modslist` enum('0','1') NOT NULL default '1',
   `hidden` enum('0','1') NOT NULL default '0',
-  `lastposttime` int(11) NOT NULL,
-  `lastpostuserid` int(11) NOT NULL,
-  `lastpostthreadid` int(11) NOT NULL,
+  `lastposttime` int(11) NOT NULL default '0',
+  `lastpostuserid` int(11) NOT NULL default '0',
+  `lastpostthreadid` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -83,6 +87,7 @@ CREATE TABLE `yakbb_boards` (
 -- Table structure for table `yakbb_categories`
 --
 
+DROP TABLE IF EXISTS `yakbb_categories`;
 CREATE TABLE `yakbb_categories` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `name` text NOT NULL,
@@ -92,7 +97,7 @@ CREATE TABLE `yakbb_categories` (
   `order` int(11) NOT NULL,
   `permissions` text NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -100,6 +105,7 @@ CREATE TABLE `yakbb_categories` (
 -- Table structure for table `yakbb_config`
 --
 
+DROP TABLE IF EXISTS `yakbb_config`;
 CREATE TABLE `yakbb_config` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `name` text NOT NULL,
@@ -107,7 +113,24 @@ CREATE TABLE `yakbb_config` (
   `groupid` int(11) NOT NULL,
   `grouporder` int(11) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `yakbb_friends`
+--
+
+DROP TABLE IF EXISTS `yakbb_friends`;
+CREATE TABLE `yakbb_friends` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `user1id` int(11) NOT NULL,
+  `user2id` int(11) NOT NULL,
+  `user1accept` enum('0','1') NOT NULL default '0',
+  `user2accept` enum('0','1') NOT NULL default '0',
+  `acceptedtime` int(11) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -115,13 +138,46 @@ CREATE TABLE `yakbb_config` (
 -- Table structure for table `yakbb_groups`
 --
 
+DROP TABLE IF EXISTS `yakbb_groups`;
 CREATE TABLE `yakbb_groups` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `name` text NOT NULL,
   `color` text NOT NULL,
   `stars` text NOT NULL,
+  `admin_access` enum('0','1') NOT NULL default '0',
+  `sticky_threads` enum('0','1') NOT NULL default '0',
+  `lock_threads` enum('0','1') NOT NULL default '0',
+  `announce_threads` enum('0','1') NOT NULL default '0',
+  `lock_polls` enum('0','1') NOT NULL default '0',
+  `delete_attachments` enum('0','1') NOT NULL default '0',
+  `delete_threads` enum('0','1') NOT NULL default '0',
+  `delete_posts` enum('0','1') NOT NULL default '0',
+  `delete_polls` enum('0','1') NOT NULL default '0',
+  `modify_posts` enum('0','1') NOT NULL default '0',
+  `modify_polls` enum('0','1') NOT NULL default '0',
+  `create_boards` enum('0','1') NOT NULL default '0',
+  `delete_boards` enum('0','1') NOT NULL default '0',
+  `modify_boards` enum('0','1') NOT NULL default '0',
+  `reorder_boards` enum('0','1') NOT NULL default '0',
+  `create_categories` enum('0','1') NOT NULL default '0',
+  `delete_categories` enum('0','1') NOT NULL default '0',
+  `modify_categories` enum('0','1') NOT NULL default '0',
+  `reorder_categories` enum('0','1') NOT NULL default '0',
+  `move_boards` enum('0','1') NOT NULL default '0',
+  `create_events` enum('0','1') NOT NULL default '0',
+  `modify_events` enum('0','1') NOT NULL default '0',
+  `delete_events` enum('0','1') NOT NULL default '0',
+  `modify_settings` enum('0','1') NOT NULL default '0',
+  `modify_profiles` enum('0','1') NOT NULL default '0',
+  `delete_users` enum('0','1') NOT NULL default '0',
+  `modify_groups` enum('0','1') NOT NULL default '0',
+  `move_threads` enum('0','1') NOT NULL default '0',
+  `split_threads` enum('0','1') NOT NULL default '0',
+  `merge_threads` enum('0','1') NOT NULL default '0',
+  `view_log` enum('0','1') NOT NULL default '0',
+  `approve_accounts` enum('0','1') NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -129,16 +185,16 @@ CREATE TABLE `yakbb_groups` (
 -- Table structure for table `yakbb_messages`
 --
 
+DROP TABLE IF EXISTS `yakbb_messages`;
 CREATE TABLE `yakbb_messages` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `message` text NOT NULL,
   `senderid` int(11) NOT NULL,
   `threadid` int(11) NOT NULL,
   `timestamp` int(11) NOT NULL,
-  `disableubbc` enum('0','1') NOT NULL,
-  `disablesmilies` enum('0','1') NOT NULL,
+  `disablesmilies` enum('0','1') NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -146,14 +202,15 @@ CREATE TABLE `yakbb_messages` (
 -- Table structure for table `yakbb_messages_relations`
 --
 
+DROP TABLE IF EXISTS `yakbb_messages_relations`;
 CREATE TABLE `yakbb_messages_relations` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `threadid` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
   `lastread` int(11) NOT NULL,
-  `deleted` enum('0','1') NOT NULL,
+  `deleted` enum('0','1') NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -161,13 +218,14 @@ CREATE TABLE `yakbb_messages_relations` (
 -- Table structure for table `yakbb_messages_threads`
 --
 
+DROP TABLE IF EXISTS `yakbb_messages_threads`;
 CREATE TABLE `yakbb_messages_threads` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `title` text NOT NULL,
   `lastupdated` int(11) NOT NULL,
   `initialsend` int(11) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -175,12 +233,13 @@ CREATE TABLE `yakbb_messages_threads` (
 -- Table structure for table `yakbb_moderators_relations`
 --
 
+DROP TABLE IF EXISTS `yakbb_moderators_relations`;
 CREATE TABLE `yakbb_moderators_relations` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `boardid` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -188,6 +247,7 @@ CREATE TABLE `yakbb_moderators_relations` (
 -- Table structure for table `yakbb_polls`
 --
 
+DROP TABLE IF EXISTS `yakbb_polls`;
 CREATE TABLE `yakbb_polls` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `threadid` int(11) NOT NULL,
@@ -219,7 +279,7 @@ CREATE TABLE `yakbb_polls` (
   `answer19` text NOT NULL,
   `answer20` text NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -227,6 +287,7 @@ CREATE TABLE `yakbb_polls` (
 -- Table structure for table `yakbb_polls_votes`
 --
 
+DROP TABLE IF EXISTS `yakbb_polls_votes`;
 CREATE TABLE `yakbb_polls_votes` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `pollid` int(11) NOT NULL,
@@ -234,7 +295,7 @@ CREATE TABLE `yakbb_polls_votes` (
   `timestamp` int(11) NOT NULL,
   `votefor` int(11) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -242,6 +303,7 @@ CREATE TABLE `yakbb_polls_votes` (
 -- Table structure for table `yakbb_posts`
 --
 
+DROP TABLE IF EXISTS `yakbb_posts`;
 CREATE TABLE `yakbb_posts` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `threadid` int(11) NOT NULL,
@@ -249,13 +311,12 @@ CREATE TABLE `yakbb_posts` (
   `timestamp` int(11) NOT NULL,
   `message` text NOT NULL,
   `title` text NOT NULL,
-  `disableubbc` enum('0','1') NOT NULL,
   `disablesmilies` enum('0','1') NOT NULL,
   `lastedittime` int(11) NOT NULL,
   `lastedituser` int(11) NOT NULL,
   `attachments` int(11) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -263,6 +324,7 @@ CREATE TABLE `yakbb_posts` (
 -- Table structure for table `yakbb_threads`
 --
 
+DROP TABLE IF EXISTS `yakbb_threads`;
 CREATE TABLE `yakbb_threads` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `name` text NOT NULL,
@@ -282,7 +344,7 @@ CREATE TABLE `yakbb_threads` (
   `redirecturl` text NOT NULL,
   `redirects` int(11) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -290,6 +352,7 @@ CREATE TABLE `yakbb_threads` (
 -- Table structure for table `yakbb_users`
 --
 
+DROP TABLE IF EXISTS `yakbb_users`;
 CREATE TABLE `yakbb_users` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `username` text NOT NULL,
@@ -334,4 +397,4 @@ CREATE TABLE `yakbb_users` (
   `dst` enum('0','1') NOT NULL,
   `dateformat` int(11) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
