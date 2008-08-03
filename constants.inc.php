@@ -21,8 +21,8 @@
 define("YAKBB", true);
 
 // Define YakBB status variables
-define("YAKBB_CURRENT_VERSION", "0.2.0a");
-define("YAKBB_CURRENT_DB_VERSION", 1);
+define("YAKBB_INSTALL_VERSION",		"0.2.0a");
+define("YAKBB_INSTALL_DB_VERSION",	1);
 
 // Directory access list
 define("YAKBB_CACHE",     "./cache/");

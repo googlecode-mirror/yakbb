@@ -21,12 +21,12 @@ defined("YAKBB") or die("Security breach.");
 
 class YakBB {
 	// Object holders
-	public $smarty = false;
-	public $db = false;
+	public $smarty  = false;
+	public $db      = false;
 
 	// Data holders
-	public $user = array();
-	private $lang = array();
+	public $user    = array();
+	private $lang   = array();
 
 	// Other variables
 	private $config = false;
