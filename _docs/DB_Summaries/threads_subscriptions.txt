@@ -1,0 +1,14 @@
+	This table contains a relationship between all user and the threads they have subscribed to.
+
+FIELD				DESCRIPTION
+id					The auto-assigned ID of the relationship.
+userid				The user's ID.
+threadid			The thread's ID.
+notificaiton		The type of notification to use on replies.
+timestamp			Timestamp of when the relationship was established.
+
+
+NOTIFICATION TYPES
+0 = no notification
+1 = pm notification
+2 = e-mail notification
