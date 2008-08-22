@@ -24,15 +24,15 @@ function seo_safe($str){
 	return preg_replace("/[^A-Z0-9]/i", "_", $str);
 }
 
-function url_thread(int $threadid, $threadname){
+function url_thread($threadid, $threadname){
 	return "/thread-".$threadid."/".seo_safe($threadname)."/";
 }
 
-function url_board(int $boardid, $boardname){
+function url_board($boardid, $boardname){
 	return "/board-".$boardid."/".seo_safe($boardname)."/";
 }
 
-function url_user(int $userid, $username, $display){
+function url_user($userid, $username, $display){
 	return "/profile-".$username."/"; // Usernames are already SEO safe
 	// return "/profile-".$userid."/";
 }

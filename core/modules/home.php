@@ -20,8 +20,7 @@
 class home {
 	public function init(){
 		global $yakbb;
-		$yakbb->smarty->assign("name", "Chris");
-		$yakbb->smarty->display("index.tpl");
+		$yakbb->smarty->display("home.tpl");
 	}
 }
 

@@ -25,13 +25,14 @@ class YakBB {
 	public $db      = false;
 
 	// Data holders
-	public $user    = array();
+	public  $user   = array();
 	private $lang   = array();
 
 	// Other variables
-	private $config = false;
-	private $groups = array();
-	private $module = false;
+	private $dbconfig = false;
+	private $config   = array();
+	private $groups   = array();
+	private $module   = false;
 
 
 	// Core loading functions
@@ -42,7 +43,7 @@ class YakBB {
 		// Load config first
 		if(file_exists("./config.inc.php")){
 			require "./config.inc.php";
-			$this->config = $config; // Will be unset after we create the DB object.
+			$this->dbconfig = $config; // Will be unset after we create the DB object.
 			unset($config);
 		} else if(!defined("YAKBB_INSTALL")){ // No config and not in the install
 			header("Location: ./install.php");
@@ -74,12 +75,44 @@ class YakBB {
 	private function loadLibrary(){
 		$this->loadSmarty();
 		require YAKBB_CORE."includes/functions.lib.php";
+		require YAKBB_CORE."classes/FlatFile.class.php";
 		require YAKBB_CORE."classes/DB.class.php";
-		if($this->config){ // If config is set, load the DB type.
-			require YAKBB_CORE."classes/DB_".$this->config["dbtype"].".class.php";
-			$str = "DB_".$this->config["dbtype"];
-			$this->db = new $str($this->config);
-			unset($this->config);
+		if($this->dbconfig){ // If dbconfig is set, load the DB type and then config.
+			require YAKBB_CORE."classes/DB_".$this->dbconfig["dbtype"].".class.php";
+			$str = "DB_".$this->dbconfig["dbtype"];
+			$this->db = new $str($this->dbconfig);
+			unset($this->dbconfig);
+			$this->loadConfig();
+		}
+
+		// Load url and link stuff
+		if($this->config["sef_urls"] == true){
+			require YAKBB_CORE."includes/urls_seo.lib.php";
+		} else {
+			require YAKBB_CORE."includes/urls.lib.php";
+		}
+		require YAKBB_CORE."includes/links.lib.php";
+	}
+
+	private function loadConfig(){
+		$dat = $this->db->cacheQuery("
+			SELECT
+				name, value
+			FROM
+				yakbb_config
+		");
+		foreach($dat as $v){
+			$val = $v["value"];
+
+			if(is_numeric($val)){
+				$val = intval($val);
+			} else if($val == "true"){
+				$val = true;
+			} else if($val == "false"){
+				$val = false;
+			}
+
+			$this->config[$v["name"]] = $val;
 		}
 	}
 
@@ -90,6 +123,8 @@ class YakBB {
 			"template" => "default",
 			"language" => "en"
 		);
+		$this->smarty->assign("guest", true);
+		$this->smarty->assign("admin_access", false);
 	}
 
 	private function selectModule(){

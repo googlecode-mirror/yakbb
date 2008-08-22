@@ -52,15 +52,57 @@ class DB_mysql extends DB {
 	}
 
 	public function cacheQuery($query, $name=false){
+		// $expiration = time it expires from when created.
+		// $name = optional file name
+
+		// Setup the file name
+		if($name === false){
+			$name = "sql/".md5($query);
+		}
+		$name = YAKBB_CACHE.$name.".php";
+
+		// See if the cache currently exists
+		if(file_exists($name) && ($expiration == -1 || filemtime($name)+$expiration >= time())){
+			include $name;
+			return $return_value;
+		}
+
+		// Cache doesn't exist yet or expired. Create it.
+		$this->query($query);
+		$dat = array();
+		while($x = $this->fetch()){
+			$dat[] = $x; 
+		}
+		
+		$s = "<"."?php\n/*\nQuery: ".$query."\nGenerated: ".makeDate()."\n*/\n\ndefined(\"YAKBB\") or die(\"Security breach.\");\n";
+		$s .= "\$return_value = ".var_export($dat, true);
+		$s .= "\n?".">";
+		if(!isset($this->ff)){
+			$this->ff = new FlatFile();
+		}
+		$this->ff->updateFile($name, $s);
+		return $dat;
 	}
 
 	public function clearCacheQuery($query, $name=false){
+		// Setup the file name
+		if($name === false){
+			$name = "sql/".md5($query);
+		}
+		$name = YAKBB_CACHE.$name.".php";
+
+		@unlink($name);
 	}
 
 	public function insert($table, array $ins){
 		// We use the query function because we could change it up for some reason and forget to change here, plus it saves coding then too if there are changes.
 		$ins = array_map(array($this, "secure"), $ins);
-		return $this->query("INSERT INTO `yakbb_".$table."` (`".implode("`,`", array_keys($ins))."`) VALUES(\"".implode("\",\"", $ins)."\")");
+		return $this->query("
+			INSERT INTO
+				`yakbb_".$table."`
+					(`".implode("`,`", array_keys($ins))."`)
+					VALUES(\"".implode("\",\"", $ins)."\")
+		");
 	}
 
 	public function lastInsertId($ref=false){

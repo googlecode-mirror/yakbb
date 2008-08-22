@@ -19,15 +19,15 @@
 
 defined("YAKBB") or die("Security breach.");
 
-function url_thread(int $threadid, $threadname){
+function url_thread($threadid, $threadname){
 	return "?thread=".$threadid;
 }
 
-function url_board(int $boardid, $boardname){
+function url_board($boardid, $boardname){
 	return "?board=".$boardid;
 }
 
-function url_user(int $userid, $username, $display){
+function url_user($userid, $username, $display){
 	return "?user=".$username;
 	// return "?userid=".$userid;
 }

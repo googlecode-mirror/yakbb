@@ -28,6 +28,14 @@
 
 defined("YAKBB") or die("Security breach.");
 
+// General functions
+function makeDate($time=0, $format="F j, Y, g:i a"){
+	if($time == 0){
+		$time = time();
+	}
+	return date($format, $time);
+}
+
 // Template functions
 function validTemplate($tempid){
 	// Makes sure the template folder exists
