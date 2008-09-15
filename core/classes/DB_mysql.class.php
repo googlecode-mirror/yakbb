@@ -51,15 +51,15 @@ class DB_mysql extends DB {
 
 	}
 
-	public function cacheQuery($query, $name=false){
+	public function cacheQuery($query, $name=false, $expiration=-1){
 		// $expiration = time it expires from when created.
 		// $name = optional file name
 
 		// Setup the file name
 		if($name === false){
-			$name = "sql/".md5($query);
+			$name = md5($query);
 		}
-		$name = YAKBB_CACHE.$name.".php";
+		$name = YAKBB_CACHE."sql/".$name.".php";
 
 		// See if the cache currently exists
 		if(file_exists($name) && ($expiration == -1 || filemtime($name)+$expiration >= time())){

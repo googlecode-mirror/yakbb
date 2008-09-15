@@ -1,0 +1,6 @@
+	See here: http://www.gaiaonline.com/journal/?mode=view&post_id=15288033
+
+	This could easily be incorporated into the "friends list" idea. Also, consider the 
+options of "can't be removed" so that a user is always listed. Another would be "added 
+by default" which would allow staff to have themselves listed by default. This may be 
+integrated into the friends list.

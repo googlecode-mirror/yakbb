@@ -33,9 +33,9 @@ abstract class DB {
 	abstract function connect($c);
 	abstract function disconnect();
 	abstract function query($query);
-	abstract function cacheQuery($query, $name=false);
-	public function queryCache($query, $name=false){
-		return $this->cacheQuery($query, $name);
+	abstract function cacheQuery($query, $name=false, $expiration=-1);
+	public function queryCache($query, $name=false, $expiration=-1){
+		return $this->cacheQuery($query, $name, $expiration);
 	}
 	abstract function clearCacheQuery($query, $name=false);
 	public function clearQueryCache($query, $name=false){

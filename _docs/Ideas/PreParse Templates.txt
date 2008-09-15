@@ -1,0 +1,6 @@
+	The file name is pretty explanatory of the concept. The plan is to give an option 
+for an admin to pre-parse all template files to increase loading speed slightly in case
+the files are not already parsed. This could save loading times in the future on pages 
+that have not yet had a view. This also goes hand in hand with a "Clear Cache" function 
+that is planned to be incorporated. This function would probably be located under the 
+"Templates" section of the ACP.

@@ -1,0 +1,13 @@
+	Official name of the notification/bookmarks feature is "Thread Tracker," or something
+similar. This system is similar to PB's, with a few changes.
+
+Here's the basic outline of the features/abilities:
+	1. A user may track any thread of any type.
+	2. A user may select to be notified of updates via PM, e-mail, or not being updated. 
+		SMS is possible if it can be done freely, but that would be an admin option.
+	3. A user can select to be notified of new posts, modifications only, new posts and 
+		modifications, or no update.
+
+	For number two and three above, "no update" is included so that users can keep track of
+a thread for later reference without worrying about receiving random updates. This helps
+prevent cluttering of a user's actual bookmarks in their browser.

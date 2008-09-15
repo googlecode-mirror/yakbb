@@ -53,6 +53,7 @@ class YakBB {
 		// Gotta load our application's library next
 		$this->loadLibrary();
 		$this->loadUser();
+		$this->setConfig();
 		$this->selectModule();
 	}
 
@@ -100,7 +101,7 @@ class YakBB {
 				name, value
 			FROM
 				yakbb_config
-		");
+		", "config");
 		foreach($dat as $v){
 			$val = $v["value"];
 
@@ -120,11 +121,16 @@ class YakBB {
 		$this->user = array( // Guest dummy data
 			"id" => 0,
 			"name" => "Guest",
-			"template" => "default",
-			"language" => "en"
+			"template" => $this->config["default_template"],
+			"language" => $this->config["default_language"]
 		);
 		$this->smarty->assign("guest", true);
 		$this->smarty->assign("admin_access", false);
+	}
+
+	private function setConfig(){
+		$bnames = unserialize($this->config["board_title"]);
+		$this->smarty->assign("board_title", $bnames[$this->user["language"]]);
 	}
 
 	private function selectModule(){

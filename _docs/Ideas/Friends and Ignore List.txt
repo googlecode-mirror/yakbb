@@ -1,0 +1,15 @@
+	The friends list is pretty straight forward. You add users to it and they become 
+your "friends." Their names would change color and possibly the background color of their
+post too. It'd allow you to recognize them easier in case you're looking for them. (See: 
+Watched Users.txt) Also, when composing a PM they'd either be listed automatically on a 
+side of the "To" box, or they'd be in a list which you can click. This would allow you to
+easily send PMs to people on your friends list. There'd also be a "view friends" page
+that is similar to the members list and allows you to view quite a bit of info on your
+"friends." The friends list could also aid in making a "MySpace" or "Facebook" like 
+system mod. It'd be fun. =D
+
+	The ignore list is also pretty straight forward. (This is less likely to be added
+however.) By default, it'd auto-collapse their posts with an option to show it since the 
+post may contribute heavily to the thread. Threads by them could also be removed from the
+thread listing. There'd also be a global "can't ignore" list so that staff can't be 
+ignored.

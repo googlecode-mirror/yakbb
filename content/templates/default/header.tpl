@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Forum Name - Page Title</title>
+	<title>{$board_title} - {$page_title}</title>
 	<style type="text/CSS">
 	{literal}
 	body {

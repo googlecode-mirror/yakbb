@@ -1,0 +1,9 @@
+	As of this time, we're unsure if this will be an admin only option or a user enabled 
+option.
+
+	This option allows the merger of two accounts. The merger will select the user data 
+(avatar, personal text, msn, yim, aim, etc.) from one account and merge it with another
+account. It'll also combine karma (if added), posts, and PMs. However, the "secondary" 
+account (which must be designated) will be deleted and only the original will be able to
+be used to login. All posts, PMs, etc. will be updated to reflect this change in the 
+accounts.
