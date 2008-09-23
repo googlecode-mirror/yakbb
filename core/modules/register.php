@@ -12,17 +12,21 @@
 || Program: YakBB v1.0.0
 || Author: Chris Dessonville
 ||==================================================||
-|| File: /content/languages/en/installer.lang.php
+|| File: /core/modules/register.php
 || File Version: v0.2.0a
 || $Id$
 \*==================================================*/
 
-defined("YAKBB") or die("Security breach.");
+class register {
 
-$items = array(
-	// Installation errors
-	"installer_locked" => "The installer is currently locked."
-);
+	public function init(){
+		global $yakbb;
 
+		$yakbb->loadLanguageFile("register");
+		$yakbb->smarty->assign("page_title", $yakbb->getLang("page_title"));
+
+		$yakbb->smarty->display("register.tpl");
+	}
+}
 
 ?>

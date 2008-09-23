@@ -121,6 +121,7 @@ class YakBB {
 		$this->user = array( // Guest dummy data
 			"id" => 0,
 			"name" => "Guest",
+			"group" => -1,
 			"template" => $this->config["default_template"],
 			"language" => $this->config["default_language"]
 		);
@@ -150,6 +151,11 @@ class YakBB {
 				$this->smarty->compile_id = $this->config["default_template"]."/";
 			}
 			// Load other modules here
+			$modules = array("register", "login", "home");
+			$this->module = $_GET["action"];
+			if(!in_array($this->module, $modules)){
+				$this->module = "home";
+			}
 		}
 		if(!file_exists(YAKBB_MODULES.$this->module.".php")){
 			$this->module = "home";

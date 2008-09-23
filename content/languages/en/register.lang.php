@@ -12,7 +12,7 @@
 || Program: YakBB v1.0.0
 || Author: Chris Dessonville
 ||==================================================||
-|| File: /content/languages/en/installer.lang.php
+|| File: /content/languages/en/register.lang.php
 || File Version: v0.2.0a
 || $Id$
 \*==================================================*/
@@ -20,8 +20,7 @@
 defined("YAKBB") or die("Security breach.");
 
 $items = array(
-	// Installation errors
-	"installer_locked" => "The installer is currently locked."
+	"page_title" => "Register"
 );
 
 
