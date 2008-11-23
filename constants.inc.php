@@ -28,6 +28,8 @@ define("YAKBB_INSTALL_DB_VERSION",	1);
 define("YAKBB_CACHE",     "./cache/");
 define("YAKBB_CONTENT",   "./content/");
 define("YAKBB_CORE",      "./core/");
+define("YAKBB_CLASSES",   YAKBB_CORE."classes/");
+define("YAKBB_INCLUDES",  YAKBB_CORE."includes/");
 define("YAKBB_LANGUAGES", YAKBB_CONTENT."languages/");
 define("YAKBB_MODULES",   YAKBB_CORE."modules/");
 define("YAKBB_PLUGINS",   YAKBB_CONTENT."plugins/");

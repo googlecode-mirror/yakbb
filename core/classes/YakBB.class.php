@@ -17,6 +17,10 @@
 || $Id$
 \*==================================================*/
 
+/*	TODO
+	- Need to assign IP to $yakbb->ip
+*/
+
 defined("YAKBB") or die("Security breach.");
 
 class YakBB {
@@ -26,11 +30,12 @@ class YakBB {
 
 	// Data holders
 	public  $user   = array();
+	public	$ip		= "";
 	private $lang   = array();
 
 	// Other variables
 	private $dbconfig = false;
-	private $config   = array();
+	public $config   = array();
 	private $groups   = array();
 	private $module   = false;
 
@@ -127,6 +132,32 @@ class YakBB {
 		);
 		$this->smarty->assign("guest", true);
 		$this->smarty->assign("admin_access", false);
+
+		if(getYakCookie("username") != "" && getYakCookie("password") != ""){
+			// Check login
+			$user = secure(getYakCookie("username"));
+			$pass = getYakCookie("password");
+			loadLibrary("validation.lib");
+			if(valid_username($user) === true && valid_password($pass) === true){
+				$this->db->query("
+					SELECT
+						*
+					FROM
+						yakbb_users
+					WHERE
+						username = '".$this->db->secure($user)."'
+					LIMIT
+						1
+				");
+				if($this->db->numRows() == 1){
+					$x = $this->db->fetch();
+					if($x["password"] === sha256($pass)){
+						$this->user = $x;
+						$this->smarty->assign("guest", false);
+					}
+				}
+			}
+		}
 	}
 
 	private function setConfig(){
@@ -151,8 +182,23 @@ class YakBB {
 				$this->smarty->compile_id = $this->config["default_template"]."/";
 			}
 			// Load other modules here
-			$modules = array("register", "login", "home");
-			$this->module = $_GET["action"];
+			if(isset($_GET["action"])){
+				$this->module = $_GET["action"];
+			} else if(isset($_GET["thread"])){
+				$this->module = "viewthread";
+			} else if(isset($_GET["board"])){
+				$this->module = "viewboard";
+			}
+			$modules = array(
+				// General
+				"register", "login", "logout", "home",
+				// Thread related
+				"viewthread",
+				// Board related
+				"viewboard",
+				// Admin related
+				// Misc
+			);
 			if(!in_array($this->module, $modules)){
 				$this->module = "home";
 			}

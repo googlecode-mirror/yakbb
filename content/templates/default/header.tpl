@@ -38,6 +38,7 @@
 		<a href="?action=search">Search</a> | 
 		<a href="?action=calendar">Calendar</a> | 
 		<a href="?action=members">Members</a> | 
+		<a href="?action=profile">Profile</a> | 
 		{if $admin_access == true}
 			<a href="?action=admin">Admin</a> | 
 		{/if}

@@ -63,7 +63,7 @@
 	</td></tr>
 	</table>
 </td></tr><tr><td>
-	By checking the following box, I agree to the Terms of Service and the Privacy Policy of this forum. <input type="checkbox" name="tos" /><br /><br />
+	By checking the following box, I am stating that I agree to the Terms of Service and the Privacy Policy of this forum. <input type="checkbox" name="tos" /><br /><br />
 	<input type="submit" value="Register" name="submit2" /> <input type="reset" value="Reset Form" name="res" onclick="return confirm('Are you sure you want to reset the form?');" />
 </td></tr>
 </table>

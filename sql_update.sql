@@ -7,7 +7,7 @@
 -- August 22nd, 2008 --
 
 -- Create a table for thread subscriptions 
- CREATE TABLE `yakbb_alpha`.`yakbb_threads_subscriptions` (
+ CREATE TABLE `yakbb_threads_subscriptions` (
 `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `userid` INT NOT NULL ,
 `threadid` INT NOT NULL ,
@@ -16,10 +16,48 @@
 ) ENGINE = MYISAM 
 
 -- Create a table for board subscriptions
- CREATE TABLE `yakbb_alpha`.`yakbb_boards_subscriptions` (
+ CREATE TABLE `yakbb_boards_subscriptions` (
 `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `userid` INT NOT NULL ,
 `boardid` INT NOT NULL ,
 `notification` ENUM( '0', '1', '2' ) NOT NULL ,
 `timestamp` INT NOT NULL
 ) ENGINE = MYISAM 
+
+
+
+-- November 21st, 2008 --
+-- Some more settings
+INSERT INTO `yakbb_alpha`.`yakbb_config` (
+`id` ,
+`name` ,
+`value` ,
+`groupid` ,
+`grouporder`
+)
+VALUES (
+'0', 'username_min_length', '1', '0', '0'
+), (
+'0', 'username_max_length', '30', '0', '0'
+), (
+'0', 'displayname_min_length', '1', '0', '0'
+), (
+'0', 'displayname_max_length', '30', '0', '0'
+);
+
+
+-- Dropped ths birthday requirement, for now anyway
+ ALTER TABLE `yakbb_users` DROP `birthdayhide`  
+ 
+ 
+ -- Needed a default timezone
+ INSERT INTO `yakbb_alpha`.`yakbb_config` (
+`id` ,
+`name` ,
+`value` ,
+`groupid` ,
+`grouporder`
+)
+VALUES (
+'0', 'default_timezone', '-6', '0', '0'
+);

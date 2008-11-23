@@ -36,6 +36,45 @@ function makeDate($time=0, $format="F j, Y, g:i a"){
 	return date($format, $time);
 }
 
+function secure($data){
+	// Secures HTML entities for the specified input
+
+	return htmlentities($data, ENT_QUOTES);
+}
+
+function sha256($dat){
+	// sha256 hash on the data.
+
+	// Add the random salt for security and then return the sha256 hash
+	return hash("sha256", $data.YAKBB_DBSALT);
+}
+
+function loadLibrary($n){
+	// Loads a library section that is not loaded by default (deletion, validation, etc.)
+
+	if(file_exists(YAKBB_CORE.$n.".php")){
+		require_once YAKBB_CORE.$n.".php";
+	} else if(file_exists(YAKBB_INCLUDES.$n.".php")){
+		require_once YAKBB_INCLUDES.$n.".php";
+	} else if(file_exists(YAKBB_CLASSES.$n.".php")){
+		require_once YAKBB_CLASSES.$n.".php";
+	} else {
+		die("Error locating library file: ".$n);
+	}
+}
+
+function redirect($url){
+        // Redirects to the specified page. It then exits the script.
+        // @param       Type            Description
+        // $url         String          The part of the URL after the slash.
+
+        $host = $_SERVER['HTTP_HOST'];
+        $uri = rtrim(dirname($_SERVER['PHP_SELF']), "/\\");
+        header("Location: http://".$host.$uri.$url);
+        exit;
+}
+
+
 // Template functions
 function validTemplate($tempid){
 	// Makes sure the template folder exists
