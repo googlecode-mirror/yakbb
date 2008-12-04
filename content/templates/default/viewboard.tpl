@@ -1,10 +1,11 @@
 {include file="header.tpl"}
 
+<form name="loginForm" action="?action=login" method="post">
 <table width="100%" class="border" cellspacing="1">
 <tr><td class="title">
-	Login
+	View board
 </td></tr><tr><td>
-	An error has occured.
+	Blank
 </td></tr>
 </table>
 
