@@ -12,23 +12,17 @@
 || Program: YakBB v1.0.0
 || Author: Chris Dessonville
 ||==================================================||
-|| File: /index.php
+|| File: /core/modules/logout.php
 || File Version: v0.2.0a
-|| $Id$
+|| $Id: register.php 126 2008-09-23 20:19:33Z cddude229 $
 \*==================================================*/
 
-
-ob_start(); // Catch white output and smarty output to
-// avoid headers errors and allow redirect at any point
-
-// Begin loading necessary data
-require "./constants.inc.php";
-require YAKBB_CORE."classes/YakBB.class.php";
-
-$yakbb = new YakBB();
-$yakbb->initiate();
-
-// Output the final content
-ob_end_flush();
+class logout {
+	public function init(){
+		setYakCookie("username", "username", 2);
+		setYakCookie("password", "password", 2);
+		redirect("?");
+	}
+}
 
 ?>

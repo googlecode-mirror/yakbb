@@ -12,23 +12,16 @@
 || Program: YakBB v1.0.0
 || Author: Chris Dessonville
 ||==================================================||
-|| File: /index.php
+|| File: /content/languages/en/register.lang.php
 || File Version: v0.2.0a
-|| $Id$
+|| $Id: register.lang.php 126 2008-09-23 20:19:33Z cddude229 $
 \*==================================================*/
 
+defined("YAKBB") or die("Security breach.");
 
-ob_start(); // Catch white output and smarty output to
-// avoid headers errors and allow redirect at any point
+$items = array(
+	"page_title" => "Login"
+);
 
-// Begin loading necessary data
-require "./constants.inc.php";
-require YAKBB_CORE."classes/YakBB.class.php";
-
-$yakbb = new YakBB();
-$yakbb->initiate();
-
-// Output the final content
-ob_end_flush();
 
 ?>
