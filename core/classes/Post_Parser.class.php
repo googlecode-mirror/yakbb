@@ -14,7 +14,7 @@
 ||==================================================||
 || File: /core/classes/Post_Parser.class.php
 || File Version: v0.2.0a
-|| $Id: YakBB.class.php 120 2008-07-27 07:01:01Z cddude229 $
+|| $Id$
 \*==================================================*/
 
 defined("YAKBB") or die("Security breach.");

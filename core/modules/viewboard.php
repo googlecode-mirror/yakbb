@@ -14,11 +14,17 @@
 ||==================================================||
 || File: /core/modules/viewboard.php
 || File Version: v0.2.0a
-|| $Id: register.php 126 2008-09-23 20:19:33Z cddude229 $
+|| $Id$
 \*==================================================*/
 
 class viewboard {
 	public function init(){
+		global $yakbb;
+
+		$yakbb->loadLanguageFile("viewboard");
+
+		// $yakbb->smarty->assign("page_title", $yakbb->getLang("page_title"));
+		$yakbb->smarty->display("viewboard.tpl");
 	}
 }
 

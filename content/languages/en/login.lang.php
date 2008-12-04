@@ -12,9 +12,9 @@
 || Program: YakBB v1.0.0
 || Author: Chris Dessonville
 ||==================================================||
-|| File: /content/languages/en/register.lang.php
+|| File: /content/languages/en/login.lang.php
 || File Version: v0.2.0a
-|| $Id: register.lang.php 126 2008-09-23 20:19:33Z cddude229 $
+|| $Id$
 \*==================================================*/
 
 defined("YAKBB") or die("Security breach.");
