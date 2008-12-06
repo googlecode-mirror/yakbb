@@ -33,7 +33,7 @@ class install {
 		switch($part){
 			case 1:  $this->part1(); break;
 		}
-		$yakbb->smarty->display("index.tpl");
+		$yakbb->loadTemplate("index.tpl");
 	}
 
 	private function part1(){

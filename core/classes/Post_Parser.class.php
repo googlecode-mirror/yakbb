@@ -46,8 +46,8 @@ define("YAKBB_UBBC_ADVANCED",	2);
 
 class Post_Parser {
 	// Holds the data that will be looped through to be parsed
-	private $smilies    = array(); // Holds the smilies for the current template only
-	private $censors    = array(); // Holds the censors to be enforced
+	private $smilies = array(); // Holds the smilies for the current template only
+	private $censors = array(); // Holds the censors to be enforced
 
 	// Core loading functions
 	public function __construct(){

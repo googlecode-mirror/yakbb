@@ -21,8 +21,8 @@ defined("YAKBB") or die("Security breach.");
 
 class DB_mysql extends DB {
 	private $lastQuery = null;
-	private $queries = array();
-	private $dbc = false;
+	public  $queries   = array();
+	private $dbc       = false;
 
 	public function __construct($config){
 		$this->connect($config);
@@ -43,8 +43,6 @@ class DB_mysql extends DB {
 	public function query($query){
 		$query = preg_replace("/yakbb_/", YAKBB_DBPRE, $query);
 		$this->queries[] = $query;
-		global $yakbb;
-		$yakbb->smarty->assign("stats_queries", count($this->queries));
 		$this->lastQuery = mysql_query($query);
 		if(mysql_error()){
 			die(mysql_error()."<br /><br /><a href='?action=upgrade'>Are you sure your installation is up to date?</a>");

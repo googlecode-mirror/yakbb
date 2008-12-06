@@ -28,19 +28,20 @@ defined("YAKBB") or die("Security breach.");
 
 class YakBB {
 	// Object holders
-	public  $smarty  = false;
-	public  $db      = false;
+	public  $smarty  = false; // Smarty object reference
+	public  $db      = false; // Database object reference
 
 	// Data holders
-	public  $user   = array();
-	public  $ip		= "";
-	private $lang   = array();
+	public  $user = array(); // User data
+	public  $ip   = ""; // USer's IP
+	private $lang = array(); // Language variables
 
 	// Other variables
-	private $dbconfig = false;
-	public  $config   = array();
-	private $groups   = array();
-	private $module   = false;
+	private $dbconfig  = false; // Databsae configuration (cleared early on)
+	public  $config    = array(); // Configuration
+	private $groups    = array(); // Groups from the database
+	private $module    = false; // The currently selected module
+	private $templates = array(); // List of template files to load
 
 
 	// Core loading functions
@@ -63,6 +64,22 @@ class YakBB {
 		$this->loadUser();
 		$this->setConfig();
 		$this->selectModule();
+		$this->finish();
+	}
+
+	public function finish(){
+		$stats = array(
+			"queries" => count($this->db->queries)
+		);
+		$this->smarty->assign("stats", $stats);
+		foreach($this->templates as $k => $v){
+			$this->smarty->display($v);
+		}
+		exit;
+	}
+
+	public function loadTemplate($file){
+		$this->templates[] = $file;
 	}
 
 	private function loadSmarty(){
@@ -235,8 +252,8 @@ class YakBB {
 		$this->smarty->assign("error", $this->getLang($error_string));
 		$this->smarty->assign("additional", $additional);
 		$this->smarty->assign("page_title", $this->getLang("error_title"));
-		$this->smarty->display("error.tpl");
-		exit;
+		$this->loadTemplate("error.tpl");
+		$this->finish();
 	}
 
 	public function getLang($str){

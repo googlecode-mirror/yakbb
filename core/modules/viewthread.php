@@ -92,7 +92,7 @@ class viewthread {
 		// Template stuff
 		$yakbb->smarty->assign("page_title", $this->tdata["name"]);
 		$yakbb->smarty->assign("posts", $this->posts);
-		$yakbb->smarty->display("viewthread.tpl");
+		$yakbb->loadTemplate("viewthread.tpl");
 	}
 }
 

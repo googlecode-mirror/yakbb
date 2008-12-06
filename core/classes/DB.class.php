@@ -20,9 +20,10 @@
 defined("YAKBB") or die("Security breach.");
 
 abstract class DB {
-	private $lastQuery;
-	private $queries = array();
-	private $dbc = false;
+	private $lastQuery = null;
+	private $queries   = array();
+	private $dbc       = false;
+
 	abstract function __construct($config);
 	public function __deconstruct(){
 		$this->disconnect();

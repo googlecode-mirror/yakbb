@@ -89,7 +89,7 @@ class viewboard {
 		// Template stuff
 		$yakbb->smarty->assign("page_title", $this->bdata["name"]);
 		$yakbb->smarty->assign("threads", $this->threads);
-		$yakbb->smarty->display("viewboard.tpl");
+		$yakbb->loadTemplate("viewboard.tpl");
 	}
 }
 

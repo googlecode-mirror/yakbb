@@ -36,7 +36,7 @@ class login {
 		}
 
 		$yakbb->smarty->assign("page_title", $yakbb->getLang("page_title"));
-		$yakbb->smarty->display("login.tpl");
+		$yakbb->loadTemplate("login.tpl");
 	}
 
 	private function validate(){

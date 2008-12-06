@@ -42,7 +42,7 @@ class register {
 
 		$yakbb->smarty->assign("page_title", $yakbb->getLang("page_title"));
 
-		$yakbb->smarty->display("register.tpl");
+		$yakbb->loadTemplate("register.tpl");
 	}
 
 	private function validateRegistration(){

@@ -1,7 +1,7 @@
 <br /><br />
 <center>
 	Copyright me.<br />
-	Queries: {$stats_queries}
+	Queries: {$stats.queries}
 </center>
 
 </div>

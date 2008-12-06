@@ -35,7 +35,7 @@ class home {
 
 		$yakbb->smarty->assign("cats", $this->cats);
 
-		$yakbb->smarty->display("home.tpl");
+		$yakbb->loadTemplate("home.tpl");
 	}
 
 	private function loadCats(){

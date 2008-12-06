@@ -19,4 +19,26 @@
 
 defined("YAKBB") or die("Security breach.");
 
+function delete_posts($postids){
+}
+
+function delete_posts_by_user($userid){
+}
+
+function delete_threads($threadids){
+}
+
+function delete_boards($boardids){
+}
+
+function delete_categories($catids){
+}
+
+function delete_pms($pmids){
+}
+
+function delete_user($userid, $poststoo=false){
+	// $poststoo = delete all of user's posts too?
+}
+
 ?>
