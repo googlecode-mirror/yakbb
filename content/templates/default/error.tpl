@@ -2,9 +2,9 @@
 
 <table width="100%" class="border" cellspacing="1">
 <tr><td class="title">
-	Login
+	Error
 </td></tr><tr><td>
-	An error has occured.
+	{$error}
 </td></tr>
 </table>
 

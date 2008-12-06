@@ -14,6 +14,8 @@
 	}
 	tr.title td, td.title {
 		background-color: #DDDDDD;
+		font-weight: bold;
+		font-size: 10pt;
 	}
 	td {
 		background-color: #F6F6F6;

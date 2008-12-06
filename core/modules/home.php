@@ -17,6 +17,10 @@
 || $Id$
 \*==================================================*/
 
+/*	TODO
+	- Change permissions to use the catPermissions and boardPermissions functions
+*/
+
 class home {
 	private $cats = array();
 

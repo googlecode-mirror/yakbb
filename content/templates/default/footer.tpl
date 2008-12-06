@@ -1,5 +1,8 @@
 <br /><br />
-<center>Copyright me.</center>
+<center>
+	Copyright me.<br />
+	Queries: {$stats_queries}
+</center>
 
 </div>
 </div>

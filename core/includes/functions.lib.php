@@ -86,10 +86,39 @@ function validTemplate($tempid){
 // Permission functions
 function boardPermissions($boardid){
 	// Get specific permissions for a specific board. All is done from the cache.
+
+	global $yakbb;
+	$boardid = intval($boardid);
+	$perms = $yakbb->db->queryCache("
+		SELECT
+			permissions
+		FROM
+			yakbb_boards
+		WHERE
+			id='".$boardid."'
+		LIMIT
+			1
+	", "permissions/boards/".$boardid);
+
+	$perms = unserialize($perms[0]["permissions"]); // Get the correct results
+	if(empty($perms) || !isset($perms[$yakbb->user["group"]])){
+		return array(
+			"view" => false,
+			"create_thread" => false,
+			"create_poll" => false,
+			"post_reply" => false,
+			"add_attachment" => false,
+			"download_attachment" => false
+		);
+	} else {
+		return $perms[$yakbb->user["group"]];
+	}
 }
 
 function catPermissions($catid){
 	// Get specific permissions for a specific category. All is done from the cache.
+
+	return array();
 }
 
 function getPermissions($groupid=false){

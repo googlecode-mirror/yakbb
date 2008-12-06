@@ -19,23 +19,26 @@
 
 /*	TODO
 	- Need to assign IP to $yakbb->ip
+	error()
+		- Need to add support for type 0 and type 1 errors
+		- Need to add support in error.tpl for additional information.
 */
 
 defined("YAKBB") or die("Security breach.");
 
 class YakBB {
 	// Object holders
-	public $smarty  = false;
-	public $db      = false;
+	public  $smarty  = false;
+	public  $db      = false;
 
 	// Data holders
 	public  $user   = array();
-	public	$ip		= "";
+	public  $ip		= "";
 	private $lang   = array();
 
 	// Other variables
 	private $dbconfig = false;
-	public $config   = array();
+	public  $config   = array();
 	private $groups   = array();
 	private $module   = false;
 
@@ -227,10 +230,13 @@ class YakBB {
 	// Handling errors
 	public function error($type, $error_string, $additional=array()){
 		// Errors types: 0 = application error, 1 = general error, 2 = throw a template error
+		// Only throws a type 2 error for now
 		$this->loadLanguageFile("errors");
 		$this->smarty->assign("error", $this->getLang($error_string));
 		$this->smarty->assign("additional", $additional);
+		$this->smarty->assign("page_title", $this->getLang("error_title"));
 		$this->smarty->display("error.tpl");
+		exit;
 	}
 
 	public function getLang($str){
