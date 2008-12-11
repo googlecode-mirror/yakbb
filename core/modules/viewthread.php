@@ -87,7 +87,7 @@ class viewthread {
 		");
 		$this->posts = array();
 		while($p = $yakbb->db->fetch()){
-			$p["userlink"] = url_user($p["userid"], $p["username"], $p["displayname"]);
+			$p["userlink"] = link_user($p["userid"], $p["username"], $p["displayname"], $p["group"]);
 			$this->posts[] = $p;
 		}
 

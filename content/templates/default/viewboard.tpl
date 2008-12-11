@@ -6,35 +6,42 @@
 		[ <a href="?action=newthread&amp;board={$boardid}">New Thread</a> - Mark as Read - Subscribe ]
 	</span>
 	View board
-</td></tr><tr class="title"><td width="1">
-</td><td>
-	Subject
-</td><td width="75" align="center">
-	Starter
-</td><td width="1" align="center">
-	Replies
-</td><td width="1" align="center">
-	Views
-</td><td width="100">
-	Last Post
 </td></tr>
-{foreach from=$threads item=thread}
-<tr><td valign="middle">
-	Icon
-</td><td valign="top">
-	<a href="{$thread.link}">{$thread.name}</a><br />
-	[ Pages: 1, 2, 3, 4, 5 ]
-</td><td nowrap="nowrap" valign="middle">
-	Starter here. wrapping test
-</td><td align="center" valign="middle">
-	{$thread.replies}
-</td><td align="center" valign="middle">
-	{$thread.views}
-</td><td valign="top" nowrap="nowrap">
-	On Dec 32nd, 2108<br />
-	By Some User
-</td></tr>
-{/foreach}
+{if count($threads) != 0}
+	<tr class="title"><td width="1">
+	</td><td>
+		Subject
+	</td><td width="75" align="center">
+		Starter
+	</td><td width="1" align="center">
+		Replies
+	</td><td width="1" align="center">
+		Views
+	</td><td width="100">
+		Last Post
+	</td></tr>
+	{foreach from=$threads item=thread}
+		<tr><td valign="middle">
+			Icon
+		</td><td valign="top">
+			{$thread.link}<br />
+			[ Pages: 1, 2, 3, 4, 5 ]
+		</td><td nowrap="nowrap" valign="middle" align="center">
+			{$thread.starterlink}
+		</td><td align="center" valign="middle">
+			{$thread.replies}
+		</td><td align="center" valign="middle">
+			{$thread.views}
+		</td><td valign="top" nowrap="nowrap">
+			On Dec 32nd, 2108<br />
+			By Some User
+		</td></tr>
+	{/foreach}
+{else}
+	<tr><td colspan="6" align="center">
+		There are currently no threads in this board.
+	</td></tr>
+{/if}
 </table>
 
 {include file="footer.tpl"}

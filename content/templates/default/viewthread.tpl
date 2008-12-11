@@ -13,7 +13,7 @@
 </td></tr>
 {foreach from=$posts item=post}
 <tr><td>
-	<a href="{$post.userlink}">{$post.displayname}</a>
+	{$post.userlink}
 </td><td>
 	<span style="float: right">
 		[ <a href="?action=reply&amp;thread={$threadid}&amp;quote={$post.id}">Quote</a> - <a href="?action=modify&amp;post={$post.id}">Modify</a> - <a href="javascript:void(0);" onclick="if(confirm('Are you sure you wish to delete this post?')) location.href='?action=delete&amp;post={$post.id}'">Delete</a> ]

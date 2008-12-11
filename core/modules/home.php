@@ -19,6 +19,8 @@
 
 /*	TODO
 	- Change permissions to use the catPermissions and boardPermissions functions
+	- Load last post info
+	- On/off buttons
 */
 
 class home {
