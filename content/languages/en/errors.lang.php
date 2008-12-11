@@ -19,6 +19,8 @@
 
 defined("YAKBB") or die("Security breach.");
 
+global $yakbb;
+
 $items = array(
 	// core/includes/YakBB.class.php
 		"error_title" => "Error",
@@ -47,7 +49,10 @@ $items = array(
 	// viewthread.php
 		"invalid_thread_id" => "The provided thread ID is invalid.",
 		"thread_doesnt_exist" => "The thread you are trying to view does not exist. It may have been deleted or moved elsewhere.",
-	
+
+	// post.php
+		"invalid_post_action" => "The matching action is invalid.",
+		"reply_thread_doesnt_exist" => "The thread you are trying to reply to does not exist.",
 );
 
 

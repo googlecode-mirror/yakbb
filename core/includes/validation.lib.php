@@ -20,6 +20,8 @@
 /*	TODO
 	- Complete valid_password
 	- Complete valid_email
+	- Complete valid_subject
+	- Complete valid_message
 */
 
 defined("YAKBB") or die("Security breach.");
@@ -57,6 +59,30 @@ function valid_password($password){
 }
 
 function valid_email($email){
+	return true;
+}
+
+function valid_subject($subject){
+	global $yakbb;
+	$len = strlen($subject);
+	if($len < $yakbb->config["subject_min_length"]){
+		return "subject_too_short";
+	} else if ($len > $yakbb->config["subject_max_length"]){
+		return "subject_too_long";
+	}
+
+	return true;
+}
+
+function valid_message($message){
+	global $yakbb;
+	$len = strlen($message);
+	if($len < $yakbb->config["message_min_length"]){
+		return "message_too_short";
+	} else if ($len > $yakbb->config["message_max_length"]){
+		return "message_too_long";
+	}
+
 	return true;
 }
 

@@ -201,31 +201,53 @@ class YakBB {
 				$this->smarty->template_dir .= $this->config["default_template"]."/";
 				$this->smarty->compile_id = $this->config["default_template"]."/";
 			}
+
 			// Load other modules here
-			if(isset($_GET["action"])){
+			if(isset($_REQUEST["action"])){
 				$this->module = $_GET["action"];
-			} else if(isset($_GET["thread"])){
+			} else if(isset($_GET["thread"])){ // Will only be get
 				$this->module = "viewthread";
-			} else if(isset($_GET["board"])){
+			} else if(isset($_GET["board"])){ // Will only be get
 				$this->module = "viewboard";
 			}
+
 			$modules = array(
 				// General
-				"register", "login", "logout", "home",
+				"register" => "register",
+				"join" => "register",
+				"login" => "login",
+				"signon" => "login",
+				"signin" => "login",
+				"logout" => "logout",
+				"signoff" => "logout",
+				"home" => "home",
+
 				// Thread related
-				"viewthread",
+				"viewthread" => "viewthread",
+				"reply" => "post",
+				"modify" => "post",
+
 				// Board related
-				"viewboard",
+				"viewboard" => "viewboard",
+				"newthread" => "post",
+
 				// Admin related
+
 				// Misc
 			);
-			if(!in_array($this->module, $modules)){
+
+			// See if module is correct, and then load it. Otherwise default to home.
+			if(!isset($modules[$this->module])){
 				$this->module = "home";
+			} else {
+				$this->module = $modules[$this->module];
 			}
 		}
+
 		if(!file_exists(YAKBB_MODULES.$this->module.".php")){
 			$this->module = "home";
 		}
+
 		$this->runSelectedModule();
 	}
 

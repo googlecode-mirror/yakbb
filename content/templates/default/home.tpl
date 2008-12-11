@@ -7,6 +7,15 @@
 		<span style="float: right">[ <a href="javascript:void(0);">+</a> ]</span>
 		{/if}
 		{$cat.name}
+	</td></tr><tr class="title"><td>
+	</td><td>
+		Board Data
+	</td><td>
+		Posts
+	</td><td>
+		Threads
+	</td><td>
+		Last Post
 	</td></tr>
 	{foreach from=$cat.boards item=board}
 		<tr><td align="center" width="1">

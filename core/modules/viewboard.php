@@ -25,8 +25,10 @@
 	- Need to add thread sorting options
 	- Need to add pagination to threads
 	- Need to load user info for threads
+	- Need to load new/viewed info for threads
 	- Need to forward permissions for buttons and attachments
 	- Add subscription management info
+	- Need to mark board as read if not already
 */
 
 class viewboard {
@@ -87,6 +89,7 @@ class viewboard {
 		}
 
 		// Template stuff
+		$yakbb->smarty->assign("boardid", $this->boardid);
 		$yakbb->smarty->assign("page_title", $this->bdata["name"]);
 		$yakbb->smarty->assign("threads", $this->threads);
 		$yakbb->loadTemplate("viewboard.tpl");

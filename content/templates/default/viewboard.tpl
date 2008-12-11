@@ -1,10 +1,9 @@
 {include file="header.tpl"}
 
-<form name="loginForm" action="?action=login" method="post">
 <table width="100%" class="border" cellspacing="1">
 <tr><td class="title" colspan="6">
 	<span style="float: right">
-		[ New Thread - Mark as Read - Subscribe ]
+		[ <a href="?action=newthread&amp;board={$boardid}">New Thread</a> - Mark as Read - Subscribe ]
 	</span>
 	View board
 </td></tr><tr class="title"><td width="1">

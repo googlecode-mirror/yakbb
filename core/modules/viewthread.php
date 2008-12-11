@@ -26,6 +26,8 @@
 	- Need to forward permissions for buttons and attachments
 	- Add subscription management info
 	- Need to add support for showing posts by guests
+	- Need to make views count go up with each view
+	- Need to mark thread as read if not already read
 */
 
 class viewthread {
@@ -90,6 +92,7 @@ class viewthread {
 		}
 
 		// Template stuff
+		$yakbb->smarty->assign("threadid", $this->threadid);
 		$yakbb->smarty->assign("page_title", $this->tdata["name"]);
 		$yakbb->smarty->assign("posts", $this->posts);
 		$yakbb->loadTemplate("viewthread.tpl");

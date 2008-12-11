@@ -27,6 +27,7 @@
 
 
 -- November 21st, 2008 --
+
 -- Some more settings
 INSERT INTO `yakbb_alpha`.`yakbb_config` (
 `id` ,
@@ -60,4 +61,28 @@ VALUES (
 )
 VALUES (
 '0', 'default_timezone', '-6', '0', '0'
+);
+
+
+
+
+
+-- December 10th, 2008 --
+
+-- Adding more config for posting
+INSERT INTO `yakbb_alpha`.`yakbb_config` (
+`id` ,
+`name` ,
+`value` ,
+`groupid` ,
+`grouporder`
+)
+VALUES (
+'0', 'subject_min_length', '1', '0', '0'
+), (
+'0', 'subject_max_length', '100', '0', '0'
+), (
+'0', 'message_min_length', '1', '0', '0'
+), (
+'0', 'message_max_length', '50000', '0', '0'
 );
