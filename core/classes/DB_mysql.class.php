@@ -47,7 +47,7 @@ class DB_mysql extends DB {
 		if(mysql_error()){
 			die(mysql_error()."<br /><br /><a href='?action=upgrade'>Are you sure your installation is up to date?</a>");
 		}
-		return $this->last;
+		return $this->lastQuery;
 
 	}
 

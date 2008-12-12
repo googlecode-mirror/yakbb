@@ -9,7 +9,7 @@
 </td></tr><tr class="title"><td width="20%">
 	Author
 </td><td width="80%">
-	Post
+	Post ({$viewcount} View{if $viewcount==1}{else}s{/if})
 </td></tr>
 {foreach from=$posts item=post}
 <tr><td>

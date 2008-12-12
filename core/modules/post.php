@@ -26,6 +26,7 @@
 	- Need to make replies go to newest post
 	- Quotes
 	- Modify posts
+	- Need to delete all "read" markers from the databsae on new thread/reply
 */
 
 class post {
@@ -74,7 +75,6 @@ class post {
 		$yakbb->smarty->assign("postid", $this->post);
 		$yakbb->smarty->assign("actiontype", $this->actiontype);
 		$yakbb->smarty->assign("page_title", $yakbb->getLang("page_title_".$this->actiontype));
-		$yakbb->smarty->assign("posts", $this->posts);
 		$yakbb->loadTemplate("post.tpl");
 	}
 

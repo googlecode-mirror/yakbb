@@ -29,7 +29,7 @@
 -- November 21st, 2008 --
 
 -- Some more settings
-INSERT INTO `yakbb_alpha`.`yakbb_config` (
+INSERT INTO `yakbb_config` (
 `id` ,
 `name` ,
 `value` ,
@@ -52,7 +52,7 @@ VALUES (
  
  
  -- Needed a default timezone
- INSERT INTO `yakbb_alpha`.`yakbb_config` (
+ INSERT INTO `yakbb_config` (
 `id` ,
 `name` ,
 `value` ,
@@ -70,7 +70,7 @@ VALUES (
 -- December 10th, 2008 --
 
 -- Adding more config for posting
-INSERT INTO `yakbb_alpha`.`yakbb_config` (
+INSERT INTO `yakbb_config` (
 `id` ,
 `name` ,
 `value` ,
@@ -85,4 +85,19 @@ VALUES (
 '0', 'message_min_length', '1', '0', '0'
 ), (
 '0', 'message_max_length', '50000', '0', '0'
+);
+
+
+-- Even more config options, this time for pagination
+INSERT INTO `yakbb_config` (
+`id` ,
+`name` ,
+`value` ,
+`groupid` ,
+`grouporder`
+)
+VALUES (
+'0', 'threads_per_page', '20', '0', '0'
+), (
+'0', 'posts_per_page', '10', '0', '0'
 );

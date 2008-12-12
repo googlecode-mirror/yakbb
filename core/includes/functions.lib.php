@@ -46,7 +46,7 @@ function sha256($dat){
 	// sha256 hash on the data.
 
 	// Add the random salt for security and then return the sha256 hash
-	return hash("sha256", $data.YAKBB_DBSALT);
+	return hash("sha256", $dat.YAKBB_DBSALT);
 }
 
 function loadLibrary($n){
@@ -148,12 +148,12 @@ function getPermission($perm, $groupid=false){
 
 // Cookie functions
 function setYakCookie($name, $value, $time=0){
-	setcookie(DBPRE.$name, $value, $time);
+	setcookie(YAKBB_DBPRE.$name, $value, $time);
 }
 
 function getYakCookie($name){
-	if(isset($_COOKIE[DBPRE.$name])){
-		return $_COOKIE[DBPRE.$name];
+	if(isset($_COOKIE[YAKBB_DBPRE.$name])){
+		return $_COOKIE[YAKBB_DBPRE.$name];
 	}
 	return "";
 }

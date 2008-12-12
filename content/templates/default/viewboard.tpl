@@ -5,7 +5,12 @@
 	<span style="float: right">
 		[ <a href="?action=newthread&amp;board={$boardid}">New Thread</a> - Mark as Read - Subscribe ]
 	</span>
-	View board
+	{if $showpagination}
+	Pages: 
+	{section name=foo start=1 loop=$totalpages+1}
+		&nbsp;<a href="?board={$boardid}&amp;page={$smarty.section.foo.index}">{$smarty.section.foo.index}</a>{if $smarty.section.foo.index != $smarty.section.foo.total}, {/if}
+	{/section}
+	{/if}
 </td></tr>
 {if count($threads) != 0}
 	<tr class="title"><td width="1">

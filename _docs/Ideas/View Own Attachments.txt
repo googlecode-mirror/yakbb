@@ -1,0 +1,1 @@
+	Through the user control panel, one would be able to view a list of all attachments they have uploaded.

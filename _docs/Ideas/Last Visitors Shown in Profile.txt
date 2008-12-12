@@ -1,0 +1,2 @@
+	The most recent visitors to a profile would be shown in the profile. Friends of the user would have
+a star or other similar symbol next to their name.

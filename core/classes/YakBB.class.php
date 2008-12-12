@@ -171,7 +171,7 @@ class YakBB {
 				");
 				if($this->db->numRows() == 1){
 					$x = $this->db->fetch();
-					if($x["password"] === sha256($pass)){
+					if($x["password"] === $pass){
 						$this->user = $x;
 						$this->smarty->assign("guest", false);
 					}

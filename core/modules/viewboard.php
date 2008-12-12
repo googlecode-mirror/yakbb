@@ -33,7 +33,7 @@
 
 class viewboard {
 	private $boardid = 0;
-	private $bdata = array();
+	private $bdata   = array();
 	private $threads = array();
 
 	public function init(){
@@ -69,9 +69,22 @@ class viewboard {
 			$yakbb->error(1, "perms_cant_view_board");
 		}
 
-		// Load threads
+		// Calculate pagination and then load threads
 		if($this->bdata["threads"] > 0){
 			// Don't load threads if no posts/threads. We'll still load announcements
+
+			// Load pagination
+			$currentpage = (isset($_GET["page"]) && intval($_GET["page"]) > 0?intval($_GET["page"]):1);
+			if($this->bdata["threads"] > $yakbb->config["threads_per_page"]){
+				$showpagination = true;
+				$totalpages = ceil($this->bdata["threads"]/$yakbb->config["threads_per_page"]);
+				if($currentpage > $totalpages){
+					$yakbb->error(2, "viewboard_page_doesnt_exist");
+				}
+			} else {
+				$showpagination = false;
+				$totalpages = 1;
+			}
 			$yakbb->db->query("
 				SELECT
 					t.*,
@@ -84,9 +97,10 @@ class viewboard {
 				WHERE
 					t.parentid='".$this->boardid."'
 				ORDER BY
-					t.lastposttime DESC
+					t.lastposttime DESC,
+					t.id DESC
 				LIMIT
-					30
+					".(($currentpage-1)*$yakbb->config["threads_per_page"]).", ".$yakbb->config["threads_per_page"]."
 			");
 			$this->threads = array();
 			while($t = $yakbb->db->fetch()){
@@ -97,6 +111,8 @@ class viewboard {
 		}
 
 		// Template stuff
+		$yakbb->smarty->assign("showpagination", $showpagination);
+		$yakbb->smarty->assign("totalpages", $totalpages);
 		$yakbb->smarty->assign("boardid", $this->boardid);
 		$yakbb->smarty->assign("page_title", $this->bdata["name"]);
 		$yakbb->smarty->assign("threads", $this->threads);

@@ -45,6 +45,7 @@ $items = array(
 		"invalid_board_id" => "The provided board ID is invalid.",
 		"board_doesnt_exist" => "The board you are trying to view does not exist.",
 		"perms_cant_view_board" => "You do not have the correct permissions to view this board.",
+		"viewboard_page_doesnt_exist" => "You are trying to view a page which doesn't exist.",
 
 	// viewthread.php
 		"invalid_thread_id" => "The provided thread ID is invalid.",

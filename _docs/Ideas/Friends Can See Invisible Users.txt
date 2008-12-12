@@ -1,0 +1,2 @@
+	A profile option should be added for invisible users so that their friends will see them as online, despite 
+the fact no one else (except staff with permission) can see them online.

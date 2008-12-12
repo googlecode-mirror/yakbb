@@ -19,17 +19,28 @@
 
 defined("YAKBB") or die("Security breach.");
 
-function url_thread($threadid, $threadname){
-	return "?thread=".$threadid;
+function url_thread($threadid, $threadnamem, $page=false){
+	$str = "?thread=".$threadid;
+
+	if($page !== false && intval($page) != 0){
+		$str .= "&amp;page=".intval($page);
+	}
+
+	return $str;
 }
 
-function url_board($boardid, $boardname){
-	return "?board=".$boardid;
+function url_board($boardid, $boardname, $page=false){
+	$str = "?board=".$boardid;
+
+	if($page !== false && intval($page) != 0){
+		$str .= "&amp;page=".intval($page);
+	}
+
+	return $str;
 }
 
 function url_user($userid, $username, $display){
 	return "?user=".$username;
-	// return "?userid=".$userid;
 }
 
 ?>

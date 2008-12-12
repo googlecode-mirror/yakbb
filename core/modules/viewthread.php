@@ -46,7 +46,7 @@ class viewthread {
 			$yakbb->error(1, "invalid_thread_id");
 		}
 
-		// Need to check if board is in the database and load data if so.
+		// Need to check if thread is in the database and load data if so.
 		$yakbb->db->query("
 			SELECT
 				*
@@ -91,7 +91,22 @@ class viewthread {
 			$this->posts[] = $p;
 		}
 
+		// Raise view count if not thread creator
+		if($this->tdata["creatorid"] == $yakbb->user["id"]){
+			$yakbb->db->query("
+				UPDATE
+					yakbb_threads
+				SET
+					views=views+1
+				WHERE
+					id = '".$this->threadid."'
+				LIMIT
+					1
+			");
+		}
+
 		// Template stuff
+		$yakbb->smarty->assign("viewcount", $this->tdata["views"]+1);
 		$yakbb->smarty->assign("threadid", $this->threadid);
 		$yakbb->smarty->assign("page_title", $this->tdata["name"]);
 		$yakbb->smarty->assign("posts", $this->posts);

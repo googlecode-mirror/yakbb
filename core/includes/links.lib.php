@@ -19,12 +19,12 @@
 
 defined("YAKBB") or die("Security breach.");
 
-function link_thread($threadid, $threadname){
-	return '<a href="'.url_thread($threadid, $threadname).'">'.$threadname.'</a>';
+function link_thread($threadid, $threadname, $page=false){
+	return '<a href="'.url_thread($threadid, $threadname, $page).'">'.$threadname.'</a>';
 }
 
-function link_board($boardid, $boardname){
-	return '<a href="'.url_board($boardid, $boardname).'">'.$boardname.'</a>';
+function link_board($boardid, $boardname, $page=false){
+	return '<a href="'.url_board($boardid, $boardname, $page).'">'.$boardname.'</a>';
 }
 
 function link_user($userid, $username, $display, $groupid=0){
