@@ -55,6 +55,10 @@ $items = array(
 		"invalid_post_action" => "The matching action is invalid.",
 		"reply_thread_doesnt_exist" => "The thread you are trying to reply to does not exist.",
 		"modify_post_doesnt_exist" => "The post you are trying to modify does not exist.",
+
+	// deletepost.php
+		"invalid_post_id" => "The provided post ID is invalid.",
+		"delete_post_doesnt_exist" => "The post you are trying to delete does not exist.",
 );
 
 

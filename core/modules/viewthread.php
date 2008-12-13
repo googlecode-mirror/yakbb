@@ -43,7 +43,7 @@ class viewthread {
 		// Get and validate thread ID
 		$this->threadid = intval($_GET["thread"]); // Force integer value
 		if($this->threadid == 0){
-			$yakbb->error(1, "invalid_thread_id");
+			$yakbb->error(2, "invalid_thread_id");
 		}
 
 		// Need to check if thread is in the database and load data if so.
@@ -58,20 +58,20 @@ class viewthread {
 				1
 		");
 		if($yakbb->db->numRows() == 0){
-			$yakbb->error(1, "thread_doesnt_exist");
+			$yakbb->error(2, "thread_doesnt_exist");
 		}
 		$this->tdata = $yakbb->db->fetch();
 
 		// Check some permissions
 		$perms = boardPermissions($this->tdata["parentid"]);
 		if($perms["view"] == false){
-			$yakbb->error(1, "perms_cant_view_board");
+			$yakbb->error(2, "perms_cant_view_board");
 		}
 
 		// Load posts
 		$yakbb->db->query("
 			SELECT
-				p.*,
+				p.id AS postid, p.*,
 				u.*
 			FROM
 				yakbb_posts p

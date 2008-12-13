@@ -44,7 +44,7 @@ class viewboard {
 		// Get and validate board ID
 		$this->boardid = intval($_GET["board"]); // Force integer value
 		if($this->boardid == 0){
-			$yakbb->error(1, "invalid_board_id");
+			$yakbb->error(2, "invalid_board_id");
 		}
 
 		// Need to check if board is in the database and load data if so.
@@ -59,14 +59,14 @@ class viewboard {
 				1
 		");
 		if($yakbb->db->numRows() == 0){
-			$yakbb->error(1, "board_doesnt_exist");
+			$yakbb->error(2, "board_doesnt_exist");
 		}
 		$this->bdata = $yakbb->db->fetch();
 
 		// Check some permissions
 		$perms = boardPermissions($this->boardid);
 		if($perms["view"] == false){
-			$yakbb->error(1, "perms_cant_view_board");
+			$yakbb->error(2, "perms_cant_view_board");
 		}
 
 		// Calculate pagination and then load threads

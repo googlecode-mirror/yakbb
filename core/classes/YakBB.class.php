@@ -230,6 +230,7 @@ class YakBB {
 				"viewthread" => "viewthread",
 				"reply" => "post",
 				"modify" => "post",
+				"delete" => "deletepost",
 
 				// Board related
 				"viewboard" => "viewboard",
