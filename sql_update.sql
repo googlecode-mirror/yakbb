@@ -101,3 +101,11 @@ VALUES (
 ), (
 '0', 'posts_per_page', '10', '0', '0'
 );
+
+
+
+
+-- December 12th, 2008 -- 
+
+-- Add "firstpost" variable to posts
+ALTER TABLE `yakbb_posts` ADD `firstpost` ENUM( '0', '1' ) NOT NULL ;

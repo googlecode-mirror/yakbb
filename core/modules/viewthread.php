@@ -88,6 +88,7 @@ class viewthread {
 		$this->posts = array();
 		while($p = $yakbb->db->fetch()){
 			$p["userlink"] = link_user($p["userid"], $p["username"], $p["displayname"], $p["group"]);
+			$p["message"] = $yakbb->parser->parse($p["message"]);
 			$this->posts[] = $p;
 		}
 

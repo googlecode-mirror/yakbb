@@ -12,7 +12,7 @@
 	Post ({$viewcount} View{if $viewcount==1}{else}s{/if})
 </td></tr>
 {foreach from=$posts item=post}
-<tr><td>
+<tr><td valign="top">
 	{$post.userlink}
 </td><td>
 	<span style="float: right">

@@ -62,8 +62,9 @@ class Post_Parser {
 			$str = $this->smilies($str);
 		}
 		if($ubbclevel != 0){
-			$str = $this->ubbc($str, (int) $ubbclevel);
+			$str = $this->ubbc($str, intval($ubbclevel));
 		}
+		$str = nl2br($str);
 		return $str;
 	}
 
@@ -75,7 +76,7 @@ class Post_Parser {
 		return $str;
 	}
 
-	private function ubbc($str, integer $level){
+	private function ubbc($str, $level){
 		// $level -> which tags wil be parsed. This is based off bitwise testing with bitwise-and (&)
 			// 0 -> Don't parse UBBC (this function shouldn't be called if that is the case)
 			// 1 -> Parse only basic formatting UBBC (b, i, u, font, size, style)
@@ -109,7 +110,7 @@ class Post_Parser {
 			$str = preg_replace("/\[u\](.*?)\[\/u\]/is", "<u>$1</u>", $str);
 			$str = preg_replace("/\[s\](.*?)\[\/s\]/is", "<s>$1</s>", $str);
 			$str = preg_replace_callback("/\[size=([\d]+)\](.*?)\[\/size\]/is", array($this, "ubbc_font_size"), $str);
-			$str = preg_replace("/\[(font|face)=([\w=+)\](.*?)\[\/\\1\]/is", "<font face=\"$2\">$1</font>", $str);
+			$str = preg_replace("/\[(font|face)=(\w=+)\](.*?)\[\/\\1\]/is", "<font face=\"$2\">$1</font>", $str);
 		}
 
 		return $str;
@@ -136,7 +137,7 @@ class Post_Parser {
 		$body = $mat[3];
 
 		// We need to stop long links from breaking the page
-		if($url == $body && strlen($body) > 80)){
+		if($url == $body && strlen($body) > 80){
 			$body = substr($body, 0, 60)."...";
 		}
 

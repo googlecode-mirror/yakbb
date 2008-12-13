@@ -70,6 +70,8 @@ class viewboard {
 		}
 
 		// Calculate pagination and then load threads
+		$showpagination = false;
+		$totalpages = 1;
 		if($this->bdata["threads"] > 0){
 			// Don't load threads if no posts/threads. We'll still load announcements
 
@@ -82,7 +84,6 @@ class viewboard {
 					$yakbb->error(2, "viewboard_page_doesnt_exist");
 				}
 			} else {
-				$showpagination = false;
 				$totalpages = 1;
 			}
 			$yakbb->db->query("

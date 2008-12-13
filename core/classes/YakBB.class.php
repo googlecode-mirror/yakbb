@@ -30,6 +30,7 @@ class YakBB {
 	// Object holders
 	public  $smarty  = false; // Smarty object reference
 	public  $db      = false; // Database object reference
+	public  $parser  = false; // Post parser object reference
 
 	// Data holders
 	public  $user = array(); // User data
@@ -103,6 +104,7 @@ class YakBB {
 		require YAKBB_CORE."includes/functions.lib.php";
 		require YAKBB_CORE."classes/FlatFile.class.php";
 		require YAKBB_CORE."classes/DB.class.php";
+		require YAKBB_CORE."classes/Post_Parser.class.php";
 		if($this->dbconfig){ // If dbconfig is set, load the DB type and then config.
 			require YAKBB_CORE."classes/DB_".$this->dbconfig["dbtype"].".class.php";
 			$str = "DB_".$this->dbconfig["dbtype"];
@@ -110,6 +112,8 @@ class YakBB {
 			unset($this->dbconfig);
 			$this->loadConfig();
 		}
+
+		$this->parser = new Post_Parser();
 
 		// Load url and link stuff
 		if($this->config["sef_urls"] == true){

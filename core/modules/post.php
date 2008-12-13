@@ -40,6 +40,7 @@ class post {
 	private $subject     = ""; // Subject submission
 	private $message     = ""; // Message submission
 	private $description = ""; // Description submission
+	private $firstpost   = false; // Modifying - First post in thread?
 
 	public function init(){
 		global $yakbb;
@@ -49,21 +50,27 @@ class post {
 
 		// Get correct action type and check IDs
 		$this->actiontype = $_REQUEST["action"];
-		if($this->actiontype == "reply"){
+		if($this->actiontype == "reply" && isset($_REQUEST["thread"])){
 			$this->thread = intval($_REQUEST["thread"]);
-		} else if($this->actiontype == "newthread"){
+		} else if($this->actiontype == "newthread" && isset($_REQUEST["board"])){
 			$this->board = intval($_REQUEST["board"]);
-		} else if($this->actiontype == "modify"){
+		} else if($this->actiontype == "modify" && isset($_REQUEST["post"])){
 			$this->post = intval($_REQUEST["post"]);
 		} else {
 			$yakbb->error("2", "invalid_post_action");
 		}
 
 		if(isset($_REQUEST["submitpost"])){
+			if($this->actiontype == "modify"){
+				$this->modifyLoad(false);
+			}
 			$this->validate();
 		} else if(isset($_REQUEST["previewpost"])){
 			// Disabled for now
+			$this->modifyLoad(false);
 			$yakbb->error("2", "");
+		} else if($this->actiontype == "modify"){
+			$this->modifyLoad();
 		}
 
 		// Template stuff
@@ -76,6 +83,37 @@ class post {
 		$yakbb->smarty->assign("actiontype", $this->actiontype);
 		$yakbb->smarty->assign("page_title", $yakbb->getLang("page_title_".$this->actiontype));
 		$yakbb->loadTemplate("post.tpl");
+	}
+
+	private function modifyLoad($senddata=true){
+		// Loads data on the first load of the modify page
+		// $senddata = if true, we will send the subject and message from the database
+
+		global $yakbb;
+
+		// See if post exists first
+		$yakbb->db->query("
+			SELECT
+				*
+			FROM
+				yakbb_posts
+			WHERE
+				id = '".$this->post."'
+			LIMIT
+				1
+		");
+		if($yakbb->db->numRows() == 0){
+			$yakbb->error(2, "modify_post_doesnt_exist");
+		}
+
+		$dat = $yakbb->db->fetch();
+		$this->thread = $dat["threadid"];
+		$this->firstpost = ($dat["firstpost"] == 1);
+
+		if($senddata === true){
+			$this->subject = $dat["title"];
+			$this->message = $dat["message"];
+		}
 	}
 
 	private function validate(){
@@ -126,11 +164,36 @@ class post {
 		global $yakbb;
 		if($this->actiontype == "modify"){
 			// Update
+			$yakbb->db->query("
+				UPDATE
+					yakbb_posts
+				SET
+					title = '".$yakbb->db->secure($this->subject)."',
+					message = '".$yakbb->db->secure($this->message)."'
+				WHERE
+					id = '".$this->post."'
+				LIMIT
+					1
+			");
+			if($this->firstpost){
+				$yakbb->db->query("
+					UPDATE
+						yakbb_threads
+					SET
+						name = '".$yakbb->db->secure($this->subject)."'
+					WHERE
+						id = '".$this->thread."'
+					LIMIT
+						1
+				");
+			}
+			redirect("?thread=".$this->thread);
 		} else {
 			// Create thread if needed and then insert the reply
 			$posttime = time();
 			if($this->actiontype == "newthread"){
 				// create thread
+				$this->firstpost = true;
 				$yakbb->db->insert("threads", array(
 					"id" => 0,
 					"name" => $this->subject,
@@ -159,7 +222,8 @@ class post {
 				"message" => $this->message,
 				"title" => $this->subject,
 				"disablesmilies" => 0,
-				"attachments" => 0
+				"attachments" => 0,
+				"firstpost" => ($this->firstpost?1:0)
 			));
 
 			// Update thread info if not creating a thread
