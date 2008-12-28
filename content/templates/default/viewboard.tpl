@@ -16,7 +16,7 @@
 	<tr class="title"><td width="1">
 	</td><td>
 		Subject
-	</td><td width="75" align="center">
+	</td><td width="1" align="center">
 		Starter
 	</td><td width="1" align="center">
 		Replies
@@ -37,9 +37,9 @@
 			{$thread.replies}
 		</td><td align="center" valign="middle">
 			{$thread.views}
-		</td><td valign="top" nowrap="nowrap">
-			On Dec 32nd, 2108<br />
-			By Some User
+		</td><td valign="top" width="30%">
+			On {$thread.lpdate}<br />
+			By {$thread.lpuserlink}
 		</td></tr>
 	{/foreach}
 {else}

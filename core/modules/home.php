@@ -19,7 +19,6 @@
 
 /*	TODO
 	- Change permissions to use the catPermissions and boardPermissions functions
-	- Load last post info
 	- On/off buttons
 */
 
@@ -77,15 +76,27 @@ class home {
 
 		$boards = $yakbb->db->query("
 			SELECT
-				*
+				b.*,
+				v.id AS viewid,
+				u.username AS lpusername, u.displayname AS lpdisplay, u.group AS lpgroup,
+				t.name AS lpthreadname
 			FROM
-				yakbb_boards
+				yakbb_boards b
+			LEFT JOIN
+				yakbb_boards_views v
+				ON (b.id = v.boardid AND v.userid = '".$yakbb->user["id"]."')
+			LEFT JOIN
+				yakbb_users u
+				ON (u.id = b.lastpostuserid)
+			LEFT JOIN
+				yakbb_threads t
+				ON (t.id = b.lastpostthreadid)
 			WHERE
-				`parenttype` = 'c'
-				AND hidden = '0'
-				AND parentid IN (".implode($catsids, ",").")
+				b.parenttype = 'c'
+				AND b.hidden = '0'
+				AND b.parentid IN (".implode($catsids, ",").")
 			ORDER BY
-				`parentorder` ASC
+				b.parentorder ASC
 		");
 
 		while($b = $yakbb->db->fetch()){
@@ -96,6 +107,9 @@ class home {
 			$b["link"] = link_board($b["id"], $b["name"]);
 			$b["url"] = url_board($b["id"], $b["name"]);
 			$b["permissions"] = $bperms[$yakbb->user["group"]];
+			$b["lpdate"] = makeDate($b["lastposttime"]);
+			$b["lplink"] = link_thread($b["lastpostthreadid"], $b["lpthreadname"]);
+			$b["lpuserlink"] = link_user($b["lastpostuserid"], $b["lpusername"], $b["lpdisplay"], $b["lpgroup"]);
 			$this->cats[$b["parentid"]]["boards"][] = $b;
 		}
 	}

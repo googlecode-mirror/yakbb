@@ -24,7 +24,6 @@
 	- Need to add a nav tree
 	- Need to add thread sorting options
 	- Need to add pagination to threads
-	- Need to load last post info for threads
 	- Need to load new/viewed info for threads
 	- Need to forward permissions for buttons and attachments
 	- Add subscription management info
@@ -89,14 +88,18 @@ class viewboard {
 			$yakbb->db->query("
 				SELECT
 					t.*,
-					u.username, u.displayname, u.group
+					u.username, u.displayname, u.group,
+					lpu.username AS lpusername, lpu.displayname AS lpdisplay, lpu.group AS lpgroup
 				FROM
 					yakbb_threads t
 				LEFT JOIN
 					yakbb_users u
 					ON (u.id = t.creatorid)
+				LEFT JOIN
+					yakbb_users lpu
+					ON (u.id = lastpostuser)
 				WHERE
-					t.parentid='".$this->boardid."'
+					t.parentid = '".$this->boardid."'
 				ORDER BY
 					t.lastposttime DESC,
 					t.id DESC
@@ -107,6 +110,8 @@ class viewboard {
 			while($t = $yakbb->db->fetch()){
 				$t["link"] = link_thread($t["id"], $t["name"]);
 				$t["starterlink"] = link_user($t["creatorid"], $t["username"], $t["displayname"], $t["group"]);
+				$t["lpuserlink"] = link_user($t["lastpostuser"], $t["lpusername"], $t["lpdisplay"], $t["lpgroup"]);
+				$t["lpdate"] = makeDate($t["lastposttime"]);
 				$this->threads[] = $t;
 			}
 		}

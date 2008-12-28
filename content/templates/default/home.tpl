@@ -33,11 +33,18 @@
 			{$board.posts}
 		</td><td align="center" width="1">
 			{$board.threads}
-		</td><td valign="top">
-			Last post
+		</td><td valign="top" width="28%">
+			{if $board.lastposttime != 0}
+				{$board.lpdate}<br />
+				in {$board.lplink}<br />
+				by {$board.lpuserlink}
+			{else}
+				[ No last post ]
+			{/if}
 		</td></tr>
 	{/foreach}
 	</table>
+	<br />
 {/foreach}
 
 {include file="footer.tpl"}
