@@ -29,14 +29,14 @@ INSERT INTO yakbb_boards (id, name, description, parenttype, parentid, parentord
 -- Dumping data for table 'yakbb_categories'
 --
 
-INSERT INTO yakbb_categories (id, name, description, hideshow, showmain, order, permissions) VALUES
+INSERT INTO yakbb_categories (id, name, description, hideshow, showmain, `order`, permissions) VALUES
 (1, 'Category 1', 'This is a test category', '1', '1', 1, 'a:3:{i:-1;a:1:{s:4:"view";b:1;}i:0;a:1:{s:4:"view";b:1;}i:1;a:1:{s:4:"view";b:1;}}');
 
 --
 -- Dumping data for table 'yakbb_config'
 --
 
-INSERT INTO yakbb_config (id, name, value, groupid, grouporder) VALUES
+INSERT INTO yakbb_config (id, name, `value`, groupid, grouporder) VALUES
 (1, 'sef_urls', 'false', 0, 0),
 (2, 'subs_count_towards_parent', 'true', 0, 0),
 (3, 'default_template', 'default', 0, 0),
