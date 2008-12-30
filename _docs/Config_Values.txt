@@ -48,3 +48,36 @@ admin_approval
 
 pm_enabled
 	Whether or not the PM system is enabled.
+
+username_min_length
+	Minimum length a username can be.
+
+username_max_length
+	Maximum length a username can be.
+
+displayname_min_length
+	Minimum length a display name can be.
+
+displayname_max_length
+	Maximum length a display name can be.
+
+default_timezome
+	Default time zone which is assigned to guests and new accounts.
+
+subject_min_length
+	Minimum length a thread and message subject can be.
+
+subject_max_length
+	Maximum length a thread and message subject can be.
+
+message_min_length
+	Minimum length a post can be.
+
+message_max_length
+	Maximum length a post can be.
+
+threads_per_page
+	Number of threads to show per page.
+
+posts_per_page
+	Number of posts to show per page in a thread

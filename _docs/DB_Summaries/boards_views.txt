@@ -1,0 +1,6 @@
+	This table contains the information used for the "mark as read" system for boards.
+
+FIELD				DESCRIPTION
+id					ID of the board-user relationship
+boardid				ID of the board the user viewed
+userid				ID of the user who viewed the board
