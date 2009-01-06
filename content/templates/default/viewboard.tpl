@@ -28,7 +28,7 @@
 	{foreach from=$threads item=thread}
 		<tr><td valign="middle">
 			Icon
-		</td><td valign="top">
+		</td><td valign="top" onclick="location.href='{$thread.url}';">
 			{$thread.link}<br />
 			[ Pages: 1, 2, 3, 4, 5 ]
 		</td><td nowrap="nowrap" valign="middle" align="center">

@@ -108,6 +108,7 @@ class viewboard {
 			");
 			$this->threads = array();
 			while($t = $yakbb->db->fetch()){
+				$t["url"] = url_thread($t["id"], $t["name"]);
 				$t["link"] = link_thread($t["id"], $t["name"]);
 				$t["starterlink"] = link_user($t["creatorid"], $t["username"], $t["displayname"], $t["group"]);
 				$t["lpuserlink"] = link_user($t["lastpostuser"], $t["lpusername"], $t["lpdisplay"], $t["lpgroup"]);

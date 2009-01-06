@@ -11,7 +11,7 @@ $config = array(
 	"dbdb" => "yakbb_alpha"
 );
 
-define("DBPRE", "yakbb_");
-
+define("YAKBB_DBPRE", "yakbb_");
+define("YAKBB_DBSALT", "!@#$(nf189h3130j1389h@#%12390jwqdf");
 
 ?>
