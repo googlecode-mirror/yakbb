@@ -102,6 +102,7 @@ class YakBB {
 	private function loadLibrary(){
 		$this->loadSmarty();
 		require YAKBB_CORE."includes/functions.lib.php";
+		require YAKBB_CORE."includes/permissions.lib.php";
 		require YAKBB_CORE."classes/FlatFile.class.php";
 		require YAKBB_CORE."classes/DB.class.php";
 		require YAKBB_CORE."classes/Post_Parser.class.php";
@@ -111,6 +112,7 @@ class YakBB {
 			$this->db = new $str($this->dbconfig);
 			unset($this->dbconfig);
 			$this->loadConfig();
+			$this->loadGroups();
 		}
 
 		$this->parser = new Post_Parser();
@@ -146,10 +148,24 @@ class YakBB {
 		}
 	}
 
+	private function loadGroups(){
+		$this->groups = array();
+		$dat = $this->db->cacheQuery("
+			SELECT
+				*
+			FROM
+				yakbb_groups
+		", "groups");
+
+		foreach($dat as $v){
+			$this->groups[$v["id"]] = $v;
+		}
+	}
+
 	private function loadUser(){
 		$this->user = array( // Guest dummy data
 			"id" => 0,
-			"name" => "Guest",
+			"username" => "Guest",
 			"group" => -1,
 			"template" => $this->config["default_template"],
 			"language" => $this->config["default_language"]

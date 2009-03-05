@@ -12,35 +12,34 @@
 || Program: YakBB v1.0.0
 || Author: Chris Dessonville
 ||==================================================||
-|| File: /core/includes/urls.lib.php
+|| File: /core/classes/Board.class.php
 || File Version: v0.2.0a
 || $Id$
 \*==================================================*/
 
+
 defined("YAKBB") or die("Security breach.");
 
-function url_thread($threadid, $threadname, $page=false){
-	$str = "?thread=".$threadid;
-
-	if($page !== false && intval($page) != 0){
-		$str .= "&amp;page=".intval($page);
+class Board {
+	// Core loading functions
+	public function __construct($dat){
+		// $dat = data of the board
 	}
 
-	return $str;
-}
-
-function url_board($boardid, $boardname, $page=false){
-	$str = "?board=".$boardid;
-
-	if($page !== false && intval($page) != 0){
-		$str .= "&amp;page=".intval($page);
+	public function moveToCat($catid, $position){
+		// $catid = ID of new cat. Need to validate cat's existence.
+		// $position = New position in board list under parent cats
 	}
 
-	return $str;
-}
+	public function createThread($threaddat){
+		// $threaddat = array of data
+	}
 
-function url_user($userid, $username, $display){
-	return "?user=".$username;
+	public function update($boarddat){
+	}
+
+	public function delete(){
+	}
 }
 
 ?>

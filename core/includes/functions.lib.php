@@ -17,15 +17,6 @@
 || $Id$
 \*==================================================*/
 
-/*	TODO
-		boardPermissions()
-			- Needs to be coded completely
-		catPermissions()
-			- Needs to be coded completely
-		getPermissions()
-			- Needs to change to be get permissions updated while in a board too
-*/
-
 defined("YAKBB") or die("Security breach.");
 
 // General functions
@@ -52,12 +43,13 @@ function sha256($dat){
 function loadLibrary($n){
 	// Loads a library section that is not loaded by default (deletion, validation, etc.)
 
-	if(file_exists(YAKBB_CORE.$n.".php")){
-		require_once YAKBB_CORE.$n.".php";
-	} else if(file_exists(YAKBB_INCLUDES.$n.".php")){
-		require_once YAKBB_INCLUDES.$n.".php";
-	} else if(file_exists(YAKBB_CLASSES.$n.".php")){
-		require_once YAKBB_CLASSES.$n.".php";
+	$f = $n.".php";
+	if(file_exists(YAKBB_CORE.$f)){
+		require_once YAKBB_CORE.$f;
+	} else if(file_exists(YAKBB_INCLUDES.$f)){
+		require_once YAKBB_INCLUDES.$f;
+	} else if(file_exists(YAKBB_CLASSES.$f)){
+		require_once YAKBB_CLASSES.$f;
 	} else {
 		die("Error locating library file: ".$n);
 	}
@@ -75,73 +67,15 @@ function redirect($url){
 }
 
 
+
+
+
 // Template functions
 function validTemplate($tempid){
 	// Makes sure the template folder exists
 
 	return is_dir(YAKBB_TEMPLATES.$tempid);
 }
-
-
-// Permission functions
-function boardPermissions($boardid){
-	// Get specific permissions for a specific board. All is done from the cache.
-
-	global $yakbb;
-	$boardid = intval($boardid);
-	$perms = $yakbb->db->queryCache("
-		SELECT
-			permissions
-		FROM
-			yakbb_boards
-		WHERE
-			id='".$boardid."'
-		LIMIT
-			1
-	", "permissions/boards/".$boardid);
-
-	$perms = unserialize($perms[0]["permissions"]); // Get the correct results
-	if(empty($perms) || !isset($perms[$yakbb->user["group"]])){
-		return array(
-			"view" => false,
-			"create_thread" => false,
-			"create_poll" => false,
-			"post_reply" => false,
-			"add_attachment" => false,
-			"download_attachment" => false
-		);
-	} else {
-		return $perms[$yakbb->user["group"]];
-	}
-}
-
-function catPermissions($catid){
-	// Get specific permissions for a specific category. All is done from the cache.
-
-	return array();
-}
-
-function getPermissions($groupid=false){
-	// Gets the permission array for a specific group
-
-	global $yakbb;
-	if($groupid === false){
-		$groupid = $yakbb->user["group"];
-	}
-
-	return $yakbb->groups[$groupid];
-}
-
-function getPermission($perm, $groupid=false){
-	// Gets a specific permission for a group
-
-	$perms = getPermissions($groupid);
-	if(isset($perms[$perm])){
-		return $perms[$perm] == 1;
-	}
-	return false;
-}
-
 
 
 

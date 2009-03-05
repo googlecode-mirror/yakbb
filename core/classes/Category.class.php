@@ -12,35 +12,31 @@
 || Program: YakBB v1.0.0
 || Author: Chris Dessonville
 ||==================================================||
-|| File: /core/includes/urls.lib.php
+|| File: /core/classes/Category.class.php
 || File Version: v0.2.0a
 || $Id$
 \*==================================================*/
 
+
 defined("YAKBB") or die("Security breach.");
 
-function url_thread($threadid, $threadname, $page=false){
-	$str = "?thread=".$threadid;
-
-	if($page !== false && intval($page) != 0){
-		$str .= "&amp;page=".intval($page);
+class Category {
+	// Core loading functions
+	public function __construct($dat){
+		// $dat = data of the category
 	}
 
-	return $str;
-}
-
-function url_board($boardid, $boardname, $page=false){
-	$str = "?board=".$boardid;
-
-	if($page !== false && intval($page) != 0){
-		$str .= "&amp;page=".intval($page);
+	public function delete(){
+		// Delete category
 	}
 
-	return $str;
-}
+	public function createBoard($boarddat){
+		// $boarddat = array of data
+	}
 
-function url_user($userid, $username, $display){
-	return "?user=".$username;
+	public function update($update){
+		// $update = array of data to update in the category
+	}
 }
 
 ?>
