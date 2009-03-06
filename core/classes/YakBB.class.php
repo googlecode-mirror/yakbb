@@ -101,7 +101,8 @@ class YakBB {
 
 	private function loadLibrary(){
 		$this->loadSmarty();
-		require YAKBB_CORE."includes/functions.lib.php";
+		require YAKBB_CORE."includes/loading.lib.php";
+		require YAKBB_CORE."includes/general_functions.lib.php";
 		require YAKBB_CORE."includes/permissions.lib.php";
 		require YAKBB_CORE."classes/FlatFile.class.php";
 		require YAKBB_CORE."classes/DB.class.php";

@@ -12,7 +12,7 @@
 || Program: YakBB v1.0.0
 || Author: Chris Dessonville
 ||==================================================||
-|| File: /core/includes/functions.lib.php
+|| File: /core/includes/general_functions.lib.php
 || File Version: v0.2.0a
 || $Id$
 \*==================================================*/
@@ -64,6 +64,12 @@ function redirect($url){
         $uri = rtrim(dirname($_SERVER['PHP_SELF']), "/\\");
         header("Location: http://".$host.$uri.$url);
         exit;
+}
+
+function record_yakbb_error($dat){
+	$ff = new FlatFile();
+	$ff->updateFile("yakbb_error_record.txt", $dat." - (".time().")\n");
+	unset($ff);
 }
 
 

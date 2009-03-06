@@ -18,36 +18,25 @@
 \*==================================================*/
 
 /*	TODO
-		boardPermissions()
+		getBoardPermissions()
 			- Needs to be fully tested
-		catPermissions()
+		getCategoryPermissions()
 			- Needs to be fully tested
 */
 
 defined("YAKBB") or die("Security breach.");
 
 // Loading permission functions
-function boardPermissions($boardid){
+function getBoardPermissions($boardid){
 	// Get specific permissions for a specific board. All is done from the cache.
 
 	global $yakbb;
-	$boardid = intval($boardid);
-	$perms = $yakbb->db->queryCache("
-		SELECT
-			id, name, description,				# Basic data
-			parenttype, parentid, parentorder,	# Parent data
-			permissions, password,				# Permissions data
-			redirecturl, redirects,				# Redirect data
-			sublist, modslist, hidden			# Settings data
-		FROM
-			yakbb_boards
-		WHERE
-			id = '".$boardid."'
-		LIMIT
-			1
-	", "board_data/".$boardid);
 
-	$perms = unserialize($perms[0]["permissions"]); // Get the correct results
+	$boardid = intval($boardid);
+	$perms = loadBoardData($boardid);
+	$perms = unserialize($perms["permissions"]);
+
+	// Get permissions
 	if(empty($perms) || !isset($perms[$yakbb->user["group"]])){
 		return array(
 			"view" => false,
@@ -62,25 +51,16 @@ function boardPermissions($boardid){
 	}
 }
 
-function catPermissions($catid){
+function getCategoryPermissions($catid){
 	// Get specific permissions for a specific category. All is done from the cache.
 
 	global $yakbb;
-	$catid = intval($catid);
-	$perms = $yakbb->db->queryCache("
-		SELECT
-			id, name, description,		# Cat data
-			hideshow, showmain, order,	# Settings data
-			permissions					# Permissions data
-		FROM
-			yakbb_categories
-		WHERE
-			id = '".$catid."'
-		LIMIT
-			1
-	", "cat_data/".$catid);
 
-	$perms = unserialize($perms[0]["permissions"]); // Get the correct results
+	$catid = intval($catid);
+	$perms = loadCategoryData($catid);
+	$perms = unserialize($perms["permissions"]);
+
+	// Get permissions
 	if(empty($perms) || !isset($perms[$yakbb->user["group"]])){
 		return array(
 			"view" => false
